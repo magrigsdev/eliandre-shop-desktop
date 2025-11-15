@@ -1,29 +1,109 @@
-import '../styles/bienvenue.css'
 import bienvenue from '../assets/bienvenue.jpg'
-
 
 const Bienvenue =  () => {
     return (
-    <div className="container">
-        <div className="card">
+        <>
+            <style>
+                {`
+                    /* ---- Container ---- */
+                    .container {
+                        width: 100%;
+                        display: flex;
+                        justify-content: center;
+                        padding: 20px;
+                    }
 
-            <div className="logoox">
-                <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" 
-                alt="logo" className="logo"/>
+                    /* ---- Card ---- */
+                    .card {
+                        width: 800px;
+                        background: white;
+                        padding: 40px;
+                        border-radius: 14px;
+                        text-align: center;
+                        box-shadow: 0px 4px 18px rgba(0,0,0,0.08);
+                    }
+
+                    /* ---- Logo ---- */
+                    .logoBox {
+                        display: flex;
+                        justify-content: center;
+                        margin-bottom: 15px;
+                    }
+
+                    .logo {
+                        width: 100px;
+                        height: 100px;
+                    }
+
+                    /* ---- Text ---- */
+                    h2 {
+                        font-size: 20px;
+                        font-weight: 700;
+                        margin-bottom: 10px;
+                        color: #111;
+                    }
+
+                    .subtitle {
+                        font-size: 13px;
+                        color: #444;
+                        margin-bottom: 25px;
+                    }
+
+                    /* ---- Illustration ---- */
+                    .illustration {
+                        width: 100%;
+                        max-width: 330px;
+                        margin: 0 auto 25px;
+                        display: block;
+                        height: 250px;
+                    }
+
+                    /* ---- Button ---- */
+                    .btn {
+                        background: teal;
+                        border: none;
+                        color: white;
+                        padding: 12px 0;
+                        width: 40%;
+                        border-radius: 25px;
+                        cursor: pointer;
+                        font-size: 15px;
+                        font-weight: bold;
+                        transition: 0.2s;
+                    }
+
+                    .btn:hover {
+                        opacity: 0.85;
+                    }
+                
+                `}
+            </style>
+
+            <div className="container">
+                <div className="card">
+
+                    <div className="logoox">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" 
+                        alt="logo" className="logo"/>
+                    </div>
+
+                    <h2>Bienvenue sur Eliandre shop</h2>
+
+                    <p className="subtitle">
+                        Découvrez Eliandre Shop, votre boutique en ligne dédiée à l’élégance et à la beauté.
+                    </p>
+
+                    <img src={bienvenue} 
+                    alt="illustration" className="illustration"/>
+
+                    <button className="btn">Commencez</button>
+
+                </div>
             </div>
-
-            <h2>Bienvenue sur Eliandre shop</h2>
-
-            <p className="subtitle">
-                Découvrez Eliandre Shop, votre boutique en ligne dédiée à l’élégance et à la beauté.
-            </p>
-
-            <img src={bienvenue} 
-            alt="illustration" className="illustration"/>
-
-            <button className="btn">Commencez</button>
-
-        </div>
-    </div>)
+        </>
+    
+    )
 }
 export default Bienvenue
+
+
