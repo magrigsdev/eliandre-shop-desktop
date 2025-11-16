@@ -8,8 +8,8 @@ function App() {
   
   return (
         // <Bienvenue/>
-        //<Connexion/>
-       <Inscription/>
+        // <Connexion/>
+      <Inscription/>
   )
 }
 

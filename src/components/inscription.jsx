@@ -126,6 +126,18 @@ const Inscription = () => {
                         .back-btn:hover {
                             background: #c0392b;
                         }
+                        .down_text {
+                            color: #555;
+                            font-size: 12px;
+                            margin-bottom: 10px;
+                        }
+                        .down_text_sub {
+                            color: teal;
+                            font-size: 12px;
+                            margin-bottom: 10px;
+                            text-decoration:'none';
+                            font-weight: 700;
+                        }
 
                     `}
                 </style>
@@ -177,6 +189,11 @@ const Inscription = () => {
                             <div class="buttons">
                                 <button class="save-btn">Enregistrer</button>
                                 <button class="back-btn">Retour</button>
+                            </div>
+                            <div>
+                                <span class="down_text">Déjà un compte 
+                                <a className="down_text_sub"> Se connecter</a>
+                                </span>
                             </div>
 
                         </div>
