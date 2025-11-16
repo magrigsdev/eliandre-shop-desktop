@@ -9,6 +9,7 @@ const Connexion = () => {
                     align-items: center;
                     height: 100vh;
                     width: 100%;
+                    font-familly: 'roboto'
                 }
 
                 .card {
@@ -126,6 +127,12 @@ const Connexion = () => {
                         padding: 20px;
                     }
                 }
+                label {
+                            font-size: 13px;
+                            font-weight: 600;
+                            color: #555;
+                            text-align: left;
+                        }
             `}
         </style>
     
@@ -146,10 +153,12 @@ const Connexion = () => {
                 </p>
 
                 <form class="form">
+                    <label>Nom</label>
                     <input type="email" placeholder="Email" />
                     <span class="error">Email incorrect ou invalid</span>
 
-                    <input type="password" placeholder="Mot de passe" />
+                    <label>Mot de passe </label>
+                    <input type="password" placeholder="••••••••" />
                     <span class="error">Email incorrect ou invalid</span>
 
                     <button type="submit">Commencer</button>
@@ -157,6 +166,7 @@ const Connexion = () => {
 
                 <p class="signup">
                     Pas de compte ? <a href="#">S’inscrire</a>
+                    
                 </p>
             </div>
 
