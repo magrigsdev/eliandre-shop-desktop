@@ -2,7 +2,14 @@
 const Connexion = () => {
    return (<>
         <style>
-            {`             
+            {`    
+                body {
+                    background-color: white;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    min-height: 100vh;
+                }         
                 .container {
                     display: flex;
                     justify-content: center;

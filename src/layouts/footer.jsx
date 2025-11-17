@@ -1,17 +1,12 @@
 
-
-
-const Navbar = () => 
+const Footer = () => 
     {
-    
+        let year =  new Date().getFullYear()
+        
         return (<>
             <style>
                 {`
-                    body {
-                        min-height: 0;
-                        background-color: white;
-                        display:'block'
-                    }
+                    
                     
                     /* 1. Conteneur de la Navigation (Modification ici) */
                     .navbar {
@@ -39,19 +34,16 @@ const Navbar = () =>
                     }
 
                     /* 3. Style des Liens (inchangé) */
-                    .nav-list li a {
+                    .nav-list  p {
                         text-decoration: none; 
-                        color: #333; 
+                        color: #A3A3A3; 
                         font-size: 16px;
                         padding: 5px 10px;
                         display: block;
                         transition: color 0.3s;
-                        font-weight:bold
                     }
 
-                    .nav-list li a:hover {
-                        color: teal;
-                    }
+                    
                     
 
                     /* 4. La Barre de Séparation Grise (Elle ne s'étend plus qu'à 1200px max) */
@@ -60,7 +52,7 @@ const Navbar = () =>
                         height: 1px;
                         background-color: #ddd; 
                         margin-top: 10px;
-                        margin-bottom: 40px;
+                        margin-bottom: 10px;
                     }
                     
                     
@@ -68,14 +60,13 @@ const Navbar = () =>
             </style>
 
             <nav class="navbar">
-                <ul class="nav-list">
-                    <li><a href="#accueil" >Accueil</a></li>
-                    <li><a href="#categorie" >Categorie</a></li>
-                    <li><a href="#panier" >Panier</a></li>
-                    <li><a href="#déconnexion" >Déconnexion</a></li>
-                </ul>
                 <div class="divider"></div>
+                <span class="nav-list">
+                   
+                    <p>&copy; { year }  Eliandre. Tous droits réservés.</p>
+                </span>
+                
             </nav>
         </>)
     }
-export default Navbar
+export default Footer

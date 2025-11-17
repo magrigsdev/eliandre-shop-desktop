@@ -5,6 +5,13 @@ const Bienvenue =  () => {
         <>
             <style>
                 {`
+                body {
+                        background-color: white;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        min-height: 100vh;
+                    }
                     /* ---- Container ---- */
                     .container {
                         width: 100%;
