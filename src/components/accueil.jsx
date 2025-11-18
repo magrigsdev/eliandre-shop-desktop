@@ -6,6 +6,7 @@ const Accueil = () => {
             <>
                         <style>
                             {`
+                           
                             
                                 /* ---- Container ---- */
                                 .container {

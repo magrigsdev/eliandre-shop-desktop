@@ -6,24 +6,20 @@ const Footer = () =>
         return (<>
             <style>
                 {`
-                    
+                 
                     
                     /* 1. Conteneur de la Navigation (Modification ici) */
-                    .navbar {
-                        /* Largeur maximale pour éviter qu'elle ne soit trop étirée */
-                        
-                        width: 80%; /* Occupe 90% de la largeur disponible (pour les petits écrans) */
-                        
-                        /* Centre le bloc entier horizontalement */
+                    .footer {
+                       
+                        width: 80%; 
                         margin-left: auto;
                         margin-right: auto;
-                        
-                        background-color: #f8f8f8; 
-                        padding: 15px 0 0;
+                        background-color: #fff; 
+                        padding: 15px 0 0 0;
                     }
 
                     /* 2. Liste des Éléments (inchangé, ils restent centrés dans le .navbar) */
-                    .nav-list {
+                    .footer-container {
                         list-style: none;
                         margin: 0;
                         padding: 0;
@@ -34,7 +30,7 @@ const Footer = () =>
                     }
 
                     /* 3. Style des Liens (inchangé) */
-                    .nav-list  p {
+                    .footer-container  p {
                         text-decoration: none; 
                         color: #A3A3A3; 
                         font-size: 16px;
@@ -47,7 +43,7 @@ const Footer = () =>
                     
 
                     /* 4. La Barre de Séparation Grise (Elle ne s'étend plus qu'à 1200px max) */
-                    .divider {
+                    .dividers {
                         width: 100%; /* S'étend sur la largeur maximale du .navbar */
                         height: 1px;
                         background-color: #ddd; 
@@ -59,9 +55,9 @@ const Footer = () =>
                 `}
             </style>
 
-            <nav class="navbar">
-                <div class="divider"></div>
-                <span class="nav-list">
+            <nav class="footer">
+                <div class="dividers"></div>
+                <span class="footer-container">
                    
                     <p>&copy; { year }  Eliandre. Tous droits réservés.</p>
                 </span>
