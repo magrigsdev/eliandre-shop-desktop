@@ -7,11 +7,7 @@ const Navbar = () =>
         return (<>
             <style>
                 {`
-                    body {
-                        min-height: 0;
-                        background-color: white;
-                        display:'block'
-                    }
+                 
                     
                     /* 1. Conteneur de la Navigation (Modification ici) */
                     .navbar {
@@ -22,8 +18,6 @@ const Navbar = () =>
                         /* Centre le bloc entier horizontalement */
                         margin-left: auto;
                         margin-right: auto;
-                        
-                        background-color: #f8f8f8; 
                         padding: 15px 0 0;
                     }
 
