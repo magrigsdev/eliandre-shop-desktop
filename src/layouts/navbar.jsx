@@ -1,72 +1,17 @@
 
-
+import '../styles/navbar.css'
 
 const Navbar = () => 
     {
     
         return (<>
-            <style>
-                {`
-                 
-                    
-                    /* 1. Conteneur de la Navigation (Modification ici) */
-                    .navbar {
-                        /* Largeur maximale pour éviter qu'elle ne soit trop étirée */
-                        
-                        width: 80%; /* Occupe 90% de la largeur disponible (pour les petits écrans) */
-                        
-                        /* Centre le bloc entier horizontalement */
-                        margin-left: auto;
-                        margin-right: auto;
-                        padding: 15px 0 0;
-                    }
-
-                    /* 2. Liste des Éléments (inchangé, ils restent centrés dans le .navbar) */
-                    .nav-list {
-                        list-style: none;
-                        margin: 0;
-                        padding: 0;
-                        
-                        display: flex;
-                        justify-content: center; 
-                        gap: 40px; 
-                    }
-
-                    /* 3. Style des Liens (inchangé) */
-                    .nav-list li a {
-                        text-decoration: none; 
-                        color: #333; 
-                        font-size: 16px;
-                        padding: 5px 10px;
-                        display: block;
-                        transition: color 0.3s;
-                        font-weight:bold
-                    }
-
-                    .nav-list li a:hover {
-                        color: teal;
-                    }
-                    
-
-                    /* 4. La Barre de Séparation Grise (Elle ne s'étend plus qu'à 1200px max) */
-                    .divider {
-                        width: 100%; /* S'étend sur la largeur maximale du .navbar */
-                        height: 1px;
-                        background-color: #ddd; 
-                        margin-top: 10px;
-                        margin-bottom: 40px;
-                    }
-                    
-                    
-                `}
-            </style>
 
             <nav class="navbar">
                 <ul class="nav-list">
-                    <li><a href="#accueil" >Accueil</a></li>
-                    <li><a href="#categorie" >Categorie</a></li>
-                    <li><a href="#panier" >Panier</a></li>
-                    <li><a href="#déconnexion" >Déconnexion</a></li>
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#categorie">Categorie</a></li>
+                    <li><a href="#panier">Panier</a></li>
+                    <li><a href="#déconnexion">Déconnexion</a></li>
                 </ul>
                 <div class="divider"></div>
             </nav>
