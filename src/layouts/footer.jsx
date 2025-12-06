@@ -6,8 +6,7 @@ const Footer = () =>
         return (<>
             <style>
                 {`
-                 
-                    
+   
                     /* 1. Conteneur de la Navigation (Modification ici) */
                     .footer {
                        
@@ -38,9 +37,6 @@ const Footer = () =>
                         display: block;
                         transition: color 0.3s;
                     }
-
-                    
-                    
 
                     /* 4. La Barre de Séparation Grise (Elle ne s'étend plus qu'à 1200px max) */
                     .dividers {
