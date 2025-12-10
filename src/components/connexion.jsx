@@ -6,9 +6,9 @@ import { useNavigate } from "react-router-dom"
 const Connexion = () => {
 
         //init le hook
-        const {setOnglet} = useNavbar()
+        const {setOnglet} = useNavbar() 
         //page actuelle
-        useEffect(()=>{setOnglet('inscription')})
+        useEffect(()=>{setOnglet('connexion')})
         //navigation
         const route = useNavigate()
          

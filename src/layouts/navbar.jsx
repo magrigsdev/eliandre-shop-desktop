@@ -11,7 +11,8 @@ const Navbar = () =>
             <nav class="navbar">
                 <ul className="nav-list">
                     <li><a 
-                        href="#accueil"
+                    
+                        href=""
                         style={ongletManager('accueil') === 'active' ? {color: 'teal'} : {}} 
                          >Accueil</a></li>
 

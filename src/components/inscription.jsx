@@ -1,12 +1,15 @@
 import { useEffect } from "react";
 import { useNavbar } from "../hooks/useNavbar";
 import "../styles/inscription.css";
+import { useNavigate } from "react-router-dom";
 
 const Inscription = () => {
     //init le hook
     const {setOnglet} = useNavbar()
     //page actuelle
     useEffect(()=>{setOnglet('inscription')})
+    //navigation
+    const route = useNavigate()
     
     return (<>
                 <div className="page-container">
@@ -53,13 +56,19 @@ const Inscription = () => {
                             <span className="error">Les mots de passe ne correspondent pas</span>
 
                             <div className="buttons">
-                                <button className="save-btn">Enregistrer</button>
+                                <button 
+                                    className="save-btn"
+                                    onClick={()=>console.log("restaure columns")}
+                                    >Enregistrer</button>
                                 <button className="back-btn">Retour</button>
                             </div>
                             <div>
-                                <span className="down_text">Déjà un compte 
-                                <a className="down_text_sub"> Se connecter</a>
-                                </span>
+                                <p className="down_text">Déjà un compte ?   
+                                <a className="down_text_sub"
+                                    href=""
+                                    onClick={()=>route('/connexion')}
+                                    >  Se connecter</a>
+                                </p>
                             </div>
 
                         </div>
