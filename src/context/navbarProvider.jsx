@@ -8,7 +8,7 @@ export const NavbarProvider  = ({children}) => {
     
     const test = "je test  le useNavbar";
 
-    if(!onglet) throw new Error('onglet must be an array ')
+    if(onglet === undefined) throw new Error('onglet must be defined ')
     
     return (
         <NavbarContext.Provider 
@@ -16,7 +16,7 @@ export const NavbarProvider  = ({children}) => {
                     test,
                     onglet,
                     setOnglet, 
-                    ongletManager: ()=> isActived(onglet)
+                    ongletManager: (target)=> isActived(onglet,target)
                 }}> {children} 
         </NavbarContext.Provider>)
 }

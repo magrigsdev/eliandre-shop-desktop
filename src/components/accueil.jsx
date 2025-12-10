@@ -7,13 +7,12 @@ import { useNavbar } from "../hooks/useNavbar"
 import '../styles/accueil.css'
 
 const Accueil = () => {
-    const {ongletManager, setOnglet, onglet} =  useNavbar()
+    const {setOnglet} =  useNavbar()
 
     useEffect(
         ()=>{
             setOnglet('accueil');    
         })
-    console.log("test onglet manager", ongletManager(onglet))
     
     return (
                 <>
