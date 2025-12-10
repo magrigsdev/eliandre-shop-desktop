@@ -1,10 +1,9 @@
 import './styles/style.css'
-import Bienvenue from './components/bienvenue'
-import Connexion from './components/connexion'
-import Inscription from './components/inscription'
 import Navbar from './layouts/Navbar'
 import Accueil from './components/accueil'
 import Footer from './layouts/footer'
+import { NavbarProvider } from './context/navbarProvider'
+
 
 
 function App() {
@@ -15,9 +14,11 @@ function App() {
       // <Inscription/>
      
       <>
-        <Navbar/>
-        <Accueil/>
-        <Footer/>
+        <NavbarProvider>
+          <Navbar/>
+          <Accueil/>
+          <Footer/>
+        </NavbarProvider>     
       </>
   )
 }

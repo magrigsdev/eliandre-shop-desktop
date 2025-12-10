@@ -39,6 +39,10 @@
                     .nav-list li a:hover {
                         color: teal;
                     }
+                    /* .nav-list li a .active {
+                        color: teal;
+                    } */
+                    .active{color:red;}
                     
 
                     /* 4. La Barre de Séparation Grise (Elle ne s'étend plus qu'à 1200px max) */

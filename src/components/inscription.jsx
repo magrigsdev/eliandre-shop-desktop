@@ -141,57 +141,57 @@ const Inscription = () => {
 
                     `}
                 </style>
-                <div class="page-container">
+                <div className="page-container">
 
         
-                    <div class="header">
-                        <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" alt="Eliandre Shop Logo" class="logo" />
-                        <div class="header-text">
+                    <div className="header">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" alt="Eliandre Shop Logo" className="logo" />
+                        <div className="header-text">
                             <h2>Bienvenue sur Eliandre shop</h2>
                             <p>Créez votre profil pour découvrir nos perruques, conseils beauté et nouveautés tendance.</p>
                         </div>
                     </div>
 
        
-                    <div class="form-container">
+                    <div className="form-container">
 
-                        <div class="left-form">
+                        <div className="left-form">
 
                             <label>Nom</label>
                             <input type="text" placeholder="banzouzi" required />
 
-                            <span class="error">Nom est requis</span>
+                            <span className="error">Nom est requis</span>
 
                             <label>Prénom</label>
                             <input type="text" placeholder="andréa" required/>
 
-                            <span class="error">Prénom est requis</span>
+                            <span className="error">Prénom est requis</span>
 
                             <label>Téléphone</label>
                             <input type="text" placeholder="Entrer le numéro" required/>
 
-                            <span class="error">Le numéro est requis</span>
+                            <span className="error">Le numéro est requis</span>
 
                         </div>
 
-                        <div class="right-form">
+                        <div className="right-form">
 
                             <label>Mot de passe</label>
                             <input type="password" placeholder="••••••••" required/>
 
-                            <span class="error">Mot de passe requis</span>
+                            <span className="error">Mot de passe requis</span>
 
                             <label>Confirmation de mot de passe</label>
                             <input type="password" placeholder="••••••••" required />
 
-                            <span class="error">Les mots de passe ne correspondent pas</span>
+                            <span className="error">Les mots de passe ne correspondent pas</span>
 
-                            <div class="buttons">
-                                <button class="save-btn">Enregistrer</button>
-                                <button class="back-btn">Retour</button>
+                            <div className="buttons">
+                                <button className="save-btn">Enregistrer</button>
+                                <button className="back-btn">Retour</button>
                             </div>
                             <div>
-                                <span class="down_text">Déjà un compte 
+                                <span className="down_text">Déjà un compte 
                                 <a className="down_text_sub"> Se connecter</a>
                                 </span>
                             </div>

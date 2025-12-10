@@ -1,10 +1,20 @@
+import { useEffect } from "react"
 import accueil from "../assets/accueil.jpg"
 import sac_noire from "../assets/sac_noire.png"
 import sac_rose from "../assets/sac_orange.png"
+import { useNavbar } from "../hooks/useNavbar"
 
 import '../styles/accueil.css'
 
 const Accueil = () => {
+    const {ongletManager, setOnglet, onglet} =  useNavbar()
+
+    useEffect(
+        ()=>{
+            setOnglet('accueil');    
+        })
+    console.log("test onglet manager", ongletManager(onglet))
+    
     return (
                 <>
                     <div className="container">
@@ -25,13 +35,13 @@ const Accueil = () => {
                                     <p className="subtitle">
                                         Les incontournables Eliandre Shop
                                     </p>
-                                    <div class="gallery">
-                                        <figure class="image-item">
+                                    <div className="gallery">
+                                        <figure className="image-item">
                                             <img src={sac_rose} alt="Description de l'image 1"/>
                                             <figcaption>Sac rose</figcaption>
                                         </figure>
 
-                                        <figure class="image-item">
+                                        <figure className="image-item">
                                             <img src={sac_noire} alt="Description de l'image 2"/>
                                             <figcaption>Sac noire</figcaption>
                                         </figure>
