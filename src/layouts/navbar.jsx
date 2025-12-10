@@ -24,6 +24,14 @@ const Navbar = () =>
                     style={ongletManager('panier') === 'active' ? {color: 'teal'} : {}}
                     >Panier</a></li>
 
+                    <li><a href="#connexion" 
+                    style={ongletManager('connexion') === 'active' ? {color: 'teal'} : {}}
+                    >Connexion</a></li>
+
+                    <li><a href="#inscription" 
+                    style={ongletManager('inscription') === 'active' ? {color: 'teal'} : {}}
+                    >Inscription</a></li>
+
                     <li><a href="#déconnexion" 
                     style={ongletManager('deconnexion') === 'active' ? {color: 'teal'} : {}}
                     >Déconnexion</a></li>

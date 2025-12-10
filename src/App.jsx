@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Bienvenue from './components/bienvenue'
 import Connexion from './components/connexion'
 import Inscription from './components/inscription';
+import Deconnexion from './components/deconnexion'
 
 
 
@@ -15,7 +16,7 @@ function App() {
   return (
         
       <>
-      
+        
         <NavbarProvider>
 
           <BrowserRouter>
@@ -26,6 +27,7 @@ function App() {
               <Route path="/accueil" element={ <Accueil /> }  />
               <Route path="/connexion" element={ <Connexion/> }  />
               <Route path="/inscription" element={ <Inscription/> }  />
+              <Route path="/deconnexion" element={<Deconnexion/> }  />
 
             </Routes>
             <Footer/>
