@@ -1,6 +1,12 @@
+import { useEffect } from "react";
+import { useNavbar } from "../hooks/useNavbar";
 import "../styles/inscription.css";
 
 const Inscription = () => {
+    //init le hook
+    const {setOnglet} = useNavbar()
+    //page actuelle
+    useEffect(()=>{setOnglet('inscription')})
     
     return (<>
                 <div className="page-container">
@@ -13,7 +19,6 @@ const Inscription = () => {
                         </div>
                     </div>
 
-       
                     <div className="form-container">
 
                         <div className="left-form">

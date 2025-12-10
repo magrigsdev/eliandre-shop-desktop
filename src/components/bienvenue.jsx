@@ -23,7 +23,7 @@ const Bienvenue =  () => {
                     <img src={bienvenue} 
                     alt="illustration" className="illustration"/>
 
-                    <button className="btn" onClick={()=>route('/inscription')}>Commencez</button>
+                    <button className="btn" onClick={()=>route('/connexion')}>Commencez</button>
 
                 </div>
             </div>

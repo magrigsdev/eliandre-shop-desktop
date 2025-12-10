@@ -1,5 +1,17 @@
+import { useEffect } from "react"
+import { useNavbar } from "../hooks/useNavbar"
+import { useNavigate } from "react-router-dom"
+
 
 const Connexion = () => {
+
+        //init le hook
+        const {setOnglet} = useNavbar()
+        //page actuelle
+        useEffect(()=>{setOnglet('inscription')})
+        //navigation
+        const route = useNavigate()
+         
    return (<>
         <style>
             {`    
@@ -172,7 +184,10 @@ const Connexion = () => {
                 </form>
 
                 <p className="signup">
-                    Pas de compte ? <a href="#">S’inscrire</a>
+                    Pas de compte ? <a 
+                    href=""
+                    onClick={()=>route('/inscription')}
+                    >S’inscrire</a>
                     
                 </p>
             </div>
