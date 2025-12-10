@@ -143,35 +143,35 @@ const Connexion = () => {
             `}
         </style>
     
-        <div class="container">
-        <div class="card">
+        <div className="container">
+        <div className="card">
 
-            <div class="left">
+            <div className="left">
                 <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" 
                 alt="EliandreShop Logo" 
-                class="logo" />
+                className="logo" />
             </div>
 
-            <div class="right">
+            <div className="right">
                 <h2>Bienvenue sur Eliandre shop</h2>
-                <p class="desc">
+                <p className="desc">
                     Découvrez Eliandre Shop, votre boutique en ligne dédiée
                     à l'élégance et à la beauté.
                 </p>
 
-                <form class="form">
+                <form className="form">
                     <label>Nom</label>
                     <input type="email" placeholder="Email" />
-                    <span class="error">Email incorrect ou invalid</span>
+                    <span className="error">Email incorrect ou invalid</span>
 
                     <label>Mot de passe </label>
                     <input type="password" placeholder="••••••••" />
-                    <span class="error">Email incorrect ou invalid</span>
+                    <span className="error">Email incorrect ou invalid</span>
 
                     <button type="submit">Commencer</button>
                 </form>
 
-                <p class="signup">
+                <p className="signup">
                     Pas de compte ? <a href="#">S’inscrire</a>
                     
                 </p>
