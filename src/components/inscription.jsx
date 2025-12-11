@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavbar } from "../hooks/useNavbar";
 import "../styles/inscription.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Inscription = () => {
     //init le hook
@@ -10,6 +10,14 @@ const Inscription = () => {
     useEffect(()=>{setOnglet('inscription')})
     //navigation
     const route = useNavigate()
+
+    //uptdate location
+    const {pathname} = useLocation() 
+    //useNavbar
+    const {setLocation} = useNavbar()
+    useEffect(()=>{setLocation(pathname)})
+
+    // console.log("location sur inscription : ", location)
     
     return (<>
                 <div className="page-container">

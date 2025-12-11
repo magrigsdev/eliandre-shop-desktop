@@ -8,13 +8,23 @@ import Deconnexion from "../components/deconnexion"
 import Categorie  from "../components/categorie"
 import Panier from "../components/panier"
 import Footer from "../layouts/footer"
+import { useNavbar } from "../hooks/useNavbar"
+import Test from "../components/test"
 
 
 export const Browers = ()=> {
+    //init use
+    const {location, NavbarManager} = useNavbar()
+    
+    // useEffect(()=>{setLocation(location)})
+    //init uselocation
+    console.log("location sur browers ", location)
   return (
     
     <BrowserRouter> 
-        <Navbar/>
+    {NavbarManager(<Navbar/>)}
+                   
+        
             <Routes>
             
               <Route path="/" element={ <Bienvenue /> }  />

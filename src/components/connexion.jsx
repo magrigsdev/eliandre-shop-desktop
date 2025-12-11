@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useNavbar } from "../hooks/useNavbar"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 
 const Connexion = () => {
@@ -11,6 +11,14 @@ const Connexion = () => {
         useEffect(()=>{setOnglet('connexion')})
         //navigation
         const route = useNavigate()
+
+        //uptdate location
+        const {pathname} = useLocation()
+        //useNavbar
+        const {setLocation} = useNavbar()
+        useEffect(()=>{setLocation(pathname)})
+        
+        console.log("location sur connexion : ", location)
          
    return (<>
         <style>

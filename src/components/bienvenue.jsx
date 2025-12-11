@@ -1,9 +1,20 @@
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import bienvenue from '../assets/bienvenue.jpg'
 import '../styles/bienvenue.css'
+import { useEffect } from 'react'
+import { useNavbar } from '../hooks/useNavbar'
 
 const Bienvenue =  () => {
     const route = useNavigate()
+    //uptdate location
+    const {pathname} = useLocation()
+    //useNavbar
+    const {setLocation} = useNavbar()
+    useEffect(()=>{setLocation(pathname)})
+
+    //test
+    // console.log("page welcome", location)
+    
     return (
         <>
             <div className="container">

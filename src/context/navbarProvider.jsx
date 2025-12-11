@@ -1,11 +1,14 @@
 import { useCallback, useState } from "react"
 import { NavbarContext } from "./navbarContext"
-import { handleRoute, isActived } from './../helpers/Helpers';
+import { DisplayIfNotWelcome, handleRoute, isActived } from './../helpers/Helpers';
+
 
 
 export const NavbarProvider  = ({children}) => {
     //init variable
     const [onglet, setOnglet] = useState([])
+    const [location, setLocation] = useState([])
+    
     
 
     if(onglet === undefined) throw new Error('onglet must be defined ')
@@ -17,14 +20,24 @@ export const NavbarProvider  = ({children}) => {
     const RouteManager = useCallback(
         (e, path, route) => handleRoute(e, path, route),[]
     )
+    const NavbarManager = useCallback(
+        (component) => DisplayIfNotWelcome(location,component), [location]
+    )
 
      
     return (
         <NavbarContext.Provider 
             value={{
-                    onglet, 
-                    ongletManager, 
+                    //variables
+                    onglet,  
                     setOnglet,
-                    RouteManager }}> {children} 
+                    location,
+                    setLocation,
+
+                    //functions
+                    ongletManager,
+                    RouteManager,
+                    NavbarManager
+                    }}> {children} 
         </NavbarContext.Provider>)
 }
