@@ -5,9 +5,9 @@ const Footer = () =>
         
         return (<>
 
-            <nav class="footer">
-                <div class="dividers"></div>
-                <span class="footer-container">
+            <nav className="footer">
+                <div className="dividers"></div>
+                <span className="footer-container">
                    
                     <p>&copy; { year }  Eliandre. Tous droits réservés.</p>
                 </span>

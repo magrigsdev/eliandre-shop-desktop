@@ -1,5 +1,25 @@
+import { useEffect } from "react"
+import { useNavbar } from "../hooks/useNavbar"
+import { useLocation, useNavigate } from "react-router-dom"
+
 
 const Connexion = () => {
+
+        //init le hook
+        const {setOnglet} = useNavbar() 
+        //page actuelle
+        useEffect(()=>{setOnglet('connexion')})
+        //navigation
+        const route = useNavigate()
+
+        //uptdate location
+        const {pathname} = useLocation()
+        //useNavbar
+        const {setLocation} = useNavbar()
+        useEffect(()=>{setLocation(pathname)})
+        
+        console.log("location sur connexion : ", location)
+         
    return (<>
         <style>
             {`    
@@ -172,7 +192,10 @@ const Connexion = () => {
                 </form>
 
                 <p className="signup">
-                    Pas de compte ? <a href="#">S’inscrire</a>
+                    Pas de compte ? <a 
+                    href=""
+                    onClick={()=>route('/inscription')}
+                    >S’inscrire</a>
                     
                 </p>
             </div>
