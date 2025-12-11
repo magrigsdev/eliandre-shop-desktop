@@ -1,10 +1,10 @@
 import  { useEffect } from 'react'
 import { useNavbar } from '../hooks/useNavbar'
-import { useNavigate } from 'react-router-dom'
 
-export const Categorie = () => {
-   
+const Categorie = () => { 
+  const {setOnglet} =  useNavbar()
 
+  useEffect(()=>{setOnglet('categorie');})
     
   return (
     <div>
@@ -12,5 +12,5 @@ export const Categorie = () => {
     </div>
   )
 }
-
+export default Categorie
 
