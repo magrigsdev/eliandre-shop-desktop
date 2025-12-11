@@ -58,7 +58,7 @@ const Inscription = () => {
                             <div className="buttons">
                                 <button 
                                     className="save-btn"
-                                    onClick={()=>console.log("restaure columns")}
+                                    //onClick={()=>console.log("restaure columns")}
                                     >Enregistrer</button>
                                 <button className="back-btn">Retour</button>
                             </div>

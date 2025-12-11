@@ -1,10 +1,16 @@
 
-import React from 'react'
+import  { useEffect } from 'react'
+import { useNavbar } from '../hooks/useNavbar'
 
  const Deconnexion = () => {
+  //call onglet from custom hook
+  const {setOnglet} =  useNavbar()
+  //update onglet for current page name
+  useEffect(()=>{setOnglet('deconnexion'); })
+
   return (
     <div>
-      deconnexion page
+      deconnexion page 
     </div>
   )
 }
