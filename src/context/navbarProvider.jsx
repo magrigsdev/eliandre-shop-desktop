@@ -8,6 +8,7 @@ export const NavbarProvider  = ({children}) => {
     //init variable
     const [onglet, setOnglet] = useState([])
     const [location, setLocation] = useState([])
+    const [connected, setConnected] = useState(false)
     
     
 
@@ -24,15 +25,18 @@ export const NavbarProvider  = ({children}) => {
         (component) => DisplayIfNotWelcome(location,component), [location]
     )
 
+
      
     return (
         <NavbarContext.Provider 
             value={{
                     //variables
-                    onglet,  
-                    setOnglet,
+                    onglet,
                     location,
+                    connected,
+                    setConnected,
                     setLocation,
+                    setOnglet,
 
                     //functions
                     ongletManager,
