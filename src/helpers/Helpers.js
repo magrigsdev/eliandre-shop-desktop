@@ -9,7 +9,7 @@ export const handleRoute = (e, path, route) => {
     route(path)        
 }
 //display if not welcome page
-export const DisplayIfNotWelcome = (path, Component) =>{
+export const DisplayIfNotWelcome = (path, Component) => {
 
     // return path !== '/' ? Component : null
     //connexion et welcome on affiche rien 
@@ -26,3 +26,6 @@ export const DisplayIfNotWelcome = (path, Component) =>{
     }
     
 }
+
+
+
