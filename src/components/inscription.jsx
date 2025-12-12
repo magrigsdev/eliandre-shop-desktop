@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavbar } from "../hooks/useNavbar";
 import "../styles/inscription.css";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -18,6 +18,16 @@ const Inscription = () => {
     useEffect(()=>{setLocation(pathname)})
 
     // console.log("location sur inscription : ", location)
+
+    // FORM MANAGEMENT *********
+    //init formdata
+    const [formData, setFormData] = useState({
+        nom:'', prenom:'',
+        telephone:'', password:'',
+        confirmPassword:''
+    })
+    //errors
+    const [errors, setErrors] = useState([])
     
     return (<>
                 <div className="page-container">
@@ -35,19 +45,19 @@ const Inscription = () => {
                         <div className="left-form">
 
                             <label>Nom</label>
-                            <input type="text" placeholder="banzouzi" required />
+                            <input type="text" placeholder="nom" required />
 
-                            <span className="error">Nom est requis</span>
+                            { errors.nom && <span className="error">{errors.nom} </span>}
 
                             <label>Prénom</label>
-                            <input type="text" placeholder="andréa" required/>
+                            <input type="text" placeholder="prénom" required/>
 
-                            <span className="error">Prénom est requis</span>
+                             { errors.prenom && <span className="error"> {errors.prenom} </span>}
 
                             <label>Téléphone</label>
-                            <input type="text" placeholder="Entrer le numéro" required/>
+                             <input type="text" placeholder="numéro" required/>
 
-                            <span className="error">Le numéro est requis</span>
+                            { errors.telephone && <span className="error">{errors.telephone} </span>}
 
                         </div>
 
@@ -56,12 +66,12 @@ const Inscription = () => {
                             <label>Mot de passe</label>
                             <input type="password" placeholder="••••••••" required/>
 
-                            <span className="error">Mot de passe requis</span>
+                            {errors.password && <span className="error"> {errors.password} </span>}
 
                             <label>Confirmation de mot de passe</label>
                             <input type="password" placeholder="••••••••" required />
 
-                            <span className="error">Les mots de passe ne correspondent pas</span>
+                            {errors.confirmPassword && <span className="error"> {errors.confirmPassword} </span>}
 
                             <div className="buttons">
                                 <button 
@@ -71,8 +81,7 @@ const Inscription = () => {
                                 <button className="back-btn">Retour</button>
                             </div>
                             <div>
-                                <p className="down_text">Déjà un compte ?   
-                                <a className="down_text_sub"
+                                <p className="down_text"> Déjà un compte ? <a className="down_text_sub"
                                     href=""
                                     onClick={()=>route('/connexion')}
                                     >  Se connecter</a>
