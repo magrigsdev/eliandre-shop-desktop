@@ -10,7 +10,7 @@ import { useFetch } from "./useFetch"
  */
 export const useSubscribe = () => {
     const {send, loading, error, data} = useFetch()
-    const url = ''
+    const url = 'http://localhost:3000/api/subscribe'
 
     const subcribe =  async (formData) => {
         const res =  await send({
