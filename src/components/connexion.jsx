@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useNavbar } from "../hooks/useNavbar"
 import { useLocation, useNavigate } from "react-router-dom"
 import "../styles/connexion.css"
@@ -18,7 +18,14 @@ const Connexion = () => {
         //useNavbar
         const {setLocation} = useNavbar()
         useEffect(()=>{setLocation(pathname)})
+
+        //formulaire
+        //init 
+        const [form, setForm] = useState({email:'', password:''})
         
+         const handleOnsubmit = () => {
+            console.log("submit")
+         }
          
    return (<>
 
@@ -38,7 +45,7 @@ const Connexion = () => {
                     à l'élégance et à la beauté.
                 </p>
 
-                <form className="form">
+                <form className="form" method="post">
                     <label>Nom</label>
                     <input type="email" placeholder="Email" />
                     <span className="error">Email incorrect ou invalid</span>
@@ -47,7 +54,9 @@ const Connexion = () => {
                     <input type="password" placeholder="••••••••" />
                     <span className="error">Email incorrect ou invalid</span>
 
-                    <button type="submit">Commencer</button>
+                    <button 
+                    onClick={()=>handleOnsubmit}
+                    type="submit">Connexion</button>
                 </form>
 
                 <p className="signup">

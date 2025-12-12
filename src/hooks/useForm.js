@@ -1,5 +1,5 @@
 
-const useForm = () => {
+export const useForm = () => {
   return (
     <div>
       
@@ -7,4 +7,4 @@ const useForm = () => {
   )
 }
 
-export default useForm
+
