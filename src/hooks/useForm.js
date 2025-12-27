@@ -12,7 +12,7 @@ export const useForm = () => {
                 if(!formData?.email?.trim()){newError.email = "L'email est requis."} 
                 else if(!emailValidate(formData.email)){newError.email = "L'email est invalide"}
                 
-                // //vérifie le champs mot de passe vide
+                // vérify le champs mot de passe vide
                  if (!formData?.password?.trim()) {
                     newError.password = 'Le mot de passe est requis.';
                     } 
@@ -59,7 +59,20 @@ export const useForm = () => {
             })
     }, []) // no dependencies, stable function
 
-        return {onFormValidation, handleOnChange}
+    const columnValidate = useCallback((field, name)=>{
+        let error= ''
+        //telephone
+        if(name === 'telephone' && name){
+            if(field.length > 0 && field.length >10 ){ error = name + 'doit contenir 10 chiffres'}
+        }
+        //another columns
+        if(field ){
+            if(field.trim() === ''){error = name + ' is required'}
+            else error = name + ' is required'
+        }
+        return error
+    }, [])
+    return {onFormValidation, handleOnChange, columnValidate}
 }
 
 const emailValidate = (email) => {

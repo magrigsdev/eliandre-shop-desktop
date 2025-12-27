@@ -3,14 +3,16 @@ import { useNavbar } from "../hooks/useNavbar";
 import "../styles/inscription.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import {useForm} from "../hooks/useForm.js";
+import {useFetch} from "../hooks/useFetch.js";
 
 const Inscription = () => {
     //init le hook
     const {setOnglet} = useNavbar() // set current page
-    const {handleOnChange, onFormValidation} = useForm() //for use form
+    const {handleOnChange, onFormValidation, columnValidate} = useForm() //for use form
     const {setLocation} = useNavbar() // for navbar
     const {pathname} = useLocation() // update location
-    const route = useNavigate() // route manage
+    //const route = useNavigate() // route manage
+    const {send, loading, error} = useFetch()
 
     //init variables*
     const [formData, setFormData] = useState({
@@ -20,7 +22,7 @@ const Inscription = () => {
         password:'',
         confirmPassword:''
     })
-    const [errors, setErrors] = useState([]) //erreors
+    const [errors, setErrors] = useState([]) //errors
 
     //useEffect
     useEffect(()=>{
@@ -29,15 +31,18 @@ const Inscription = () => {
     },[pathname,setOnglet, setLocation])
 
     // FORM MANAGEMENT *********
-    const validation = onFormValidation(formData,setErrors)
+
     //init formData
 
-    //errors
-
     const onSubmit = (e) => {
+
         e.preventDefault()
+        //columnValidate(formData.nom) !== '' ?
+
         console.log(formData)
-        const submit = validation
+        const result = onFormValidation(formData, setErrors)
+        console.log(result)
+
 
     }
     //console.log(formData) onFormValidation
@@ -78,7 +83,7 @@ const Inscription = () => {
                              { errors.prenom && <span className="error"> {errors.prenom} </span>}
 
                             <label>Téléphone</label>
-                             <input type="text"
+                             <input type="number"
                                     placeholder="numéro"
                                     value={formData.telephone}
                                     onChange={(e)=>handleOnChange('telephone', e.target.value, setFormData, setErrors)}
