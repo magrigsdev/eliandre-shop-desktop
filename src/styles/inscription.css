@@ -16,6 +16,7 @@ body {
 /* ---------- HEADER ---------- */
 .page-container {
   width: 100%;
+  margin-bottom: 50px;
 }
 
 .header {
@@ -135,7 +136,7 @@ input:focus {
   text-decoration: none;
   font-weight: 700;
 }
-.down_text_sub a:hover 
+/* .down_text_sub a:hover 
 {
-  text-decoration: underline;
-}
+  text-decoration: none;
+} */

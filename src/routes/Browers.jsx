@@ -9,7 +9,6 @@ import Categorie  from "../components/categorie"
 import Panier from "../components/panier"
 import Footer from "../layouts/footer"
 import { useNavbar } from "../hooks/useNavbar"
-import Test from "../components/test"
 
 
 export const Browers = ()=> {

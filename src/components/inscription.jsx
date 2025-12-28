@@ -1,24 +1,53 @@
-import { useEffect } from "react";
+import { useEffect, useState} from "react";
 import { useNavbar } from "../hooks/useNavbar";
 import "../styles/inscription.css";
 import { useLocation, useNavigate } from "react-router-dom";
+import {useForm} from "../hooks/useForm.js";
+import {useFetch} from "../hooks/useFetch.js";
 
 const Inscription = () => {
     //init le hook
-    const {setOnglet} = useNavbar()
-    //page actuelle
-    useEffect(()=>{setOnglet('inscription')})
-    //navigation
-    const route = useNavigate()
+    const {setOnglet} = useNavbar() // set current page
+    const {handleOnChange, onFormValidation, columnValidate} = useForm() //for use form
+    const {setLocation} = useNavbar() // for navbar
+    const {pathname} = useLocation() // update location
+    //const route = useNavigate() // route manage
+    const {send, loading, error} = useFetch()
 
-    //uptdate location
-    const {pathname} = useLocation() 
-    //useNavbar
-    const {setLocation} = useNavbar()
-    useEffect(()=>{setLocation(pathname)})
+    //init variables*
+    const [formData, setFormData] = useState({
+        nom:'',
+        prenom:'',
+        telephone:'',
+        password:'',
+        confirmPassword:''
+    })
+    const [errors, setErrors] = useState([]) //errors
 
-    // console.log("location sur inscription : ", location)
-    
+    //useEffect
+    useEffect(()=>{
+        setLocation(pathname);
+        setOnglet('inscription')
+    },[pathname,setOnglet, setLocation])
+
+    // FORM MANAGEMENT *********
+
+    //init formData
+
+    const onSubmit = (e) => {
+
+        e.preventDefault()
+        //columnValidate(formData.nom) !== '' ?
+
+        console.log(formData)
+        const result = onFormValidation(formData, setErrors)
+        console.log(result)
+
+
+    }
+    //console.log(formData) onFormValidation
+
+
     return (<>
                 <div className="page-container">
 
@@ -35,52 +64,70 @@ const Inscription = () => {
                         <div className="left-form">
 
                             <label>Nom</label>
-                            <input type="text" placeholder="banzouzi" required />
+                            <input type="text"
+                                   value={formData.nom}
+                                   onChange={(e)=>handleOnChange('nom',e.target.value,setFormData, setErrors)}
+                                   placeholder="nom"
+                                   required />
 
-                            <span className="error">Nom est requis</span>
+                            { errors.nom && <span className="error">{errors.nom} </span>}
 
                             <label>Prénom</label>
-                            <input type="text" placeholder="andréa" required/>
+                            <input type="text"
+                                   placeholder="prénom"
+                                   value={formData.prenom}
+                                   onChange={(e)=>handleOnChange('prenom', e.target.value, setFormData, setErrors)}
+                                   required
+                            />
 
-                            <span className="error">Prénom est requis</span>
+                             { errors.prenom && <span className="error"> {errors.prenom} </span>}
 
                             <label>Téléphone</label>
-                            <input type="text" placeholder="Entrer le numéro" required/>
+                             <input type="number"
+                                    placeholder="numéro"
+                                    value={formData.telephone}
+                                    onChange={(e)=>handleOnChange('telephone', e.target.value, setFormData, setErrors)}
+                                    required/>
 
-                            <span className="error">Le numéro est requis</span>
+                            { errors.telephone && <span className="error">{errors.telephone} </span>}
 
                         </div>
 
                         <div className="right-form">
 
                             <label>Mot de passe</label>
-                            <input type="password" placeholder="••••••••" required/>
+                            <input type="password" placeholder="••••••••" required
+                            value={formData.password}
+                            onChange={(e)=>handleOnChange('password', e.target.value, setFormData, setErrors)}/>
 
-                            <span className="error">Mot de passe requis</span>
+                            {errors.password && <span className="error"> {errors.password} </span>}
 
                             <label>Confirmation de mot de passe</label>
-                            <input type="password" placeholder="••••••••" required />
+                            <input type="password"
+                                   placeholder="••••••••"
+                                   value={formData.confirmPassword}
+                                   onChange={(e)=>handleOnChange('confirmPassword', e.target.value, setFormData, setErrors)}
+                                   required
+                            />
 
-                            <span className="error">Les mots de passe ne correspondent pas</span>
+                            {errors.confirmPassword && <span className="error"> {errors.confirmPassword} </span>}
 
                             <div className="buttons">
-                                <button 
+                                <button
                                     className="save-btn"
-                                    //onClick={()=>console.log("restaure columns")}
+                                    onClick={(e)=>{ onSubmit(e)}}
                                     >Enregistrer</button>
                                 <button className="back-btn">Retour</button>
                             </div>
                             <div>
-                                <p className="down_text">Déjà un compte ?   
-                                <a className="down_text_sub"
+                                <p className="down_text"> Déjà un compte ? <a className="down_text_sub"
                                     href=""
-                                    onClick={()=>route('/connexion')}
-                                    >  Se connecter</a>
+                                    onClick={()=>{console.log('retours se connecter')}}>  Se connecter</a>
                                 </p>
                             </div>
 
                         </div>
-                        
+
 
                     </div>
 
