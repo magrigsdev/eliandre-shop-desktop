@@ -4,6 +4,7 @@ import bienvenue from '../assets/bienvenue.jpg'
 import { useEffect } from 'react'
 import { useNavbar } from '../hooks/useNavbar'
 import {ShoppingCart} from "lucide-react";
+import {Boutton} from "./boutton.jsx";
 
 const Bienvenue =  () => {
     const route = useNavigate()
@@ -15,6 +16,9 @@ const Bienvenue =  () => {
 
     //test
     // console.log("page welcome", location)
+    const go = (pathname) => {
+
+    }
     
     return (
         <>
@@ -35,10 +39,7 @@ const Bienvenue =  () => {
                         <img src={bienvenue} alt="" />
                     </div>
                     <div className="flex justify-center !mt-4">
-                        <button
-                            className="w-100 text-teal-600 items-center justify-center  border-teal"
-                            type="button"
-                            onClick={()=>route('./connexion')}> Commencez</button>
+                        <Boutton value='Commencez' size='100' onclick={()=>route('./connexion')}/>
                     </div>
                 </div>
             </div>
