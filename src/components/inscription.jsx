@@ -4,6 +4,7 @@ import "../styles/inscription.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import {useForm} from "../hooks/useForm.js";
 import {useFetch} from "../hooks/useFetch.js";
+import bienvenue from "../assets/bienvenue.jpg";
 
 const Inscription = () => {
     //init le hook
@@ -49,7 +50,60 @@ const Inscription = () => {
 
 
     return (<>
-                <div className="page-container">
+        <div className="flex justify-center items-center bg-white w-screen" >
+            <div className="grid grid-flows-row auto-rows-max">
+
+                {/**  bloc    ***/}
+                <div className="flex justify-start !mb-2 ">
+                    {/**  bloc 1 logo and title   ***/}
+                    <div className="flex flex-start gap-x-6 ">
+                        <div>
+                            <img
+                                src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png"
+                                alt="EliandreShop Logo"
+                                className="img w-20 h-20" />
+                        </div>
+
+
+                        <div className="mt-2 w-180 gap-x-2 ">
+                            <h2 className=" text-2xl font-bold">Bienvenue sur Eliandre shop</h2>
+                            <p className="text-base">Créez votre profil pour découvrir nos perruques, conseils beauté et nouveautés tendance.</p>
+                        </div>
+
+                    </div>
+
+                </div>
+                {/**  bloc 2 subscribe columns  ***/}
+
+                <div className="flex flex-col  rounded-2xl border-gray-300 w-200  border-1 !p-10">
+                    <div className="flex justify-center ">
+
+                        <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png"
+                             alt="EliandreShop Logo"
+                             className="img w-20 h-20" />
+                    </div>
+                    <div className="flex justify-center"> <h2>Bienvenue sur Eliandre shop</h2>
+                    </div>
+                    <div className="flex justify-center">
+                        <p className="text-3xs">Découvrez Eliandre Shop, votre boutique en ligne dédiée à l'élégance et à la beauté.</p>
+                    </div>
+                    <div className="flex justify-center">
+                        <img src={bienvenue} alt="" />
+                    </div>
+                    <div className="flex justify-center !mt-4">
+                        <button
+                            className="w-100 text-teal-600 items-center justify-center  border-teal"
+                            type="button"
+                            onClick={()=>route('./connexion')}> Commencez</button>
+                    </div>
+                </div>
+                </div>
+
+            </div>
+
+        {/* subscribe columns*/}
+
+            <div className="page-container">
 
                     <div className="header">
                         <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" alt="Eliandre Shop Logo" className="logo" />
