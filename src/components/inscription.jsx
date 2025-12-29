@@ -9,7 +9,7 @@ import {Boutton} from "./boutton.jsx";
 const Inscription = () => {
     //init le hook
     const {setOnglet} = useNavbar() // set current page
-    const {handleOnChange, onFormValidation, columnValidate} = useForm() //for use form
+    const {handleOnChange, onEmailAndPasswordValidation, columnValidate} = useForm() //for use form
     const {setLocation} = useNavbar() // for navbar
     const {pathname} = useLocation() // update location
     //const route = useNavigate() // route manage
@@ -21,7 +21,8 @@ const Inscription = () => {
         prenom:'',
         telephone:'',
         password:'',
-        confirmPassword:''
+        confirmPassword:'',
+        email:'',
     })
     const [errors, setErrors] = useState([]) //errors
 
@@ -32,19 +33,23 @@ const Inscription = () => {
     },[pathname,setOnglet, setLocation])
 
     // FORM MANAGEMENT *********
+    // 1.checking field
 
-    //init formData
+
+
 
     const onSubmit = (e) => {
-
         e.preventDefault()
         //columnValidate(formData.nom) !== '' ?
 
         console.log(formData)
-        const result = onFormValidation(formData, setErrors)
-        console.log(result)
 
 
+
+    }
+    const onCancel = (e) => {
+
+        console.debug('Cancel')
     }
     //console.log(formData) onFormValidation
 
@@ -78,21 +83,69 @@ const Inscription = () => {
                             <div className="flex flex-col  rounded-2xl border-gray-300 w-200  border-1 !p-10">
 
                                 <div className="flex justify-start gap-x-5 !mb-4">
-                                    <Field name="Nom"  width="w-60"/>
-                                    <Field name="Mot de passe"  width="w-60"/>
+                                    <Field
+                                            placeholder='Nom'
+                                            type="text"
+                                            name="Nom"
+                                           width="w-60"
+                                           errorMessage={errors.nom}
+                                           value={formData.nom}
+                                           onChange={(e) => setFormData({...formData, nom: e.target.value})}
+                                    />
+                                    <Field
+                                        type="password"
+                                        placeholder="••••••••"
+                                        name="Mot de passe"
+                                        width="w-60"
+                                        value={formData.password}
+                                        errorMessage={errors.password}
+                                        onChange={(e) => setFormData({...formData, password: e.target.value})}
+                                    />
                                 </div>
 
                                 <div className="flex justify-start gap-x-4 !mb-4">
-                                    <Field name="Prénom"  width="w-60"/>
-                                    <Field name="Confirmation de mot de passe"  width="w-60"/>
+                                    <Field
+                                        type="text"
+                                        placeholder='prénom'
+                                        name="Prénom"
+                                        width="w-60"
+                                        errorMessage={errors.prenom}
+                                        value={formData.prenom}
+                                        onChange={(e) => setFormData({...formData, prenom: e.target.value})}
+                                    />
+                                    <Field
+                                        type="password"
+                                        name="Confirmation de mot de passe"
+                                        width="w-60"
+                                        placeholder='••••••••'
+                                        errorMessage={errors.confirmPassword}
+                                        value={formData.confirmPassword}
+                                        onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}/>
                                 </div>
 
-                                <div className="flex justify-start !mb-4">
-                                    <Field name="Téléphone"  width="w-60"/>
+                                <div className="flex justify-start !mb-4 gap-x-4">
+                                    <Field
+                                        placeholder='telephone'
+                                        type="number"
+                                        name="Téléphone"
+                                        width="w-60"
+                                        errorMessage={errors.telephone}
+                                        value={formData.telephone}
+                                        onChange={(e) => setFormData({...formData, telephone: e.target.value})}
+                                    />
+                                    <Field
+                                        placeholder='email'
+                                        type="email"
+                                        name="Email"
+                                        value={formData.email}
+                                        errorMessage={errors.email}
+                                        width="w-60"
+                                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                                    />
                                 </div>
                                 <div className="flex justify-start !mb-4 gap-x-16">
-                                    <Boutton value='Effacer' size='50' restore='true'/>
-                                    <Boutton value='Enregistrer' size='50'/>
+                                    <Boutton value='Effacer' size='50' restore='true' onclick={onCancel}/>
+                                    <Boutton value='Enregistrer' size='50' onclick={onSubmit}/>
                                 </div>
 
                             </div>

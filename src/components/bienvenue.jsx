@@ -16,10 +16,7 @@ const Bienvenue =  () => {
 
     //test
     // console.log("page welcome", location)
-    const go = (pathname) => {
 
-    }
-    
     return (
         <>
             <div className="flex justify-center items-center bg-white w-screen" >

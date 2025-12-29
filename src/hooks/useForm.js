@@ -4,7 +4,7 @@ import { useCallback } from "react"
 export const useForm = () => {
         
     //validation fields
-    const onFormValidation = useCallback((formData, setErrors) => {
+    const onEmailAndPasswordValidation = useCallback((formData, setErrors) => {
         
                 //VARIABLES INIT
                 const newError = {}
@@ -72,7 +72,7 @@ export const useForm = () => {
         }
         return error
     }, [])
-    return {onFormValidation, handleOnChange, columnValidate}
+    return {onEmailAndPasswordValidation, handleOnChange, columnValidate}
 }
 
 const emailValidate = (email) => {
