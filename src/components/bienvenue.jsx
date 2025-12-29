@@ -40,7 +40,6 @@ const Bienvenue =  () => {
                 </div>
             </div>
         </>
-
     )
 }
 export default Bienvenue
