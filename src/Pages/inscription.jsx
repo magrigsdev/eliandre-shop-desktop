@@ -1,10 +1,10 @@
 import { useEffect, useState} from "react";
-import { useNavbar } from "../hooks/useNavbar";
+import { useNavbar } from "../hooks/useNavbar.js";
 import { useLocation, useNavigate } from "react-router-dom";
 import {useForm} from "../hooks/useForm.js";
 import {useFetch} from "../hooks/useFetch.js";
-import {Field} from "./field.jsx";
-import {Boutton} from "./boutton.jsx";
+import {Field} from "../components/field.jsx";
+import {Boutton} from "../components/boutton.jsx";
 
 const Inscription = () => {
     //init le hook
@@ -19,9 +19,8 @@ const Inscription = () => {
     const {setLocation} = useNavbar() // for navbar
     const {pathname} = useLocation() // update location
     //const route = useNavigate() // route manage
-    const {send, loading, error} = useFetch()
-    //erreur taille
-    const error_size = null
+    const {get, send, loading, error, data} = useFetch() // fetch api
+
 
     //init variables*
     const [formData, setFormData] = useState({
@@ -70,11 +69,17 @@ const Inscription = () => {
         }
         else console.log("non validaté")
 
+
+
     }
     const onCancel = (e) => {
         console.debug('Cancel')
     }
-    //console.log(formData) onFormValidation
+    //test de connection
+    useEffect(() => {
+        const url = 'http://192.168.1.14:3000/api/test-db'
+        const TestDB =  get({url});
+    }, [])
 
     return (<>
                 <div className="flex justify-center items-center bg-white w-screen" >

@@ -2,9 +2,9 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import bienvenue from '../assets/bienvenue.jpg'
 
 import { useEffect } from 'react'
-import { useNavbar } from '../hooks/useNavbar'
+import { useNavbar } from '../hooks/useNavbar.js'
 import {ShoppingCart} from "lucide-react";
-import {Boutton} from "./boutton.jsx";
+import {Boutton} from "../components/boutton.jsx";
 
 const Bienvenue =  () => {
     const route = useNavigate()
