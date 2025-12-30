@@ -20,6 +20,8 @@ const Inscription = () => {
     const {pathname} = useLocation() // update location
     //const route = useNavigate() // route manage
     const {send, loading, error} = useFetch()
+    //erreur taille
+    const error_size = null
 
     //init variables*
     const [formData, setFormData] = useState({
@@ -61,14 +63,15 @@ const Inscription = () => {
         //2. check password
         passwordValidation(formData.password) !=='' ? error.password = passwordValidation(formData.password) : ''
         confirmPasswordValidation(formData.password,formData.confirmPassword) !=='' ? error.confirmPassword = confirmPasswordValidation(formData.password,formData.confirmPassword) : ''
-
-        console.log(formData)
-        console.log(' les errors ',error)
-
+        setErrors(error)
+        //validate
+        if(errors === null) {
+            console.log("validaté ", errors)
+        }
+        else console.log("non validaté")
 
     }
     const onCancel = (e) => {
-
         console.debug('Cancel')
     }
     //console.log(formData) onFormValidation

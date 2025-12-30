@@ -16,8 +16,8 @@ export const Field = ({value,name, width='w-50', errorMessage, onChange, type, p
                                     : "border-gray-300 focus:ring-teal-500"
                     }`}
                  required />
-                {errorMessage && <div className="text-red-500">{errorMessage}</div>}
-                <span> error message : {errorMessage}</span>
+                {errorMessage  && <div className=" text-sm !mt-1 text-red-500">{errorMessage}</div>}
+
         </div>)
 }
 
