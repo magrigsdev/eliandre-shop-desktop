@@ -17,6 +17,7 @@ export const Field = ({value,name, width='w-50', errorMessage, onChange, type, p
                     }`}
                  required />
                 {errorMessage && <div className="text-red-500">{errorMessage}</div>}
+                <span> error message : {errorMessage}</span>
         </div>)
 }
 

@@ -9,7 +9,7 @@ import {Boutton} from "./boutton.jsx";
 const Inscription = () => {
     //init le hook
     const {setOnglet} = useNavbar() // set current page
-    const {handleOnChange, onEmailAndPasswordValidation, columnValidate} = useForm() //for use form
+    const {emailValidate, columnValidate} = useForm() //for use form
     const {setLocation} = useNavbar() // for navbar
     const {pathname} = useLocation() // update location
     //const route = useNavigate() // route manage
@@ -24,7 +24,8 @@ const Inscription = () => {
         confirmPassword:'',
         email:'',
     })
-    const [errors, setErrors] = useState([]) //errors
+    const [errors, setErrors] = useState({
+    }) //errors
 
     //useEffect
     useEffect(()=>{
@@ -33,17 +34,28 @@ const Inscription = () => {
     },[pathname,setOnglet, setLocation])
 
     // FORM MANAGEMENT *********
-    // 1.checking field
-
-
 
 
     const onSubmit = (e) => {
+        const error = {}
+        //const validate = false
         e.preventDefault()
         //columnValidate(formData.nom) !== '' ?
 
-        console.log(formData)
+        // 1.checking fields validation
+        //nom
+        columnValidate(formData.nom, 'nom') !=='' ? error.nom = columnValidate(formData.nom, 'nom') : ''
+        //telephone
+        columnValidate(formData.nom, 'telephone') !=='' ? error.telephone = columnValidate(formData.telephone, 'telephone') : ''
+        //prenom
+        columnValidate(formData.prenom, 'prenom') !=='' ? error.prenom = columnValidate(formData.prenom, 'prenom') : ''
+        //email
+        emailValidate(formData.email) !=='' ? error.email = emailValidate(formData.email) : ''
 
+        //2. check
+
+        console.log(formData)
+        console.log(' les errors ',error)
 
 
     }

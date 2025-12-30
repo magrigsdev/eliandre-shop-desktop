@@ -4,13 +4,11 @@ import { useCallback } from "react"
 export const useForm = () => {
         
     //validation fields
-    const onEmailAndPasswordValidation = useCallback((formData, setErrors) => {
+    const PasswordValidation = useCallback((formData, setErrors) => {
         
                 //VARIABLES INIT
                 const newError = {}
-                //email validation
-                if(!formData?.email?.trim()){newError.email = "L'email est requis."} 
-                else if(!emailValidate(formData.email)){newError.email = "L'email est invalide"}
+
                 
                 // vérify le champs mot de passe vide
                  if (!formData?.password?.trim()) {
@@ -58,24 +56,37 @@ export const useForm = () => {
                 return errors // else no change
             })
     }, []) // no dependencies, stable function
-
     const columnValidate = useCallback((field, name)=>{
         let error= ''
         //telephone
         if(name === 'telephone' && name){
-            if(field.length > 0 && field.length >10 ){ error = name + 'doit contenir 10 chiffres'}
-        }
-        //another columns
-        if(field ){
-            if(field.trim() === ''){error = name + ' is required'}
+            if(field.length > 0 && field.length <10 ){
+                error = name + ' doit contenir  10 chiffres'
+            }
             else error = name + ' is required'
         }
-        return error
+        //another columns.
+        if(name && field.trim() === ''){
+             error = name + ' is required'
+        }
+        else if(!field ){error = name + ' is required'}
+
+        return error //return
     }, [])
-    return {onEmailAndPasswordValidation, handleOnChange, columnValidate}
+    //email validation
+    const emailValidate = useCallback((email)=>{
+        let error = ''
+        //email validation
+        if(!email?.trim()){error = "L'email is required."}
+        else if(!emailVal(email)){error = "L'email est invalide"}
+        return error
+    },[])
+
+    //
+    return {PasswordValidation, handleOnChange, columnValidate, emailValidate}
 }
 
-const emailValidate = (email) => {
+const emailVal = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(String(email).toLowerCase());
 }

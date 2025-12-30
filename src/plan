@@ -1,0 +1,4 @@
+ 1. verifications des champs et affichage  sur la console des erreurs (nom, prenom, telephone)
+ 2. verifications des champs et affichage sur la console des erreurs de l'email
+ 3. verifications des champs et affichage sur la console des erreurs (password, confirmPassword)
+ 4.affichage des errors à l'ecran
