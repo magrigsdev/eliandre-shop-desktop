@@ -9,7 +9,13 @@ import {Boutton} from "./boutton.jsx";
 const Inscription = () => {
     //init le hook
     const {setOnglet} = useNavbar() // set current page
-    const {emailValidate, columnValidate} = useForm() //for use form
+    const {
+        emailValidate,
+        columnValidate,
+        passwordValidation,
+        confirmPasswordValidation
+    } = useForm() //for use form
+
     const {setLocation} = useNavbar() // for navbar
     const {pathname} = useLocation() // update location
     //const route = useNavigate() // route manage
@@ -52,7 +58,9 @@ const Inscription = () => {
         //email
         emailValidate(formData.email) !=='' ? error.email = emailValidate(formData.email) : ''
 
-        //2. check
+        //2. check password
+        passwordValidation(formData.password) !=='' ? error.password = passwordValidation(formData.password) : ''
+        confirmPasswordValidation(formData.password,formData.confirmPassword) !=='' ? error.confirmPassword = confirmPasswordValidation(formData.password,formData.confirmPassword) : ''
 
         console.log(formData)
         console.log(' les errors ',error)
