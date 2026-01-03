@@ -19,7 +19,7 @@ const Inscription = () => {
     const {setLocation} = useNavbar() // for navbar
     const {pathname} = useLocation() // update location
     //const route = useNavigate() // route manage
-    const {get, send, loading, error, data} = useFetch() // fetch api
+    const { send, error, data} = useFetch() // fetch api
 
 
     //init variables*
@@ -31,8 +31,24 @@ const Inscription = () => {
         confirmPassword:'',
         email:'',
     })
+
+    //initial formdata
+    const initialFormaData= {
+        nom:'',
+        prenom:'',
+        telephone:'',
+        password:'',
+        confirmPassword:'',
+        email:''}
+
+    const urls = {
+        'test_de_connexion' : 'http://192.168.1.14:3000/api/users/db',
+        'creation_user': 'http://192.168.1.14:3000/api/users',
+    }
+    const [users, setUsers] = useState({});
     const [errors, setErrors] = useState({
     }) //errors
+
 
     //useEffect
     useEffect(()=>{
@@ -40,66 +56,90 @@ const Inscription = () => {
         setOnglet('inscription')
     },[pathname,setOnglet, setLocation])
 
+    //test de connection.
+    useEffect(() => {
+
+        const TestDB =  send({
+            url: urls.test_de_connexion,
+            method: 'GET',
+        })
+        //console.log('test de DB',TestDB)
+    }, [])
+
     const onSubmit = (e) => {
         const error = {}
 
         //const validate = false
         e.preventDefault()
-        //columnValidate(formData.nom) !== '' ?
 
-        // 1.checking fields validation
+        // 1. CHECKING FIELDS VALIDATION
+
         //nom
         columnValidate(formData.nom, 'nom') !=='' ? error.nom = columnValidate(formData.nom, 'nom') : ''
+
         //telephone
         columnValidate(formData.telephone, 'telephone') !=='' ? error.telephone = columnValidate(formData.telephone, 'telephone') : ''
+
         //prenom
         columnValidate(formData.prenom, 'prenom') !=='' ? error.prenom = columnValidate(formData.prenom, 'prenom') : ''
+
         //email
         emailValidate(formData.email) !=='' ? error.email = emailValidate(formData.email) : ''
 
         //2. check password
         passwordValidation(formData.password) !=='' ? error.password = passwordValidation(formData.password) : ''
         confirmPasswordValidation(formData.password,formData.confirmPassword) !=='' ? error.confirmPassword = confirmPasswordValidation(formData.password,formData.confirmPassword) : ''
+
         setErrors(error)
-        //validate
 
+        //1.1- CHECKING
 
-        //verifié
-
-        if(Object.keys(errors).length === 0) {
+        if(Object.keys(error).length === 0) {
             console.log('validé')
-            const subscrib = send(urls, formData)
-            console.log("validaté ", errors)
-            console.log('subscrib data',subscrib)
-            console.log(' data',data)
+
+            const subscribe = send({
+                url: urls.creation_user,
+                method: 'POST',
+                body: {
+                    Nom: formData.nom,
+                    Prenom: formData.prenom,
+                    Telephone: formData.telephone,
+                    Password: formData.password,
+                    Email: formData.email,
+                },
+            })
+            //
+            /* if(!dataerror){
+                setUsers(subscribe)
+                console.log('users', users)
+            }
+            else{
+                console.error(subscribe)
+                console.log('error', subscribe.error)
+            } */
+
+            console.log('users ', data)
+            console.log(error)
             setFormData("")
             setErrors("")
 
         }
-        else console.log("non validaté")
-        console.log("valeurs du formulaire",formData)
-        console.log("valeurs de errors",errors)
+
 
     //setFormData("")
     //setErrors("")
     }
 
 
+
     const onCancel = (e) => {
-        console.debug('Cancel')
+        e.preventDefault();
+        setFormData({ ... initialFormaData})
     }
-    //test de connection.
-    useEffect(() => {
-        const url = 'http://192.168.1.14:3000/api/users/db'
-        const TestDB =  get({url});
-        console.log('test de connexion : ',TestDB)
-    }, [])
+
 
     // test inscription
-    useFetch(()=>{
-        const url = 'http://192.168.1.14:3000/api/users'
-        const send =send(formData)
-    }, [])
+
 
     return (<>
                 <div className="flex justify-center items-center bg-white w-screen" >
@@ -132,9 +172,9 @@ const Inscription = () => {
 
                                 <div className="flex justify-start gap-x-5 !mb-4">
                                     <Field
-                                            placeholder='Nom'
+                                            placeholder='nom'
                                             type="text"
-                                            name="Nom"
+                                            name="nom"
                                            width="w-60"
                                            errorMessage={errors.nom}
                                            value={formData.nom}
@@ -186,14 +226,14 @@ const Inscription = () => {
                                         name="Confirmation de mot de passe"
                                         width="w-60"
                                         placeholder='••••••••'
-                                        errorMessage={errors.confirmPassword}
+                                        errorMessage={errors.confirmPassword }
                                         value={formData.confirmPassword}
                                         onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}/>
                                 </div>
 
 
                                 <div className="flex justify-start !mb-4 gap-x-16">
-                                    <Boutton type='restore' value='Effacer' size='50' restore='true' />
+                                    <Boutton type='restore' value='Effacer' size='50' restore='true' onclick={onCancel} />
                                     <Boutton value='Enregistrer' size='50' onclick={onSubmit}/>
                                 </div>
 
