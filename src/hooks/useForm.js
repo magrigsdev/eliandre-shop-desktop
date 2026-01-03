@@ -67,20 +67,24 @@ export const useForm = () => {
             })
     }, []) // no dependencies, stable function
     //validation des colonnes
-    const columnValidate = useCallback((field, name)=>{
+    const columnValidate = useCallback((value, name)=>{
         let error= ''
+
         //telephone
         if(name === 'telephone' && name){
-            if(field.length > 0 && field.length <10 ){
+            if(!value?.trim()){
+                error = capitalizeWords(name) + ' est requise'
+            }
+            else if(!isValidPhone(value)){
                 error =  capitalizeWords(name) + ' doit contenir  10 chiffres'
             }
-            else error = capitalizeWords(name) + ' est requise'
         }
+
         //another columns.
-        if(name && field.trim() === ''){
+        if(name && !value?.trim()){
              error = capitalizeWords(name) + ' est requise'
         }
-        else if(!field ){error = capitalizeWords(name) + ' est requise'}
+        else if(!value ){error = capitalizeWords(name) + ' est requise'}
 
         return error //return
     }, [])
@@ -104,6 +108,10 @@ const emailVal = (email) => {
 //mettre la premiere lettre en majuscule
 const capitalizeWords = (str = "") => {
     return str.charAt(0).toUpperCase() + str.slice(1);
+}
+//valid
+const  isValidPhone = (phone) => {
+    return /^[0-9]{10}$/.test(phone);
 }
 
 

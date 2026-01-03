@@ -19,20 +19,20 @@ export const useFetch =() => {
    * @param {Object|null} [options.body=null] - Request body data (for POST, PUT, etc.)
    * @returns {Promise<Object|null>} The response data on success, or null on error
    */
-      const send = async ({ url , body = null}) => {
+    const send = async ({ url , body = null}) => {
           setLoading(true)
           setError(null)
-            const method = 'POST'
-
+        const method = 'POST'
+        //body = JSON.stringify(body)
           try {
-            const headers = {}
-            //axios
-            const res = await axios({method, url, data: body, headers})
-            setData(res.data)
-            return res.data
+                const headers = {'Content-Type': 'application/json'};
+                //axios
+                const res = await axios({method, url, data: body, headers})
+                setData(res.data)
+                return res.data
           } catch (error) {
-            setError(error.response?.data?.msg || 'Request failed');
-            return null;
+                setError(error.response?.data?.msg || 'Request failed');
+                return null;
           } finally{ setLoading(false)}
 
       }
@@ -41,12 +41,11 @@ export const useFetch =() => {
         setLoading(true)
         setError(null)
         const method = 'GET'
+        //body = JSON.stringify(body)
         //status
 
-
         try {
-
-            const headers = {}
+            const headers = {'Content-Type': 'application/json'};
             //axios
             const res = await axios({method, url, data: body, headers})
             setData(res.data)

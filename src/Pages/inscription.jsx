@@ -40,11 +40,9 @@ const Inscription = () => {
         setOnglet('inscription')
     },[pathname,setOnglet, setLocation])
 
-    // FORM MANAGEMENT *********
-
-
     const onSubmit = (e) => {
         const error = {}
+
         //const validate = false
         e.preventDefault()
         //columnValidate(formData.nom) !== '' ?
@@ -53,7 +51,7 @@ const Inscription = () => {
         //nom
         columnValidate(formData.nom, 'nom') !=='' ? error.nom = columnValidate(formData.nom, 'nom') : ''
         //telephone
-        columnValidate(formData.nom, 'telephone') !=='' ? error.telephone = columnValidate(formData.telephone, 'telephone') : ''
+        columnValidate(formData.telephone, 'telephone') !=='' ? error.telephone = columnValidate(formData.telephone, 'telephone') : ''
         //prenom
         columnValidate(formData.prenom, 'prenom') !=='' ? error.prenom = columnValidate(formData.prenom, 'prenom') : ''
         //email
@@ -64,21 +62,43 @@ const Inscription = () => {
         confirmPasswordValidation(formData.password,formData.confirmPassword) !=='' ? error.confirmPassword = confirmPasswordValidation(formData.password,formData.confirmPassword) : ''
         setErrors(error)
         //validate
-        if(errors === null) {
+
+
+        //verifié
+
+        if(Object.keys(errors).length === 0) {
+            console.log('validé')
+            const subscrib = send(urls, formData)
             console.log("validaté ", errors)
+            console.log('subscrib data',subscrib)
+            console.log(' data',data)
+            setFormData("")
+            setErrors("")
+
         }
         else console.log("non validaté")
+        console.log("valeurs du formulaire",formData)
+        console.log("valeurs de errors",errors)
 
-
-
+    //setFormData("")
+    //setErrors("")
     }
+
+
     const onCancel = (e) => {
         console.debug('Cancel')
     }
-    //test de connection
+    //test de connection.
     useEffect(() => {
-        const url = 'http://192.168.1.14:3000/api/test-db'
+        const url = 'http://192.168.1.14:3000/api/users/db'
         const TestDB =  get({url});
+        console.log('test de connexion : ',TestDB)
+    }, [])
+
+    // test inscription
+    useFetch(()=>{
+        const url = 'http://192.168.1.14:3000/api/users'
+        const send =send(formData)
     }, [])
 
     return (<>
@@ -121,18 +141,6 @@ const Inscription = () => {
                                            onChange={(e) => setFormData({...formData, nom: e.target.value})}
                                     />
                                     <Field
-                                        type="password"
-                                        placeholder="••••••••"
-                                        name="Mot de passe"
-                                        width="w-60"
-                                        value={formData.password}
-                                        errorMessage={errors.password}
-                                        onChange={(e) => setFormData({...formData, password: e.target.value})}
-                                    />
-                                </div>
-
-                                <div className="flex justify-start gap-x-4 !mb-4">
-                                    <Field
                                         type="text"
                                         placeholder='prénom'
                                         name="Prénom"
@@ -141,20 +149,12 @@ const Inscription = () => {
                                         value={formData.prenom}
                                         onChange={(e) => setFormData({...formData, prenom: e.target.value})}
                                     />
-                                    <Field
-                                        type="password"
-                                        name="Confirmation de mot de passe"
-                                        width="w-60"
-                                        placeholder='••••••••'
-                                        errorMessage={errors.confirmPassword}
-                                        value={formData.confirmPassword}
-                                        onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}/>
-                                </div>
 
+                                </div>
                                 <div className="flex justify-start !mb-4 gap-x-4">
                                     <Field
                                         placeholder='telephone'
-                                        type="number"
+                                        type="numerique"
                                         name="Téléphone"
                                         width="w-60"
                                         errorMessage={errors.telephone}
@@ -171,8 +171,29 @@ const Inscription = () => {
                                         onChange={(e) => setFormData({...formData, email: e.target.value})}
                                     />
                                 </div>
+                                <div className="flex justify-start gap-x-4 !mb-4">
+                                    <Field
+                                        type="password"
+                                        placeholder="••••••••"
+                                        name="Mot de passe"
+                                        width="w-60"
+                                        value={formData.password}
+                                        errorMessage={errors.password}
+                                        onChange={(e) => setFormData({...formData, password: e.target.value})}
+                                    />
+                                    <Field
+                                        type="password"
+                                        name="Confirmation de mot de passe"
+                                        width="w-60"
+                                        placeholder='••••••••'
+                                        errorMessage={errors.confirmPassword}
+                                        value={formData.confirmPassword}
+                                        onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}/>
+                                </div>
+
+
                                 <div className="flex justify-start !mb-4 gap-x-16">
-                                    <Boutton value='Effacer' size='50' restore='true' onclick={onCancel}/>
+                                    <Boutton type='restore' value='Effacer' size='50' restore='true' />
                                     <Boutton value='Enregistrer' size='50' onclick={onSubmit}/>
                                 </div>
 
@@ -181,8 +202,6 @@ const Inscription = () => {
 
                     </div>
                 </div>
-
-
             </>)
 }
 export default Inscription
