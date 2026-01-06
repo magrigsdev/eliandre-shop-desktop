@@ -5,6 +5,7 @@ import {useForm} from "../hooks/useForm.js";
 import {useFetch} from "../hooks/useFetch.js";
 import {Field} from "../components/field.jsx";
 import {Boutton} from "../components/boutton.jsx";
+import {Message} from "../components/Message.jsx";
 
 const Inscription = () => {
     //init le hook
@@ -19,7 +20,7 @@ const Inscription = () => {
     const {setLocation} = useNavbar() // for navbar
     const {pathname} = useLocation() // update location
     //const route = useNavigate() // route manage
-    const { send, error, data} = useFetch() // fetch api
+    const { send, errorAPI , data} = useFetch() // fetch api
 
 
     //init variables*
@@ -32,7 +33,7 @@ const Inscription = () => {
         email:'',
     })
 
-    //initial formdata
+    //initial formdata & errors
     const initialFormaData= {
         nom:'',
         prenom:'',
@@ -40,10 +41,19 @@ const Inscription = () => {
         password:'',
         confirmPassword:'',
         email:''}
+    const initialErrors = {
+        nom:'',
+        prenom:'',
+        telephone:'',
+        password:'',
+        confirmPassword:'',
+        email:''
+    }
 
+    //urls
     const urls = {
         'test_de_connexion' : 'http://192.168.1.14:3000/api/users/db',
-        'creation_user': 'http://192.168.1.14:3000/api/users',
+        'creation_user': 'http://192.168.1.14:3000/api/usersd',
     }
     const [users, setUsers] = useState({});
     const [errors, setErrors] = useState({
@@ -57,14 +67,14 @@ const Inscription = () => {
     },[pathname,setOnglet, setLocation])
 
     //test de connection.
-    useEffect(() => {
+    /*  useEffect(() => {
 
         const TestDB =  send({
             url: urls.test_de_connexion,
             method: 'GET',
         })
         //console.log('test de DB',TestDB)
-    }, [])
+    }, []) */
 
     const onSubmit = (e) => {
         const error = {}
@@ -95,8 +105,8 @@ const Inscription = () => {
         //1.1- CHECKING
 
         if(Object.keys(error).length === 0) {
-            console.log('validé')
-
+            console.log('formulaire validé')
+            // envoye du formualaire
             const subscribe = send({
                 url: urls.creation_user,
                 method: 'POST',
@@ -108,18 +118,26 @@ const Inscription = () => {
                     Email: formData.email,
                 },
             })
-            //
-            /* if(!dataerror){
-                setUsers(subscribe)
-                console.log('users', users)
-            }
-            else{
-                console.error(subscribe)
-                console.log('error', subscribe.error)
-            } */
 
-            console.log('users ', data)
-            console.log(error)
+            // test si il ya une erreur dans l'api
+            if(errorAPI === null){
+
+                    setUsers(data.data)
+                    console.log('get or  res json for return API  ', subscribe)
+                    console.log('get data return API', users)
+
+                // on ouvre tous
+                console.log('get status', data.status)
+                console.log('get data example user info', data.data)
+                console.log('get data statusText', data.statusText)
+
+                // changé de page ...
+            }
+            //affiche l'erreur
+            else{
+                console.log('error : ', errorAPI, ' urls :', urls )
+            }
+
             setFormData("")
             setErrors("")
 
@@ -135,6 +153,7 @@ const Inscription = () => {
     const onCancel = (e) => {
         e.preventDefault();
         setFormData({ ... initialFormaData})
+        setErrors({ ... initialErrors })
     }
 
 
@@ -143,6 +162,7 @@ const Inscription = () => {
 
     return (<>
                 <div className="flex justify-center items-center bg-white w-screen" >
+
                     <div className="grid grid-flows-row auto-rows-max">
                         {/**  bloc 1 title   ***/}
                         <div className="flex justify-start !mb-2 ">
@@ -167,7 +187,7 @@ const Inscription = () => {
                         </div>
 
                         {/**  bloc 2 subscribe columns  ***/}
-                        <form onSubmit={onSubmit} method="POST">
+                        <form  method="POST">
                             <div className="flex flex-col  rounded-2xl border-gray-300 w-200  border-1 !p-10">
 
                                 <div className="flex justify-start gap-x-5 !mb-4">
@@ -237,11 +257,13 @@ const Inscription = () => {
                                     <Boutton value='Enregistrer' size='50' onclick={onSubmit}/>
                                 </div>
 
+
+
                             </div>
                         </form>
 
                     </div>
                 </div>
-            </>)
+    </>)
 }
 export default Inscription

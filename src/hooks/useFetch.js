@@ -3,28 +3,28 @@ import { useState } from "react"
 
 /**
  * @callback send
- * @returns {error, data, loading}
+ * @returns {errorAPI, data, loading}
  */
 export const useFetch =() => {
-  const [loading, setLoading] = useState()
-  const [error, setError] = useState()
-
+    const [errorAPI, setErrorAPI] = useState({})
+    const [data, setData] = useState({})
 
   //
   /**
-   * Sends an HTTP request and manages loading/error states
+   * Sends an HTTP request and manages loading/errorAPI states
    * @async
    * @param {Object} options - Configuration object for the request
    * @param {string} options.url - The endpoint URL to send the request to
    * @param {Object|null} [options.body=null] - Request body data (for POST, PUT, etc.)
-   * @returns {Promise<Object|null>} The response data on success, or null on error
+   * @returns {Promise<Object|null>} The response data on success, or null on errorAPIAPI
    */
     const send = async ({ url ,method='POST', body= null}) => {
-          setLoading(true)
-          setError(null)
+
+          setErrorAPI(null)
 
           try {
                 const headers = {'Content-Type': 'application/json'};
+                //body = body ? JSON.stringify(body) : null
                 //axios
                 const res = await axios(
                     {
@@ -33,22 +33,26 @@ export const useFetch =() => {
                         data: body,
                         headers: body ? {headers } : {}
                     })
+                setData(res)
 
-                return res.data
+                //return res.data
           } catch (error) {
-                setError(
-                    error.response?.data?.error ||
-                    error.response?.data?.error ||
-                        'Request failed.'
-                );
-                return null;
+              const apiError = error.response?.data
+              console.log('dans useFetch voici le error api ',apiError)
+              if(apiError?.code === 'USER_ALREADY_EXISTS') {
+                  setErrorAPI("Cet email est déjà utilisé")
+              }
+              else if(apiError?.code === 'SERVER_NOT_FOUND') {
+                  setErrorAPI("Server non disponible.")
+              }
+              else setErrorAPI(apiError?.error || 'Erreur de serveur')
+             // return null;
           }
-
       }
 
 
 
-  return { send, loading, error}
+  return { send, errorAPI, data}
 
 }
 
