@@ -1,6 +1,6 @@
 
 import  { useEffect } from 'react'
-import { useNavbar } from '../hooks/useNavbar'
+import { useNavbar } from '../hooks/useNavbar.js'
 
  const Deconnexion = () => {
   //call onglet from custom hook

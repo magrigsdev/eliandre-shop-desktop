@@ -2,47 +2,55 @@ import { useCallback } from "react"
 
 
 export const useForm = () => {
-        
-    //validation fields
-    const onFormValidation = useCallback((formData, setErrors) => {
+    //validation de confirmation de mot de passe
+    const confirmPasswordValidation = useCallback((password, confirmPassword) => {
+        let newError = ''
+        // vérify le champs mot de passe vide
+        if (!confirmPassword?.trim()) {
+            newError= 'confirmation de mot de passe est requise.';
+        }
+        else if(password !== confirmPassword) {
+            newError= 'les mots de passe ne correspondent pas.';
+        }
+        return newError;
+    }, [])
+
+    //validation password
+    const passwordValidation = useCallback((password) => {
         
                 //VARIABLES INIT
-                const newError = {}
-                //email validation
-                if(!formData?.email?.trim()){newError.email = "L'email est requis."} 
-                else if(!emailValidate(formData.email)){newError.email = "L'email est invalide"}
-                
+                let newError = ''
+
                 // vérify le champs mot de passe vide
-                 if (!formData?.password?.trim()) {
-                    newError.password = 'Le mot de passe est requis.';
-                    } 
-                else if (formData.password.length < 8 ) {
-                    // newError.password = 'The password must contain 8 caracters minum';
-                    newError.password = 'le mot de passe doit contenir au Minimum 8 caractères.';
-                } 
-                else if(formData.password.length > 25){
-                    // newError.password = 'The password must contain 25 caracters maximum';
-                    newError.password = 'le mot de passe doit contenir au maximun Minimum 25 characters.';
+                 if (!password?.trim()) {
+                    newError= 'mot de passe est requise.';
+                    }
+
+                else if (password.length < 8 ) {
+
+                    newError = 'mot de passe doit contenir au Minimum 8 caractères.';
+                }
+                else if(password.length > 25){
+                     newError = 'mot de passe doit contenir au maximun  25 characters.';
                 }
                 //Vérifie la présence d'une majuscule
-                else if(!/[A-Z]/.test(formData.password)){
+                else if(!/[A-Z]/.test(password)){
                     // newError.password = 'The password must contain one capitalize letter';
-                    newError.password = 'le mot de passe doit contenir au moins une lettre majuscule.';
+                     newError = 'mot de passe doit contenir au moins une lettre majuscule.';
                 }
                 // Vérifie la présence d'un chiffre
-                else if(!/[0-9]/.test(formData.password)){
+                else if(!/[0-9]/.test(password)){
                     // newError.password = 'The password must contain one number';
-                    newError.password = 'le mot de passe doit contenir au moins un nombre.';
+                     newError = 'mot de passe doit contenir au moins un nombre.';
                 }
-                // Vérifie la présence d’un caractère spécial
-                else if(!/[!@#$%^&*(),.?":{}|<>]/.test(formData.password)){
+                //Vérifie la présence d’un caractère spécial
+                else if(!/[!@#$%^&*(),.?":{}|<>]/.test(password)){
                     // newError.password = 'The password must contain one capitalize letter';
-                    newError.password = 'le mot de passe doit contenir au moins  un caractère spécial.';
+                     newError = 'le mot de passe doit contenir au moins  un caractère spécial.';
                 }
-                
-                setErrors(newError)
-        
-                return Object.keys(newError).length === 0
+               // setErrors(newError)
+                return capitalizeWords(newError);
+               // return Object.keys(newError).length === 0
         },
         [])
     
@@ -58,26 +66,52 @@ export const useForm = () => {
                 return errors // else no change
             })
     }, []) // no dependencies, stable function
-
-    const columnValidate = useCallback((field, name)=>{
+    //validation des colonnes
+    const columnValidate = useCallback((value, name)=>{
         let error= ''
+
         //telephone
         if(name === 'telephone' && name){
-            if(field.length > 0 && field.length >10 ){ error = name + 'doit contenir 10 chiffres'}
+            if(!value?.trim()){
+                error = capitalizeWords(name) + ' est requise'
+            }
+            else if(!isValidPhone(value)){
+                error =  capitalizeWords(name) + ' doit contenir  10 chiffres'
+            }
         }
-        //another columns
-        if(field ){
-            if(field.trim() === ''){error = name + ' is required'}
-            else error = name + ' is required'
-        }
-        return error
-    }, [])
-    return {onFormValidation, handleOnChange, columnValidate}
-}
 
-const emailValidate = (email) => {
+        //another columns.
+        if(name && !value?.trim()){
+             error = capitalizeWords(name) + ' est requise'
+        }
+        else if(!value ){error = capitalizeWords(name) + ' est requise'}
+
+        return error //return
+    }, [])
+    //email validation
+    const emailValidate = useCallback((email)=>{
+        let error = ''
+        //email validation
+        if(!email?.trim()){error = "L'email est requise."}
+        else if(!emailVal(email)){error = "L'email est invalide"}
+        return error
+    },[])
+
+    //return
+    return {passwordValidation, handleOnChange, columnValidate, emailValidate, confirmPasswordValidation}
+}
+//email
+const emailVal = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(String(email).toLowerCase());
+}
+//mettre la premiere lettre en majuscule
+const capitalizeWords = (str = "") => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+//valid
+const  isValidPhone = (phone) => {
+    return /^[0-9]{10}$/.test(phone);
 }
 
 

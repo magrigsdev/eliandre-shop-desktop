@@ -3,42 +3,56 @@ import { useState } from "react"
 
 /**
  * @callback send
- * @returns {error, data, loading}
+ * @returns {errorAPI, data, loading}
  */
 export const useFetch =() => {
-  const [loading, setLoading] = useState()
-  const [error, setError] = useState()
-  const [data, setData] = useState()
+    const [errorAPI, setErrorAPI] = useState({})
+    const [data, setData] = useState({})
 
   //
   /**
-   * Sends an HTTP request and manages loading/error states
+   * Sends an HTTP request and manages loading/errorAPI states
    * @async
    * @param {Object} options - Configuration object for the request
-   * @param {string} [options.method="GET"] - HTTP method (GET, POST, PUT, DELETE, etc.)
    * @param {string} options.url - The endpoint URL to send the request to
    * @param {Object|null} [options.body=null] - Request body data (for POST, PUT, etc.)
-   * @returns {Promise<Object|null>} The response data on success, or null on error
+   * @returns {Promise<Object|null>} The response data on success, or null on errorAPIAPI
    */
-  const send = async ({ method = "GET",url , body = null}) => {
-      setLoading(true)
-      setError(null)
+    const send = async ({ url ,method='POST', body= null}) => {
 
-      try {
-        const headers = {}
-        //axios
-        
-        const res = await axios({method, url, data: body, headers})
-        setData(res.data)
-        return res.data
-      } catch (error) {
-        setError(error.response?.data?.msg || 'Request failed');
-        return null;
-      } finally{ setLoading(false)}
-    
-  }
+          setErrorAPI(null)
 
-  return {send, loading, error, data}
+          try {
+                const headers = {'Content-Type': 'application/json'};
+                //body = body ? JSON.stringify(body) : null
+                //axios
+                const res = await axios(
+                    {
+                        method,
+                        url,
+                        data: body,
+                        headers: body ? {headers } : {}
+                    })
+                setData(res)
+
+                //return res.data
+          } catch (error) {
+              const apiError = error.response?.data
+              console.log('dans useFetch voici le error api ',apiError)
+              if(apiError?.code === 'USER_ALREADY_EXISTS') {
+                  setErrorAPI("Cet email est déjà utilisé")
+              }
+              else if(apiError?.code === 'SERVER_NOT_FOUND') {
+                  setErrorAPI("Server non disponible.")
+              }
+              else setErrorAPI(apiError?.error || 'Erreur de serveur')
+             // return null;
+          }
+      }
+
+
+
+  return { send, errorAPI, data}
 
 }
 
