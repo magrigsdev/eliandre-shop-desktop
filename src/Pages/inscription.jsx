@@ -1,6 +1,6 @@
 import { useEffect, useState} from "react";
 import { useNavbar } from "../hooks/useNavbar.js";
-import { useLocation, useNavigate } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {useForm} from "../hooks/useForm.js";
 import {useFetch} from "../hooks/useFetch.js";
 import {Field} from "../components/field.jsx";
@@ -19,7 +19,7 @@ const Inscription = () => {
 
     const {setLocation} = useNavbar() // for navbar
     const {pathname} = useLocation() // update location
-    //const route = useNavigate() // route manage
+    const route = useNavigate() // route manage
     const { send, errorAPI , data} = useFetch() // fetch api
 
 
@@ -53,11 +53,13 @@ const Inscription = () => {
     //urls
     const urls = {
         'test_de_connexion' : 'http://192.168.1.14:3000/api/users/db',
-        'creation_user': 'http://192.168.1.14:3000/api/usersd',
+        'creation_user': 'http://192.168.1.14:3000/api/users',
     }
     const [users, setUsers] = useState({});
     const [errors, setErrors] = useState({
     }) //errors
+
+    //navigation
 
 
     //useEffect
@@ -107,7 +109,7 @@ const Inscription = () => {
         if(Object.keys(error).length === 0) {
             console.log('formulaire validé')
             // envoye du formualaire
-            const subscribe = send({
+             send({
                 url: urls.creation_user,
                 method: 'POST',
                 body: {
@@ -120,16 +122,10 @@ const Inscription = () => {
             })
 
             // test si il ya une erreur dans l'api
-            if(errorAPI === null){
+            if(!errorAPI || Object.keys(errorAPI).length === 0){
 
-                    setUsers(data.data)
-                    console.log('get or  res json for return API  ', subscribe)
-                    console.log('get data return API', users)
-
-                // on ouvre tous
-                console.log('get status', data.status)
-                console.log('get data example user info', data.data)
-                console.log('get data statusText', data.statusText)
+                setUsers(data.data)
+                route('/accueil',{user : users})
 
                 // changé de page ...
             }
@@ -143,12 +139,7 @@ const Inscription = () => {
 
         }
 
-
-    //setFormData("")
-    //setErrors("")
     }
-
-
 
     const onCancel = (e) => {
         e.preventDefault();
@@ -181,6 +172,7 @@ const Inscription = () => {
                                     <p className="text-base">Créez votre profil pour découvrir nos perruques, conseils beauté et
                                         nouveautés tendance.</p>
                                 </div>
+
 
                             </div>
 
