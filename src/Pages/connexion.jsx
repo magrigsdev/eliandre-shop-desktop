@@ -4,13 +4,45 @@ import {Field} from "../components/field.jsx";
 import {Boutton} from "../components/boutton.jsx";
 import {useNavbar} from "../hooks/useNavbar.js";
 import {useLocation, useNavigate} from "react-router-dom";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import {useForm} from "../hooks/useForm.js";
+import {useFetch} from "../hooks/useFetch.js";
 
 
 const Connexion = () => {
-    const {setLocation, setOnglet} = useNavbar() // for navbar
-    const {pathname} = useLocation() // update location
-    const route = useNavigate() // route manage
+    //********HOOK
+        const {setLocation, setOnglet} = useNavbar() // for navbar
+        const {pathname} = useLocation() // update location
+        const route = useNavigate() // route manage
+        const {
+                emailValidate,
+                passwordValidation,
+        } = useForm() // ************ use
+        const { send, errorAPI , data} = useFetch() // fetch api
+
+
+
+
+    //********** VARAIBLES ************
+    const [formData, setFormData] = useState({email:'', password:''})
+    const [errors, setErrors] = useState({email:'', password:''})
+
+    //urls
+    const urls = {
+        'test_de_connexion' : 'http://192.168.1.14:3000/api/users/db',
+        'creation_user': 'http://192.168.1.14:3000/api/users',
+    }
+
+
+    //initial formdata & errors
+    const initialFormaData= {
+        email:'',
+        password:'',
+        }
+    const initialErrors = {
+        email:'',
+        password:'',
+    }
 
 
     //useEffect for location and current page
@@ -18,74 +50,28 @@ const Connexion = () => {
         setLocation(pathname);
         setOnglet('connexion') //
     },[pathname,setOnglet, setLocation])
-/*
-        //init le hook
-        const {setOnglet} = useNavbar() 
-        //page actuelle
-        useEffect(()=>{setOnglet('connexion')})
-        //navigation
-        const route = useNavigate()
 
-        //uptdate location
-        const {pathname} = useLocation()
-        //useNavbar
-        const {setLocation} = useNavbar()
-        useEffect(()=>{setLocation(pathname)})
 
-        //formulaire
-        //init 
-        const [form, setForm] = useState({email:'', password:''})
-        
-         const handleOnsubmit = () => {
-            console.log("submit")
-         }*/
-      /*
-   return (<>
+    // HANDLE
+    const handleOnsubmit = (e) => {
+        const error = {}
+        e.preventDefault();
+        //1. check email
+        emailValidate(formData.email) !=='' ? error.email = emailValidate(formData.email) : ''
 
-        <div className="container">
-        <div className="card">
+        //2. check password
+        passwordValidation(formData.password) !=='' ? error.password = passwordValidation(formData.password) : ''
+        setErrors(error)
+        if(Object.keys(error).length === 0){
+            console.log("validé")
+            setFormData(initialFormaData)
+            setErrors(initialErrors)
+        }
+        else {
+            console.log("non validé")
+        }
 
-            <div className="left">
-                <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" 
-                alt="EliandreShop Logo" 
-                className="logo" />
-            </div>
-
-            <div className="right">
-                <h2>Bienvenue sur Eliandre shop</h2>
-                <p className="desc">
-                    Découvrez Eliandre Shop, votre boutique en ligne dédiée
-                    à l'élégance et à la beauté.
-                </p>
-
-                <form className="form" method="post">
-                    <label>Nom</label>
-                    <input type="email" placeholder="Email" />
-                    <span className="error">Email incorrect ou invalid</span>
-
-                    <label>Mot de passe </label>
-                    <input type="password" placeholder="••••••••" />
-                    <span className="error">Email incorrect ou invalid</span>
-
-                    <button 
-                    onClick={()=>handleOnsubmit}
-                    type="submit">Connexion</button>
-                </form>
-
-                <p className="signup">
-                    Pas de compte ? <a 
-                    href=""
-                    onClick={()=>route('/inscription')}
-                    >S’inscrire</a>
-                    
-                </p>
-            </div>
-
-        </div>
-    </div>
-   </>
-    
-   ) */
+    }
     return <div className="flex justify-center items-center bg-white w-screen" >
 
             <div className="grid grid-flows-row auto-rows-max">
@@ -107,13 +93,16 @@ const Connexion = () => {
                             Découvrez Eliandre Shop, votre boutique en ligne dédiée
                             à l'élégance et à la beauté.
                         </p>
-                        <form method="POST">
+                        <form method="POST" >
                             <div className="flex justify-right gap-x-5 !mb-4">
                                 <Field
                                     placeholder='Email'
                                     type="email"
                                     name="Email"
                                     width="w-60"
+                                    errorMessage={errors.email}
+                                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+
                                 />
                             </div>
                             <div className="flex justify-right gap-x-5 !mb-4">
@@ -122,10 +111,18 @@ const Connexion = () => {
                                     placeholder='••••••••••••••••'
                                     name="Mot de passe"
                                     width="w-60"
+                                    value={formData.password}
+                                    onChange={(e) => setFormData({...formData, password: e.target.value})}
+                                    errorMessage={errors.password}
+
                                 />
                             </div>
                             <div className="flex justify-right gap-x-5 !mb-4">
-                                <Boutton type="submit" value="Connexion" size="60"/>
+                                <Boutton type="submit"
+                                         value="Connexion"
+                                         size="60"
+                                         onclick={ handleOnsubmit}
+                                />
                             </div>
                             <div className="flex justify-items-start gap-x-5 !mb-4">
                                 <span className=" text-xs text-gray-500">Pas de compte ?   <a
