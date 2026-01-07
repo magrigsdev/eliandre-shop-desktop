@@ -1,11 +1,24 @@
-import { useEffect, useState } from "react"
-import { useNavbar } from "../hooks/useNavbar.js"
-import { useLocation, useNavigate } from "react-router-dom"
+
 import "../styles/connexion.css"
+import {Field} from "../components/field.jsx";
+import {Boutton} from "../components/boutton.jsx";
+import {useNavbar} from "../hooks/useNavbar.js";
+import {useLocation, useNavigate} from "react-router-dom";
+import {useEffect} from "react";
 
 
 const Connexion = () => {
+    const {setLocation, setOnglet} = useNavbar() // for navbar
+    const {pathname} = useLocation() // update location
+    const route = useNavigate() // route manage
 
+
+    //useEffect for location and current page
+    useEffect(()=>{
+        setLocation(pathname);
+        setOnglet('connexion') //
+    },[pathname,setOnglet, setLocation])
+/*
         //init le hook
         const {setOnglet} = useNavbar() 
         //page actuelle
@@ -25,8 +38,8 @@ const Connexion = () => {
         
          const handleOnsubmit = () => {
             console.log("submit")
-         }
-         
+         }*/
+      /*
    return (<>
 
         <div className="container">
@@ -72,6 +85,61 @@ const Connexion = () => {
     </div>
    </>
     
-   ) 
+   ) */
+    return <div className="flex justify-center items-center bg-white w-screen" >
+
+            <div className="grid grid-flows-row auto-rows-max">
+
+                {/**  bloc  subscribe columns  ***/}
+                <div className="flex   rounded-2xl border-gray-300 w-200  border-1 !p-10">
+                    {/* Colonne gauche – Image */}
+                    <div className="hidden md:flex w-1/2 items-center justify-center bg-gray-100">
+                        <img
+                            src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png"
+                            alt="Illustration"
+                            className="h-50 w-50 object-cover"
+                        />
+                    </div>
+
+                    <div className="flex flex-col">
+                        <h2 className="font-medium">Bienvenue sur Eliandre shop</h2>
+                        <p className="desc w-60">
+                            Découvrez Eliandre Shop, votre boutique en ligne dédiée
+                            à l'élégance et à la beauté.
+                        </p>
+                        <form method="POST">
+                            <div className="flex justify-right gap-x-5 !mb-4">
+                                <Field
+                                    placeholder='Email'
+                                    type="email"
+                                    name="Email"
+                                    width="w-60"
+                                />
+                            </div>
+                            <div className="flex justify-right gap-x-5 !mb-4">
+                                <Field
+                                    type="text"
+                                    placeholder='••••••••••••••••'
+                                    name="Mot de passe"
+                                    width="w-60"
+                                />
+                            </div>
+                            <div className="flex justify-right gap-x-5 !mb-4">
+                                <Boutton type="submit" value="Connexion" size="60"/>
+                            </div>
+                            <div className="flex justify-items-start gap-x-5 !mb-4">
+                                <span className=" text-xs text-gray-500">Pas de compte ?   <a
+                                      href=""
+                                      className="text-teal-600  font-medium"
+                                    onClick={()=>route('/inscription')}
+                                > S'inscrire</a></span>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </div>
+
 }
-export default Connexion
+export default Connexion;

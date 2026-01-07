@@ -5,7 +5,7 @@ import {useForm} from "../hooks/useForm.js";
 import {useFetch} from "../hooks/useFetch.js";
 import {Field} from "../components/field.jsx";
 import {Boutton} from "../components/boutton.jsx";
-import {Message} from "../components/Message.jsx";
+
 
 const Inscription = () => {
     //init le hook
@@ -17,6 +17,7 @@ const Inscription = () => {
         confirmPasswordValidation
     } = useForm() //for use form
 
+    // MANAGE LOCATION PAGE
     const {setLocation} = useNavbar() // for navbar
     const {pathname} = useLocation() // update location
     const route = useNavigate() // route manage
@@ -58,9 +59,6 @@ const Inscription = () => {
     const [users, setUsers] = useState({});
     const [errors, setErrors] = useState({
     }) //errors
-
-    //navigation
-
 
     //useEffect
     useEffect(()=>{
@@ -186,7 +184,7 @@ const Inscription = () => {
                                     <Field
                                             placeholder='nom'
                                             type="text"
-                                            name="nom"
+                                            name="Nom"
                                            width="w-60"
                                            errorMessage={errors.nom}
                                            value={formData.nom}
@@ -248,8 +246,13 @@ const Inscription = () => {
                                     <Boutton type='restore' value='Effacer' size='50' restore='true' onclick={onCancel} />
                                     <Boutton value='Enregistrer' size='50' onclick={onSubmit}/>
                                 </div>
-
-
+                                <div className="flex justify-right gap-x-5 !mb-4">
+                                <span className=" text-xs text-gray-500 m-4"> Vous avez déjà un compte ?   <a
+                                    href=""
+                                    className="text-teal-600  font-medium"
+                                    onClick={()=>route('/connexion')}
+                                > Connexion</a></span>
+                                </div>
 
                             </div>
                         </form>
