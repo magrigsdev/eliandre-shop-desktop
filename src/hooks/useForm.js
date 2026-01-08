@@ -112,8 +112,12 @@ export const useForm = () => {
         })
     }
     //TESTDB
-    const handleTestDB = async (url, body) => {
-        return await send({url: url, method: 'GET', data: body})
+    const handleTestDB = async (url, body = null) => {
+        return await send({
+            url: url,
+            method: 'GET',
+            body
+        })
     }
     //GET PRODUCTS
     //LOGOUT

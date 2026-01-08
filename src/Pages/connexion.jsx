@@ -17,7 +17,8 @@ const Connexion = () => {
         const {
                 emailValidate,
                 passwordValidation,
-                handleLogin
+                handleLogin,
+                handleTestDB
         } = useForm() // ************ use
         const { send, errorAPI , data} = useFetch() // fetch api
 
@@ -76,6 +77,8 @@ const Connexion = () => {
                 return
             }
             console.log('✅ LOGIN SUCCESS :', result);
+            console.log('✅ LOGIN SUCCESS :', data);
+
 
             setFormData(initialFormaData)
             setErrors(initialErrors)
@@ -86,22 +89,17 @@ const Connexion = () => {
 
     }
     // test de Connection connetion page
-    /*
+
     useEffect(()=>{
         //test connection
         let testDB = {}
-        const testConnection =  async () => {
-            testDB = await  send({
+        const testConnection = async () => {
+            testDB = await send({
                 url : urls.test_de_connexion,
-                method: 'GET',
-            })
-            console.log('test_de_connexion page connexion  data : ', testDB)
-
-        }
+                method: 'GET', })
+                console.log('test_de_connexion page connexion data : ', testDB) }
         testConnection()
-
-
-    }, []) */
+    },[])
 
     return <div className="flex justify-center items-center bg-white w-screen" >
 
