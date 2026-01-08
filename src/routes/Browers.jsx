@@ -10,6 +10,8 @@ import Panier from "../Pages/panier.jsx"
 import Footer from "../layouts/footer"
 import { useNavbar } from "../hooks/useNavbar"
 
+import Home from "../Pages/home.jsx"
+
 
 export const Browers = ()=> {
     //init use
@@ -24,8 +26,9 @@ export const Browers = ()=> {
                    
         
             <Routes>
-            
-              <Route path="/" element={ <Bienvenue /> }  />
+
+                {/* <Route path="/" element={ <Bienvenue /> }  /> */}
+                <Route path="/" element={ <Home /> }  />
               <Route path="/accueil" element={ <Accueil /> }  />
               <Route path="/connexion" element={ <Connexion/> }  />
               <Route path="/inscription" element={ <Inscription/> }  />

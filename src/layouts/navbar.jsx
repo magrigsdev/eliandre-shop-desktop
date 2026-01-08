@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom'
 import { useNavbar } from '../hooks/useNavbar'
 import '../styles/navbar.css'
+import Onglet from "../components/onglet.jsx";
+import React from "react";
 
 const Navbar = () => 
     {
@@ -11,46 +13,27 @@ const Navbar = () =>
 
         return (<>
 
-            <nav className="navbar">
-                <ul className="nav-list">
-                    <li><a 
-                        href='#'
-                        onClick = {(e)=> RouteManager(e, '/accueil',route)}
-                        style={ongletManager('accueil') === 'active' ? {color: 'teal'} : {}} 
-                         >Accueil</a></li>
+            <nav className="bg-white border-b border-gray-200">
+                <div className="max-w-7xl mx-auto px-6">
+                    <div className="flex justify-between items-center h-16">
 
-                    <li>
-                        <a href=""
-                        onClick={(e) => RouteManager(e,'/categorie', route)} 
-                        style={ongletManager('categorie') === 'active' ? {color: 'teal'} : {}}
-                    >Categorie</a></li>
+                        <div className="text-xl font-bold text-teal-500">
+                            Eliandre Shop
+                        </div>
 
-                    <li><a href="" 
-                    
-                    onClick={(e) => RouteManager(e,'/panier',route)}
-                    style={ongletManager('panier') === 'active' ? {color: 'teal'} : {}}
-                    >Panier</a></li>
+                        <div className="hidden md:flex space-x-8">
+                            <Onglet name="Home" active={true} />
+                            <Onglet name="Category"  />
+                            <Onglet name="Chart"  />
+                            <Onglet name="Login"  />
+                            <Onglet name="Logout"  />
+                        </div>
 
-                    <li><a href="" 
-                    
-                    onClick={(e) => RouteManager(e,'/connexion',route)}
-                    style={ongletManager('connexion') === 'active' ? {color: 'teal'} : {}}
-                    >Connexion</a></li>
-
-                    <li><a href=""
-                     
-                    onClick={(e) => RouteManager(e,'/inscription',route)}
-                    style={ongletManager('inscription') === 'active' ? {color: 'teal'} : {}}
-                    >Inscription</a></li>
-
-                    <li><a href="#" 
-                    
-                    onClick={(e) => RouteManager(e,'/deconnexion',route)}
-                    style={ongletManager('deconnexion') === 'active' ? {color: 'teal'} : {}}
-                    >Déconnexion</a></li>
-                </ul>
-                <div className="divider"></div>
+                    </div>
+                </div>
             </nav>
+
+
         </>)
     }
 export default Navbar
