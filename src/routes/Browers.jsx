@@ -13,7 +13,7 @@ import { useNavbar } from "../hooks/useNavbar"
 
 export const Browers = ()=> {
     //init use
-    const {location, NavbarManager} = useNavbar()
+    const { NavbarManager} = useNavbar()
     //useEffect(()=>{setLocation(location)})
     //init uselocation
    // console.log("location sur browers ", location)

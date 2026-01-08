@@ -1,7 +1,11 @@
 import { useCallback } from "react"
+import {useFetch} from "./useFetch.js";
 
 
 export const useForm = () => {
+
+    //import send
+    const {send, errorAPI} = useFetch()
     //validation de confirmation de mot de passe
     const confirmPasswordValidation = useCallback((password, confirmPassword) => {
         let newError = ''
@@ -66,6 +70,7 @@ export const useForm = () => {
                 return errors // else no change
             })
     }, []) // no dependencies, stable function
+
     //validation des colonnes
     const columnValidate = useCallback((value, name)=>{
         let error= ''
@@ -88,6 +93,7 @@ export const useForm = () => {
 
         return error //return
     }, [])
+
     //email validation
     const emailValidate = useCallback((email)=>{
         let error = ''
@@ -97,8 +103,23 @@ export const useForm = () => {
         return error
     },[])
 
+    //**LOGIN
+    const handleLogin = async (url, body) =>{
+        return await send({
+            url: url,
+            method: 'POST',
+            body: body,
+        })
+    }
+
+    //GET PRODUCTS
+    //LOGOUT
+    const handleLogout = async () => {
+        console.log('logout')
+    }
+
     //return
-    return {passwordValidation, handleOnChange, columnValidate, emailValidate, confirmPasswordValidation}
+    return {passwordValidation, handleOnChange, columnValidate, emailValidate, confirmPasswordValidation, handleLogin, handleLogout}
 }
 //email
 const emailVal = (email) => {
