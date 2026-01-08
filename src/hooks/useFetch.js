@@ -24,8 +24,7 @@ export const useFetch =() => {
    */
     const send = async ({ url ,method, body= null}) => {
             setErrorAPI({})
-            setData({})
-
+            setData(null)
           try {
                 const headers = {'Content-Type': 'application/json'};
                 //body = method === 'GET' && JSON.stringify(body)
@@ -35,7 +34,8 @@ export const useFetch =() => {
                         method,
                         url,
                         data: body,
-                        headers: body ? headers  : {}
+                        //headers: body ? headers  : {}
+                        headers: headers
                     })
 
                 setData(res.data)
@@ -50,7 +50,13 @@ export const useFetch =() => {
                   setErrorAPI("Server non disponible.")
               }
               else setErrorAPI(apiError?.error || 'Erreur de serveur')
-             return null;
+              return {
+                  success: false,
+                  status: error.response?.status,
+                  error: apiError.error,
+                  code: apiError.code,
+              }
+
           }
     }
 

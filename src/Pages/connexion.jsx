@@ -17,8 +17,12 @@ const Connexion = () => {
         const {
                 emailValidate,
                 passwordValidation,
+                handleLogin
         } = useForm() // ************ use
         const { send, errorAPI , data} = useFetch() // fetch api
+
+        //
+        let user = {}
 
 
 
@@ -66,16 +70,12 @@ const Connexion = () => {
         if(Object.keys(error).length === 0){
             console.log("validé")
 
-            const login = send(
-                {
-                    method: 'POST',
-                    url: urls.login_user,
-                    body:{
-                        email: formData.email,
-                        password: formData.password,
-                    },
-                })
-            if(data) {console.log('login successfully', data)}
+        const result =  handleLogin(urls.login_user, {Email:formData.email, Password:formData.password})
+            if(result?.success === false){
+                console.log(' ERREur login', result.error)
+                return
+            }
+            console.log('✅ LOGIN SUCCESS :', result);
 
             setFormData(initialFormaData)
             setErrors(initialErrors)
@@ -85,7 +85,8 @@ const Connexion = () => {
         }
 
     }
-    // test de Connection connexion page
+    // test de Connection connetion page
+    /*
     useEffect(()=>{
         //test connection
         let testDB = {}
@@ -100,7 +101,8 @@ const Connexion = () => {
         testConnection()
 
 
-    }, [])
+    }, []) */
+
     return <div className="flex justify-center items-center bg-white w-screen" >
 
             <div className="grid grid-flows-row auto-rows-max">

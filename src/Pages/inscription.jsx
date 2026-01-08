@@ -106,6 +106,7 @@ const Inscription = () => {
 
         if(Object.keys(error).length === 0) {
             console.log('formulaire validé')
+
             // envoye du formualaire
              send({
                 url: urls.creation_user,
@@ -155,10 +156,9 @@ const Inscription = () => {
                 url : urls.test_de_connexion,
                 method: 'GET',
             })
-            console.log('test_de_connexion page inscription  data : ', testDB)
+            console.log('test_de_connexion page inscription  data message : ', testDB.message)
         }
         testConnection()
-
 
     }, [])
 
