@@ -111,14 +111,7 @@ export const useForm = () => {
             body: body,
         })
     }
-    //TESTDB
-    const handleTestDB = async (url, body = null) => {
-        return await send({
-            url: url,
-            method: 'GET',
-            body
-        })
-    }
+
     //GET PRODUCTS
     //LOGOUT
     const handleLogout = async () => {
@@ -126,7 +119,7 @@ export const useForm = () => {
     }
 
     //return
-    return {passwordValidation, handleOnChange, columnValidate, emailValidate, confirmPasswordValidation, handleLogin, handleTestDB, handleLogout}
+    return {passwordValidation, handleOnChange, columnValidate, emailValidate, confirmPasswordValidation, handleLogin, handleLogout}
 }
 //email
 const emailVal = (email) => {

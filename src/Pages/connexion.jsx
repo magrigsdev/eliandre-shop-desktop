@@ -18,19 +18,17 @@ const Connexion = () => {
                 emailValidate,
                 passwordValidation,
                 handleLogin,
-                handleTestDB
+
         } = useForm() // ************ use
         const { send, errorAPI , data} = useFetch() // fetch api
 
         //
         let user = {}
 
-
-
-
     //********** VARIABLES ************
     const [formData, setFormData] = useState({email:'', password:''})
     const [errors, setErrors] = useState({email:'', password:''})
+    const [username, setUsername] = useState({})
 
     //urls
     const urls = {
@@ -39,17 +37,16 @@ const Connexion = () => {
         'users': 'http://192.168.1.14:3000/api/users',
     }
 
-
     //initial formdata & errors
     const initialFormaData= {
         email:'',
         password:'',
         }
+
     const initialErrors = {
         email:'',
         password:'',
     }
-
 
     //useEffect for location and current page
     useEffect(()=>{
@@ -72,12 +69,19 @@ const Connexion = () => {
             console.log("validé")
 
         const result =  handleLogin(urls.login_user, {Email:formData.email, Password:formData.password})
-            if(result?.success === false){
-                console.log(' ERREur login', result.error)
-                return
-            }
+
             console.log('✅ LOGIN SUCCESS :', result);
-            console.log('✅ LOGIN SUCCESS :', data);
+            // test si il ya une erreur dans l'api
+            if(!errorAPI || Object.keys(errorAPI).length === 0){
+                setUsername(result)
+                route('/accueil',{user : username})
+
+                // changé de page ...
+            }
+            //affiche l'erreur
+            else{
+                console.log('error : ', errorAPI, ' urls :', urls )
+            }
 
 
             setFormData(initialFormaData)
@@ -88,8 +92,8 @@ const Connexion = () => {
         }
 
     }
-    // test de Connection connetion page
 
+    // test de Connection connetion page
     useEffect(()=>{
         //test connection
         let testDB = {}
