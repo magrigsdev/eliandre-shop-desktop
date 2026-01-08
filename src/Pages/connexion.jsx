@@ -23,14 +23,15 @@ const Connexion = () => {
 
 
 
-    //********** VARAIBLES ************
+    //********** VARIABLES ************
     const [formData, setFormData] = useState({email:'', password:''})
     const [errors, setErrors] = useState({email:'', password:''})
 
     //urls
     const urls = {
         'test_de_connexion' : 'http://192.168.1.14:3000/api/users/db',
-        'creation_user': 'http://192.168.1.14:3000/api/users',
+        'login_user': 'http://192.168.1.14:3000/api/users/login',
+        'users': 'http://192.168.1.14:3000/api/users',
     }
 
 
@@ -64,6 +65,18 @@ const Connexion = () => {
         setErrors(error)
         if(Object.keys(error).length === 0){
             console.log("validé")
+
+            const login = send(
+                {
+                    method: 'POST',
+                    url: urls.login_user,
+                    body:{
+                        email: formData.email,
+                        password: formData.password,
+                    },
+                })
+            if(data) {console.log('login successfully', data)}
+
             setFormData(initialFormaData)
             setErrors(initialErrors)
         }
@@ -72,6 +85,22 @@ const Connexion = () => {
         }
 
     }
+    // test de Connection connexion page
+    useEffect(()=>{
+        //test connection
+        let testDB = {}
+        const testConnection =  async () => {
+            testDB = await  send({
+                url : urls.test_de_connexion,
+                method: 'GET',
+            })
+            console.log('test_de_connexion page connexion  data : ', testDB)
+
+        }
+        testConnection()
+
+
+    }, [])
     return <div className="flex justify-center items-center bg-white w-screen" >
 
             <div className="grid grid-flows-row auto-rows-max">

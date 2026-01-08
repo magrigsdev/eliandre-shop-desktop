@@ -9,6 +9,10 @@ export const useFetch =() => {
     const [errorAPI, setErrorAPI] = useState({})
     const [data, setData] = useState({})
 
+
+    //test body
+
+
   //
   /**
    * Sends an HTTP request and manages loading/errorAPI states
@@ -18,27 +22,27 @@ export const useFetch =() => {
    * @param {Object|null} [options.body=null] - Request body data (for POST, PUT, etc.)
    * @returns {Promise<Object|null>} The response data on success, or null on errorAPIAPI
    */
-    const send = async ({ url ,method='POST', body= null}) => {
-
-          setErrorAPI(null)
+    const send = async ({ url ,method, body= null}) => {
+            setErrorAPI({})
+            setData({})
 
           try {
                 const headers = {'Content-Type': 'application/json'};
-                //body = body ? JSON.stringify(body) : null
+                //body = method === 'GET' && JSON.stringify(body)
                 //axios
                 const res = await axios(
                     {
                         method,
                         url,
                         data: body,
-                        headers: body ? {headers } : {}
+                        headers: body ? headers  : {}
                     })
-                setData(res)
 
-                //return res.data
+                setData(res.data)
+                return res.data
           } catch (error) {
               const apiError = error.response?.data
-              console.log('dans useFetch voici le error api ',apiError)
+
               if(apiError?.code === 'USER_ALREADY_EXISTS') {
                   setErrorAPI("Cet email est déjà utilisé")
               }
@@ -46,13 +50,10 @@ export const useFetch =() => {
                   setErrorAPI("Server non disponible.")
               }
               else setErrorAPI(apiError?.error || 'Erreur de serveur')
-             // return null;
+             return null;
           }
-      }
-
-
+    }
 
   return { send, errorAPI, data}
-
 }
 
