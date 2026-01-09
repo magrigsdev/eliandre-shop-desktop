@@ -3,6 +3,7 @@ import { useNavbar } from '../hooks/useNavbar.js'
 import accueil from "../assets/accueil.jpg";
 import {useFetch} from "../hooks/useFetch.js";
 import CartItem from "../components/cartItem.jsx";
+import {useLocation} from "react-router-dom";
 
 const Category = () => {
     //urls
@@ -27,6 +28,9 @@ const Category = () => {
             console.log('test_de_connexion page connexion data : ', testDB) }
         testConnection()
     },[])
+
+    const location = useLocation();
+    console.log('location : ',location);
     return (
         <div className="flex justify-center items-center bg-white " >
             <div className="grid grid-flows-row auto-rows-max">

@@ -74,7 +74,7 @@ const Login = () => {
             // test si il ya une erreur dans l'api
             if(!errorAPI || Object.keys(errorAPI).length === 0){
                 setUsername(result)
-                route('/',{user : username})
+                route('/', {state : {user : username }})
 
                 // changé de page ...
             }
@@ -104,6 +104,8 @@ const Login = () => {
                 console.log('test_de_connexion page connexion data : ', testDB) }
         testConnection()
     },[])
+    const location = useLocation();
+    console.log('location : ',location);
 
     return <div className="flex justify-center items-center bg-white screen" >
 

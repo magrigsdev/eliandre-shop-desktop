@@ -159,6 +159,8 @@ const Register = () => {
         testConnection()
     },[])
 
+    const location = useLocation();
+    console.log('location : ',location);
     return (<>
                 <div className="flex justify-center items-center bg-white screen" >
 

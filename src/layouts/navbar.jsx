@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import {useLocation, useNavigate} from 'react-router-dom'
 import { useNavbar } from '../hooks/useNavbar'
 import '../styles/navbar.css'
 import Onglet from "../components/onglet.jsx";
@@ -10,6 +10,7 @@ const Navbar = () =>
         const route = useNavigate()
         //init the customer hook 
         const {ongletManager, RouteManager} =  useNavbar()
+
 
         return (<>
 
@@ -23,11 +24,11 @@ const Navbar = () =>
 
                         <div className="hidden md:flex space-x-8">
                             <Onglet name="Home" actived={true} onNavigate={()=>{route('/')}}/>
-                            <Onglet name="Category"  onNavigate={()=>{route('/category')}}/>
-                            <Onglet name="Cart"  onNavigate={()=>{route('/cart')}}/>
-                            <Onglet name="Login"  onNavigate={()=>{route('/login')}}/>
-                            <Onglet name="Logout"  onNavigate={()=>{route('/logout')}}/>
-                            <Onglet name="Register"  onNavigate={()=>{route('/register')}}/>
+                            <Onglet name="Category"   onNavigate={()=>{route('/category')}}/>
+                            <Onglet name="Cart"   onNavigate={()=>{route('/cart')}}/>
+                            <Onglet name="Login"   onNavigate={()=>{route('/login')}}/>
+                            <Onglet name="Logout"   onNavigate={()=>{route('/logout')}}/>
+                            <Onglet name="Register"   onNavigate={()=>{route('/register')}}/>
                         </div>
 
                     </div>
@@ -37,5 +38,29 @@ const Navbar = () =>
 
         </>)
     }
+
 export default Navbar
 
+/**
+ * @param location
+ * @return boolean
+ * **/
+const findCurrentPage = (location) =>{
+    switch (location.pathname) {
+        case '/':
+            return true
+        case '/category':
+            return true
+        case '/cart':
+            return true
+        case '/login':
+            return true
+        case '/logout':
+            return true
+        case '/register':
+            return true
+        default:
+            return false
+
+    }
+}

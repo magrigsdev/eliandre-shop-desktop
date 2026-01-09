@@ -8,7 +8,8 @@ import UserCard from "../components/userCard.jsx";
   const {setOnglet} =  useNavbar()
   //update onglet for current page name
   useEffect(()=>{setOnglet('deconnexion'); })
-
+     const location = useLocation();
+     console.log('location : ',location);
      return (
          <div className="flex justify-center items-center bg-white " >
              <div className="grid grid-flows-row auto-rows-max">

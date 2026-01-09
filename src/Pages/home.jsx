@@ -2,8 +2,13 @@ import React, {Component} from 'react';
 import {Field} from "../components/field.jsx";
 import {Boutton} from "../components/boutton.jsx";
 import accueil from "../assets/accueil.jpg"
+import {useLocation} from "react-router-dom";
+
 const Home  = () => {
 
+    const {location, state} = useLocation();
+    console.log('location : ',location);
+    console.log('route param  : ', state.user);
         return (
             <div className="flex justify-center items-center bg-white " >
                 <div className="grid grid-flows-row auto-rows-max">
