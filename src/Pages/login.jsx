@@ -9,7 +9,7 @@ import {useForm} from "../hooks/useForm.js";
 import {useFetch} from "../hooks/useFetch.js";
 
 
-const Connexion = () => {
+const Login = () => {
     //********HOOK
         const {setLocation, setOnglet} = useNavbar() // for navbar
         const {pathname} = useLocation() // update location
@@ -74,7 +74,7 @@ const Connexion = () => {
             // test si il ya une erreur dans l'api
             if(!errorAPI || Object.keys(errorAPI).length === 0){
                 setUsername(result)
-                route('/accueil',{user : username})
+                route('/',{user : username})
 
                 // changé de page ...
             }
@@ -105,7 +105,7 @@ const Connexion = () => {
         testConnection()
     },[])
 
-    return <div className="flex justify-center items-center bg-white w-screen" >
+    return <div className="flex justify-center items-center bg-white screen" >
 
             <div className="grid grid-flows-row auto-rows-max">
 
@@ -152,7 +152,7 @@ const Connexion = () => {
                             </div>
                             <div className="flex justify-right gap-x-5 !mb-4">
                                 <Boutton type="submit"
-                                         value="Connexion"
+                                         value="Login"
                                          size="60"
                                          onclick={ handleOnsubmit}
                                 />
@@ -172,4 +172,4 @@ const Connexion = () => {
     </div>
 
 }
-export default Connexion;
+export default Login;

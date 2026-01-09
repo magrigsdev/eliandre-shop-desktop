@@ -13,7 +13,7 @@ const Navbar = () =>
 
         return (<>
 
-            <nav className="bg-white border-b border-gray-200">
+            <nav className="bg-white border-b border-gray-200 !mb-4">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="flex justify-between items-center h-16">
 
@@ -22,11 +22,12 @@ const Navbar = () =>
                         </div>
 
                         <div className="hidden md:flex space-x-8">
-                            <Onglet name="Home" active={true} />
-                            <Onglet name="Category"  />
-                            <Onglet name="Chart"  />
-                            <Onglet name="Login"  />
-                            <Onglet name="Logout"  />
+                            <Onglet name="Home" actived={true} onNavigate={()=>{route('/')}}/>
+                            <Onglet name="Category"  onNavigate={()=>{route('/category')}}/>
+                            <Onglet name="Cart"  onNavigate={()=>{route('/cart')}}/>
+                            <Onglet name="Login"  onNavigate={()=>{route('/login')}}/>
+                            <Onglet name="Logout"  onNavigate={()=>{route('/logout')}}/>
+                            <Onglet name="Register"  onNavigate={()=>{route('/register')}}/>
                         </div>
 
                     </div>

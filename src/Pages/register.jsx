@@ -7,7 +7,7 @@ import {Field} from "../components/field.jsx";
 import {Boutton} from "../components/boutton.jsx";
 
 
-const Inscription = () => {
+const Register = () => {
     //init le hook
     const {setOnglet} = useNavbar() // set current page
     const {
@@ -124,7 +124,7 @@ const Inscription = () => {
             if(!errorAPI || Object.keys(errorAPI).length === 0){
 
                 setUsers(data.data)
-                route('/accueil',{user : users})
+                route('/',{user : users})
 
                 // changé de page ...
             }
@@ -160,7 +160,7 @@ const Inscription = () => {
     },[])
 
     return (<>
-                <div className="flex justify-center items-center bg-white w-screen" >
+                <div className="flex justify-center items-center bg-white screen" >
 
                     <div className="grid grid-flows-row auto-rows-max">
                         {/**  bloc 1 title   ***/}
@@ -271,4 +271,4 @@ const Inscription = () => {
                 </div>
     </>)
 }
-export default Inscription
+export default Register

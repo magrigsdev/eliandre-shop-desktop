@@ -1,12 +1,13 @@
 
-const  Onglet = ({name, active= false, onClick}) => {
+const  Onglet = ({name, actived= false, onNavigate}) => {
 
         return (
             <a
-                onClick={()=>console.log('')}
+                onClick={actived ? undefined : onNavigate }
+                aria-disabled={actived}
                 className={`hover:text-teal-600 font-medium transition-colors !mx-4 
-                ${active  ? "text-teal-600" : "text-gray-600 " }`}
-                href="#">
+                ${actived  ? "text-teal-600" : "text-gray-600 " }`}
+                href="">
                 {name}
             </a>
         );
