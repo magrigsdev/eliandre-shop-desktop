@@ -3,9 +3,9 @@ import {Boutton} from "./boutton.jsx";
 
 
 
-function CartItem({titre, price, quantity, image, description, callBack}) {
+function CartItem({titre, price, quantity, image, description, callBack, cart= false}) {
     return (
-        <div className=" rounded-2xl w-100 flex flex-row border-gray-300   border-1 !p-2 gap-0 !mr-4">
+        <div className={` rounded-2xl  w-${cart === false  ? "100" : "full"} flex flex-row border-gray-300   border-1 !p-2 gap-0 !mr-4 `}>
             {/** image **/}
             <div className="basic 1/3 !p-2 ">
                 <img
@@ -18,9 +18,11 @@ function CartItem({titre, price, quantity, image, description, callBack}) {
 
                 <h3 className="text-sm">{`${titre === undefined ? "BOWLING EN IRISÉ PRINCESSE GLOW - Sac à main - noir" : titre}`}</h3>
                 <p className="!py-2 text-gray-500 text-sm"> {`${description === undefined ? "Lorem Ipsum is simply dummy text of the printing and typesetting industry." : description}`}  </p>
-                <span className="text-sm text-gray-500"> {`${price === undefined ? "0 €" : price}`} </span>
-                <p  className="text-sm text-gray-500">{`${quantity === undefined ? "0" : quantity}`}</p>
-                <p  className="text-sm text-gray-500"><Boutton  size="30" value="Ajouter" /></p>
+                <span className="text-2xl text-gray-500"> {`${price === undefined ? "0 €" : price}`} </span>
+                <span  className="text-sm text-gray-500"> quantité : {`${quantity === undefined ? "0" : quantity}`}</span>
+
+                {!cart && (<p  className="text-sm text-gray-500 mb-2 ">
+                    <Boutton  size="30" value="Ajouter" onclick={callBack} /></p> )}
 
             </div>
 
