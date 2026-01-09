@@ -1,7 +1,7 @@
 
 import React, { useEffect } from 'react'
 import { useNavbar } from '../hooks/useNavbar.js'
-import accueil from "../assets/accueil.jpg";
+import UserCard from "../components/userCard.jsx";
 
  const Logout = () => {
   //call onglet from custom hook
@@ -26,10 +26,7 @@ import accueil from "../assets/accueil.jpg";
 
                  <div className="flex flex-col  rounded-2xl border-gray-300 w-200  border-1 !p-10">
                      <div className="flex justify-center !mb-2">
-                         <img
-                             src={accueil}
-                             alt="EliandreShop Logo"
-                             className="img w-100 h-100"/>
+                         <UserCard />
                      </div>
                  </div>
 
