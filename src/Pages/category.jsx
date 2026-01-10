@@ -1,62 +1,75 @@
-import React, { useEffect } from 'react'
-import { useNavbar } from '../hooks/useNavbar.js'
-import accueil from "../assets/accueil.jpg";
-import {useFetch} from "../hooks/useFetch.js";
-import CartItem from "../components/cartItem.jsx";
-import {useLocation} from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import { useNavbar } from '../hooks/useNavbar'
+import { useFetch } from '../hooks/useFetch'
+import CartItem from '../components/cartItem'
+
+const URLS = {
+    GET_SACS: 'http://192.168.1.14:3000/api/sacs/',
+}
 
 const Category = () => {
-    //urls
-    const urls = {
-        'test_de_connexion' : 'http://192.168.1.14:3000/api/users/db',
-        'getSacs': 'http://192.168.1.14:3000/api/sacs',
-    }
-    //use effect
-    const { send, errorAPI , data} = useFetch() // fetch api
+    const [sacs, setSacs] = useState([])
+    const [searchValue, setSearchValue] = useState('')
 
-    const {setOnglet} =  useNavbar()
+    const { send } = useFetch()
+    const { setOnglet } = useNavbar()
 
-  useEffect(()=>{setOnglet('categorie');})
-    // test de Connection inscription page
-    useEffect(()=>{
-        //test connection
-        let testDB = {}
-        const testConnection = async () => {
-            testDB = await send({
-                url : urls.test_de_connexion,
-                method: 'GET', })
-            console.log('test_de_connexion page connexion data : ', testDB) }
-        testConnection()
-    },[])
+    /** Set active navbar tab */
+    useEffect(() => {
+        setOnglet('category')
+    }, [setOnglet])
 
-    const location = useLocation();
-    console.log('location : ',location);
+    /** Fetch sacs */
+    useEffect(() => {
+        const fetchSacs = async () => {
+            try {
+                const data = await send({
+                    url: URLS.GET_SACS,
+                    method: 'GET',
+                })
+                setSacs(data || [])
+            } catch (error) {
+                console.error('Error fetching sacs:', error)
+            }
+        }
+
+        fetchSacs()
+    }, [send])
+
+    /** Filter sacs */
+    const sacsFiltered = sacs.filter(sac =>
+        sac.libelle?.toLowerCase().includes(searchValue.toLowerCase())
+    )
+
     return (
-        <div className="flex justify-center items-center bg-white " >
-            <div className="grid grid-flows-row auto-rows-max">
+        <div className="flex justify-center items-center bg-white">
+            <div className="grid grid-flow-row auto-rows-max">
 
-                {/**  bloc 1 title   ***/}
-                <div className="flex justify-start !mb-2 ">
-                    {/**  bloc 1 logo and title   ***/}
-                    <div className="flex flex-start gap-x-6 ">
-                        <div className="mt-2 w-180 gap-x-2 !py-6">
-                            <p className="text-base"> Salut ! LES PRODUITS CATEGORY</p>
-                        </div>
+                {/* Title */}
+                <div className="flex justify-start !mb-2">
+                    <p className="text-base text-teal-800">
+                        NOMBRE DE SACS ( {sacsFiltered.length} )
+                    </p>
+                </div>
+
+                {/* Sacs list */}
+                <div className="flex h-full rounded-2xl border border-gray-300 !p-10 w-250">
+                    <div className="flex flex-wrap justify-start gap-6 w-full">
+                        {sacsFiltered.map(sac => (
+                            <CartItem
+                                key={sac.id}
+                                image={sac.image}
+                                description={sac.description}
+                                price={sac.prix}
+                                titre={sac.libelle}
+                            />
+                        ))}
                     </div>
                 </div>
 
-                {/**  bloc 2 subscribe columns  ***/}
-                <div className="flex flex-flow h-full  rounded-2xl border-gray-300 w-250  border-1 !p-10">
-                    <div className="flex flex-wrap justify-start gap-6 w-full ">
-                        <CartItem image="https://img01.ztat.net/article/spp-media-p1/a658f0f421494a88a3ef0d2121ecedaa/96c918e392f6488d899082cca82d428e.jpg?imwidth=1800&filter=packshot"/>
-                        <CartItem />
-                        <CartItem />
-                        <CartItem />
-                    </div>
-                </div>
             </div>
         </div>
-    );
+    )
 }
-export default Category
 
+export default Category

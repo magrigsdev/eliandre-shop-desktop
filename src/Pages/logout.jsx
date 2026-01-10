@@ -2,14 +2,16 @@
 import React, { useEffect } from 'react'
 import { useNavbar } from '../hooks/useNavbar.js'
 import UserCard from "../components/userCard.jsx";
+import {useLocation} from "react-router-dom";
 
  const Logout = () => {
   //call onglet from custom hook
-  const {setOnglet} =  useNavbar()
+  const {setOnglet, Onglet} =  useNavbar()
   //update onglet for current page name
   useEffect(()=>{setOnglet('deconnexion'); })
-     const location = useLocation();
+     const location = useLocation(); useLocation();
      console.log('location : ',location);
+     console.log('onglet : ',Onglet);
      return (
          <div className="flex justify-center items-center bg-white " >
              <div className="grid grid-flows-row auto-rows-max">
