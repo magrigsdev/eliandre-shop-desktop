@@ -46,9 +46,15 @@ const Category = () => {
             <div className="grid grid-flow-row auto-rows-max">
 
                 {/* Title */}
-                <div className="flex justify-start !mb-2">
+                <div className="flex justify-between !mb-2">
                     <p className="text-base text-teal-800">
                         NOMBRE DE SACS ( {sacsFiltered.length} )
+                    </p>
+                    <p className="text-base text-red-800">
+                        PANIER - CART (0)
+                    </p>
+                    <p className="text-base text-teal-800">
+                        Recherche
                     </p>
                 </div>
 
