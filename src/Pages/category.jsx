@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { useNavbar } from '../hooks/useNavbar'
 import { useFetch } from '../hooks/useFetch'
 import CartItem from '../components/cartItem'
 
@@ -12,12 +11,7 @@ const Category = () => {
     const [searchValue, setSearchValue] = useState('')
 
     const { send } = useFetch()
-    const { setOnglet } = useNavbar()
 
-    /** Set active navbar tab */
-    useEffect(() => {
-        setOnglet('category')
-    }, [setOnglet])
 
     /** Fetch sacs */
     useEffect(() => {

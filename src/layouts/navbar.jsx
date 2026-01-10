@@ -9,7 +9,7 @@ const Navbar = () =>
         //variable for route
         const route = useNavigate()
         //init the customer hook 
-        const {ongletManager, RouteManager} =  useNavbar()
+        //const {ongletManager, RouteManager} =  useNavbar()
 
 
         return (<>

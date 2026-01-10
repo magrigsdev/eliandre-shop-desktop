@@ -15,16 +15,15 @@ import Home from "../Pages/home.jsx"
 
 export const Browers = ()=> {
     //init use
-    const { NavbarManager} = useNavbar()
+    //const { NavbarManager} = useNavbar()
     //useEffect(()=>{setLocation(location)})
     //init uselocation
    // console.log("location sur browers ", location)
   return (
     
     <BrowserRouter> 
-    {NavbarManager(<Navbar/>)}
-                   
-        
+        <Navbar/>
+
             <Routes>
 
                 <Route path="/" element={ <Home /> }  />
