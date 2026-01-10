@@ -34,7 +34,7 @@ const Category = () => {
         }
 
         fetchSacs()
-    }, [send])
+    }, [])
 
     /** Filter sacs */
     const sacsFiltered = sacs.filter(sac =>
@@ -63,7 +63,7 @@ const Category = () => {
                     <div className="flex flex-wrap justify-start gap-6 w-full">
                         {sacsFiltered.map(sac => (
                             <CartItem
-                                key={sac.id}
+                                key={sac._id}
                                 image={sac.image}
                                 description={sac.description}
                                 price={sac.prix}

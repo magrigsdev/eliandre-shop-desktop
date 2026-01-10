@@ -6,9 +6,9 @@ import {useLocation} from "react-router-dom";
 
 const Home  = () => {
 
-    const {location, state} = useLocation();
+    const {location} = useLocation();
     console.log('location : ',location);
-    console.log('route param  : ', state.user);
+    //console.log('route param  : ', state.user);
         return (
             <div className="flex justify-center items-center bg-white " >
                 <div className="grid grid-flows-row auto-rows-max">
