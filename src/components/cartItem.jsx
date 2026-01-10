@@ -16,10 +16,10 @@ function CartItem({titre, price, quantity, image, description, callBack, cart= f
             {/** text **/}
             <div className="basic 2/3 w-40 h-40 !p-1">
 
-                <h3 className="text-sm">{`${titre === undefined ? "BOWLING EN IRISÉ PRINCESSE GLOW - Sac à main - noir" : titre}`}</h3>
+                <h3 className="text-md">{`${titre === undefined ? "BOWLING EN IRISÉ PRINCESSE GLOW - Sac à main - noir" : titre}`}</h3>
                 <p className="!py-2 text-gray-500 text-sm"> {`${description === undefined ? "Lorem Ipsum is simply dummy text of the printing and typesetting industry." : description}`}  </p>
-                <span className="text-2xl text-gray-500"> {`${price === undefined ? "0 €" : price}`} </span>
-                <span  className="text-sm text-gray-500"> quantité : {`${quantity === undefined ? "0" : quantity}`}</span>
+                <span className="text-2xl text-gray-500"> {`${price === undefined ? "0 €" : price + " €"}`} </span>
+                <p  className="text-sm text-gray-500"> quantité : {`${quantity === undefined ? "0" : quantity}`}</p>
 
                 {!cart && (<p  className="text-sm text-gray-500 mb-2 ">
                     <Boutton  size="30" value="Ajouter" onclick={callBack} /></p> )}

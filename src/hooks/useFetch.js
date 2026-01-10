@@ -27,7 +27,7 @@ export const useFetch =() => {
             setData(null)
           try {
                 const headers = {'Content-Type': 'application/json'};
-                //body = method === 'GET' && JSON.stringify(body)
+                body = method === 'GET' && JSON.stringify(body)
                 //axios
                 const res = await axios(
                     {
