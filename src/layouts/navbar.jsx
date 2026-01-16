@@ -1,5 +1,4 @@
-import {useLocation, useNavigate} from 'react-router-dom'
-import { useNavbar } from '../hooks/useNavbar'
+import { useNavigate} from 'react-router-dom'
 import '../styles/navbar.css'
 import Onglet from "../components/onglet.jsx";
 import React from "react";

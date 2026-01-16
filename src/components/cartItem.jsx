@@ -3,7 +3,7 @@ import {Boutton} from "./boutton.jsx";
 
 
 
-function CartItem({titre, price, quantity, image, description, onclick, cart= false}) {
+function CartItem({titre, price, quantity, image, description, onClick, cart= false}) {
     return (
         <div className={` rounded-2xl  w-${cart === false  ? "100" : "full"} flex flex-row border-gray-300   border-1 !p-2 gap-0 !mr-4 `}>
             {/** image **/}
@@ -22,7 +22,7 @@ function CartItem({titre, price, quantity, image, description, onclick, cart= fa
                 <p  className="text-sm text-gray-500"> quantité : {`${quantity === undefined ? "0" : quantity}`}</p>
 
                 {!cart && (<p  className="text-sm text-gray-500 mb-2 ">
-                    <Boutton  size="30" value="Ajouter" onclick={onclick} /></p> )}
+                    <Boutton type="button"  size="30" value="Ajouter" onClick={onClick} /></p> )}
 
             </div>
 

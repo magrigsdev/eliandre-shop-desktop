@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useFetch } from '../hooks/useFetch'
 import CartItem from '../components/cartItem'
+import useCart from "../hooks/useCart.js";
+import {usePanier} from "../context/panierProvider.jsx";
 
+//sur mon mobile : 172.20.10.2
+// à la maison : 192.168.1.14:3000
+//à l'école : 172.16.18.188
 const URLS = {
-    GET_SACS: 'http://192.168.1.14:3000/api/sacs/',
+    GET_SACS: 'http://172.16.18.188:3000/api/sacs/',
+    TEST_DB: 'http://172.16.18.188:3000/users/db',
 }
 
 const Category = () => {
@@ -18,7 +24,8 @@ const Category = () => {
         const fetchSacs = async () => {
             try {
                 const data = await send({
-                    url: URLS.GET_SACS,
+                   url: URLS.GET_SACS,
+                    //url:URLS.TEST_DB,
                     method: 'GET',
                 })
                 setSacs(data || [])
@@ -31,9 +38,16 @@ const Category = () => {
     }, [])
 
     /** Filter sacs */
-    const sacsFiltered = sacs.filter(sac =>
-        sac.libelle?.toLowerCase().includes(searchValue.toLowerCase())
-    )
+        const sacsFiltered = sacs.filter(sac =>
+            sac.libelle?.toLowerCase().includes(searchValue.toLowerCase())
+        )
+    //******************** CART MANAGE
+    const {addToCart, cartItems, totalItems} = useCart()
+    console.log('le totale : ',totalItems)
+    console.log('le carte items : ',cartItems)
+
+
+    let Test = {}
 
     return (
         <div className="flex justify-center items-center bg-white">
@@ -54,7 +68,7 @@ const Category = () => {
 
                 {/* Sacs list */}
                 <div className="flex h-full rounded-2xl border border-gray-300 !p-10 w-250">
-                    <div className="flex flex-wrap justify-start gap-6 w-full">
+                    <div className="flex flex-wrap justify-center gap-6 w-full">
                         {sacsFiltered.map(sac => (
                             <CartItem
                                 key={sac._id}
@@ -62,7 +76,9 @@ const Category = () => {
                                 description={sac.description}
                                 price={sac.prix}
                                 titre={sac.libelle}
+                                onClick={()=> addToCart(sac)}
                             />
+
                         ))}
                     </div>
                 </div>

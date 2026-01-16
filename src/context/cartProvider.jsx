@@ -82,7 +82,9 @@ const  CartProvider = ({children}) => {
 
                 logout
             }),
-            [getQuantityById, totalPrice,
+            [
+                getQuantityById,
+                totalPrice,
                 totalItems, ajouteCart,
                 cart, emptyCart,
                 deleteOneFromCart,
@@ -100,9 +102,7 @@ const  CartProvider = ({children}) => {
 }
 
 export default CartProvider;
-
-export const useCart = () => {
-    const ctx = useContext(CartContext);
-    if(!ctx) throw new Error('useCart() must be used within cartProvider');
-    return ctx;
-}
+/**
+ * @return getQuantityById, totalPrice,totalItems,
+ * @return ajouteCart,cart,emptyCart,deleteOneFromCart,logout
+ * */
