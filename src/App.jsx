@@ -8,7 +8,9 @@ import {PanierProvider} from "./context/panierProvider.jsx";
 function App() {
 
   return (
+      // provider pour panier
       <PanierProvider>
+          {/* pour la navigation entre pages */}
           <Browers/>
       </PanierProvider>
 

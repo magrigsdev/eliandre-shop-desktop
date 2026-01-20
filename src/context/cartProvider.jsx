@@ -1,13 +1,13 @@
 import React, {createContext, useCallback, useMemo, useState, useContext} from 'react';
 
+// declaration des variables ou constantes
 const CartContext = createContext();
-
 const  CartProvider = ({children}) => {
 
     //list des objets
     const [cart, setCart] = useState([])
 
-    //ajoute le produit ou increment sa quantité
+    //ajoute le produit ou increment sa quantité avec un useCallback
     const ajouteCart = useCallback((item)=>{
         setCart(prev => {
             const exist = prev.find(p => p._id === item._id);
@@ -19,6 +19,7 @@ const  CartProvider = ({children}) => {
             return [...prev, { ...item, quantity: 1 }];
         });
     },[])
+
 
     //enlever le produit du cart
     const deleteOneFromCart = useCallback((item)=>{
@@ -58,10 +59,9 @@ const  CartProvider = ({children}) => {
     }, [cart]);
 
     //vider le cart
-    const emptyCart = useCallback(()=>{
-        if(!cart) return 0
-        setCart([])
-    },[])
+    // const emptyCart = useCallback(()=>{ if(!cart) return 0
+    //     setCart([])
+    // },[])
 
     //logout
     const logout = useCallback(()=>{
@@ -77,7 +77,7 @@ const  CartProvider = ({children}) => {
                 totalItems,
                 ajouteCart,
                 cart,
-                emptyCart,
+                
                 deleteOneFromCart,
 
                 logout
@@ -86,7 +86,7 @@ const  CartProvider = ({children}) => {
                 getQuantityById,
                 totalPrice,
                 totalItems, ajouteCart,
-                cart, emptyCart,
+                cart, 
                 deleteOneFromCart,
 
                 logout

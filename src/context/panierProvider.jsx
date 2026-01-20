@@ -70,7 +70,7 @@ export const PanierProvider = ({children}) => {
     //logout
     const logout = useCallback(()=>{
       setUser([])
-    })
+    }, [])
 
    
     /*********** FIN */

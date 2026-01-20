@@ -1,5 +1,6 @@
 import React from 'react';
 
+// composant field , pour tous type de champs
 export const Field = ({value,name, width='w-50', errorMessage, onChange, type, placeholder}) => {
         return (
             <div className={`${width} max-w-sm mb-4`}>
