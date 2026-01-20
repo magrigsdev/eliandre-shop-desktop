@@ -39,11 +39,11 @@ const  CartProvider = ({children}) => {
 
     },[])
 
-    //calcule le total des articles
+    //calculer le total des produits
     const totalItems = useMemo(
         ()=>cart?.reduce((sum, p) => sum + (p.quantity || 0), 0), [cart])
 
-    //total des produit dans le cart
+    //total des produits dans le panier
     const totalPrice = useMemo(
         ()=>
             //(cart || [])
