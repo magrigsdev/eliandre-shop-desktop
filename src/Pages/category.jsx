@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState} from 'react'
 import { useFetch } from '../hooks/useFetch'
 import CartItem from '../components/cartItem'
 import useCart from "../hooks/useCart.js";
-import {usePanier} from "../context/panierProvider.jsx";
+import useApp from "../hooks/useApp.js";
+
+
+
 
 //sur mon mobile : 172.20.10.2
 // à la maison : 192.168.1.14:3000
@@ -14,11 +17,13 @@ const URLS = {
 
 const Category = () => {
     const [sacs, setSacs] = useState([])
-    const [searchValue, setSearchValue] = useState('')
+   // const [searchValue, setSearchValue] = useState('')
+
+    const {testValue} =  useApp()
 
     const { send } = useFetch()
 
-
+    console.log('test de value sur app testValue', testValue)
     /** Fetch sacs */
     useEffect(() => {
         const fetchSacs = async () => {

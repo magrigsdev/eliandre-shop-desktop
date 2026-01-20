@@ -52,7 +52,7 @@ const  CartProvider = ({children}) => {
                 sum + (p.quantity || 0) * (p.prix ?? p.price ?? 0), 0).toFixed(2)
         ,[cart])
 
-    //obtenir la quantité courant
+    //obtenir la quantité courant ********
     const getQuantityById = useCallback((item) => {
         if (!cart) return 0;
         return cart.find(p => p._id === item._id)?.quantity || 0;
