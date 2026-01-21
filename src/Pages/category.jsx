@@ -2,51 +2,27 @@ import React, { useEffect, useState} from 'react'
 import { useFetch } from '../hooks/useFetch'
 import CartItem from '../components/cartItem'
 import useCart from "../hooks/useCart.js";
-import useApp from "../hooks/useApp.js";
-import {Routes} from "../Constants/Routes.js";
-
-
-
-
-
-//sur mon mobile : 172.20.10.2
-// à la maison : 192.168.1.14:3000
-//à l'école : 172.16.18.188
-const URLS = {
-    GET_SACS: 'http://172.16.18.188:3000/api/sacs/',
-    TEST_DB: 'http://172.16.18.188:3000/users/db',
-}
+import {Texts} from "../Constants/texts.js";
 
 const Category = () => {
+    //initiation des variables  et constantes
     const [sacs, setSacs] = useState([])
-    //hooks
-    const {setCurrentPage, currentPage} = useApp()
-   // const [searchValue, setSearchValue] = useState('')
-    //********************************
-    useEffect(() => {
-        setCurrentPage(Routes.HOME)
-    },[])
-    console.log("current page ", currentPage)
 
-    //*******************************
-    const {testValue} =  useApp()
-
+    //appel au hooks
     const { send } = useFetch()
-
-    console.log('test de value sur app testValue', testValue)
 
     /** Fetch sacs */
     useEffect(() => {
         const fetchSacs = async () => {
             try {
                 const data = await send({
-                   url: URLS.GET_SACS,
+                   url: Texts.URLS.GET_SACS,
                     //url:URLS.TEST_DB,
                     method: 'GET',
                 })
                 setSacs(data || [])
             } catch (error) {
-                console.error('Error fetching sacs:', error)
+                console.error(Texts.ERREUR_DB, error)
             }
         }
 
