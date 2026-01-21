@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import {useMemo, useState} from 'react';
 import AppContext from "./AppContext.js";
 
 // creation le context
@@ -6,10 +6,19 @@ import AppContext from "./AppContext.js";
 
 //creation de provider, fourniseur de données
  const AppProvider = ({children}) => {
-    //test
+     const [currentPage, setCurrentPage] = useState('');
+
+
+     //test
     const testValue = "je test si AppContext marche" // test reuissi
     const value = useMemo(
-        ()=>({testValue}), []);
+        ()=>(
+            {
+                testValue,
+                setCurrentPage,
+                currentPage,
+            }),
+        [testValue, setCurrentPage, currentPage]);
 
 
     return ( <AppContext.Provider

@@ -3,6 +3,8 @@ import { useFetch } from '../hooks/useFetch'
 import CartItem from '../components/cartItem'
 import useCart from "../hooks/useCart.js";
 import useApp from "../hooks/useApp.js";
+import {Routes} from "../Constants/Routes.js";
+
 
 
 
@@ -17,13 +19,22 @@ const URLS = {
 
 const Category = () => {
     const [sacs, setSacs] = useState([])
+    //hooks
+    const {setCurrentPage, currentPage} = useApp()
    // const [searchValue, setSearchValue] = useState('')
+    //********************************
+    useEffect(() => {
+        setCurrentPage(Routes.HOME)
+    },[])
+    console.log("current page ", currentPage)
 
+    //*******************************
     const {testValue} =  useApp()
 
     const { send } = useFetch()
 
     console.log('test de value sur app testValue', testValue)
+
     /** Fetch sacs */
     useEffect(() => {
         const fetchSacs = async () => {

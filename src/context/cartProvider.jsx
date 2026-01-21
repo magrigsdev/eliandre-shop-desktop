@@ -1,4 +1,4 @@
-import React, {createContext, useCallback, useMemo, useState, useContext} from 'react';
+import React, {createContext, useCallback, useMemo, useState} from 'react';
 
 // declaration des variables ou constantes
 const CartContext = createContext();

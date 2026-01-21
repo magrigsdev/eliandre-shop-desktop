@@ -2,17 +2,16 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import bienvenue from '../assets/bienvenue.jpg'
 
 import { useEffect } from 'react'
-import { useNavbar } from '../hooks/useNavbar.js'
 import {ShoppingCart} from "lucide-react";
 import {Boutton} from "../components/boutton.jsx";
 
 const Bienvenue =  () => {
     const route = useNavigate()
     //update location
-    const {pathname} = useLocation()
+    //const {pathname} = useLocation()
     //useNavbar
-    const {setLocation} = useNavbar()
-    useEffect(()=>{setLocation(pathname)})
+   // const {setLocation} = useNavbar()
+    //useEffect(()=>{setLocation(pathname)})
 
     //test
     // console.log("page welcome", location)

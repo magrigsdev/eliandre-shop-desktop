@@ -1,23 +1,40 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect} from 'react';
 import {Field} from "../components/field.jsx";
 import {Boutton} from "../components/boutton.jsx";
 import accueil from "../assets/accueil.jpg"
-import {useLocation} from "react-router-dom";
+import useNavbar from "../hooks/useNavbar.js";
+import {Routes} from "../Constants/Routes.js";
+import useApp from "../hooks/useApp.js";
+import Navbars from "../components/navbars.jsx";
+
+
 
 const Home  = () => {
+    //initiation des variables
+    const {setCurrentPage, currentPage} = useApp()
 
-    const {location} = useLocation();
-    console.log('location : ',location);
+   const {Text} = useNavbar()
+
+    console.log('useNavbar : ',Text)
+    console.log('les pages : ',Routes.HOME)
+
+    useEffect(() => {
+        setCurrentPage(Routes.HOME)
+    },[currentPage])
+    console.log('current page : ',currentPage)
     //console.log('route param  : ', state.user);
-        return (
+        return (<>
+
+
             <div className="flex justify-center items-center bg-white " >
+
                 <div className="grid grid-flows-row auto-rows-max">
                     {/**  bloc 1 title   ***/}
                     <div className="flex justify-start !mb-2 ">
                         {/**  bloc 1 logo and title   ***/}
                         <div className="flex flex-start gap-x-6 ">
                             <div className="mt-2 w-180 gap-x-2 !py-6">
-                                <p className="text-base"> Salut ! welcome to Eliandre shop</p>
+                                <p className="text-base"> Saluts ! welcome to Eliandre shop</p>
                             </div>
                         </div>
                     </div>
@@ -36,6 +53,6 @@ const Home  = () => {
 
                 </div>
             </div>
-        );
+        </>);
 }
 export default Home

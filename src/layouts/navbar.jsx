@@ -2,14 +2,22 @@ import { useNavigate} from 'react-router-dom'
 import '../styles/navbar.css'
 import Onglet from "../components/onglet.jsx";
 import React from "react";
+import {Routes} from "../Constants/Routes.js";
+import useNavbar from "../hooks/useNavbar.js";
+import useApp from "../hooks/useApp.js";
 
 const Navbar = () => 
     {
         //variable for route
         const route = useNavigate()
         //init the customer hook 
-        //const {ongletManager, RouteManager} =  useNavbar()
+        const {pageManager} = useNavbar()
+        const {currentPage} = useApp()
 
+        //test
+        console.log("test sur home", pageManager('home', currentPage))
+        console.log("test sur category", pageManager('home', currentPage))
+        console.log("test sur uppercase ", currentPage.toUpperCase())
 
         return (<>
 
@@ -22,8 +30,12 @@ const Navbar = () =>
                         </div>
 
                         <div className="hidden md:flex space-x-8">
-                            <Onglet name="Home" actived={true} onNavigate={()=>{route('/')}}/>
-                            <Onglet name="Category"   onNavigate={()=>{route('/category')}}/>
+                            <Onglet name="Home"
+                                    actived={pageManager('home', currentPage )}
+                                    onNavigate={()=>{route('/')}}/>
+                            <Onglet name="Category"
+                                    actived={pageManager('category', Routes.CATEGORY)}
+                                    onNavigate={()=>{route('/category')}}/>
                             <Onglet name="Cart"   onNavigate={()=>{route('/cart')}}/>
                             <Onglet name="Login"   onNavigate={()=>{route('/login')}}/>
                             <Onglet name="Logout"   onNavigate={()=>{route('/logout')}}/>

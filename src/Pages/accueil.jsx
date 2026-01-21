@@ -1,19 +1,15 @@
-import { useEffect } from "react"
-import accueil from "../assets/accueil.jpg"
+
+
 import sac_noire from "../assets/sac_noire.png"
 import sac_rose from "../assets/sac_orange.png"
-import { useNavbar } from "../hooks/useNavbar.js"
+//import { useNavbar } from "../hooks/useNavbar.js"
 
 import '../styles/accueil.css'
 
 const Accueil = () => {
-    const {setOnglet} =  useNavbar()
+   // const {setOnglet} =  useNavbar()
 
-    useEffect(
-        ()=>{
-            setOnglet('accueil');    
-        })
-    
+
     return (
                 <>
                     <div className="container">
