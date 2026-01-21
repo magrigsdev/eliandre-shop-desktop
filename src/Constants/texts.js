@@ -8,8 +8,8 @@ export const Texts = {
     SERVER_NOT_FOUND:'Server non disponible.',
     ERREUR_SERVER_NOT_FOUND:'Server non disponible.',
     URLS:{
-        GET_SACS: 'http://172.1.14:3000/api/sacs/',
-        TEST_DB: 'http://172.1.14:3000/users/db',
+        GET_SACS: 'http://172.20.10.2:3000/api/sacs/',
+        TEST_DB: 'http://172.20.10.2:3000/users/db',
     },
     ERREUR_DB: "Erreur lors d'obtention des données",
 }

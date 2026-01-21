@@ -3,10 +3,14 @@ import { useFetch } from '../hooks/useFetch'
 import CartItem from '../components/cartItem'
 import useCart from "../hooks/useCart.js";
 import {Texts} from "../Constants/texts.js";
+import Body from "../components/Body.jsx";
+import CategoryBanner from "../components/category/categoryBanner.jsx";
+import CategoryList from "../components/category/categoryList.jsx";
 
 const Category = () => {
-    //initiation des variables  et constantes
+    //initiation des variables  et constants
     const [sacs, setSacs] = useState([])
+
 
     //appel au hooks
     const { send } = useFetch()
@@ -20,61 +24,34 @@ const Category = () => {
                     //url:URLS.TEST_DB,
                     method: 'GET',
                 })
+                console.log("data : ",data)
                 setSacs(data || [])
             } catch (error) {
                 console.error(Texts.ERREUR_DB, error)
             }
         }
-
         fetchSacs()
     }, [])
 
     /** Filter sacs */
-        const sacsFiltered = sacs.filter(sac =>
+       /** const sacsFiltered = sacs.filter(sac =>
             sac.libelle?.toLowerCase().includes(searchValue.toLowerCase())
-        )
+        )*/
     //******************** CART MANAGE
-    const {addToCart, cartItems, totalItems} = useCart()
-    console.log('le totale : ',totalItems)
-    console.log('le carte items : ',cartItems)
-
-
-    let Test = {}
+    const {addToCart} = useCart()
 
     return (
         <div className="flex justify-center items-center bg-white">
             <div className="grid grid-flow-row auto-rows-max">
 
-                {/* Title */}
-                <div className="flex justify-between !mb-2">
-                    <p className="text-base text-teal-800">
-                        NOMBRE DE SACS ( {sacsFiltered.length} )
-                    </p>
-                    <p className="text-base text-red-800">
-                        PANIER - CART (0)
-                    </p>
-                    <p className="text-base text-teal-800">
-                        Recherche
-                    </p>
-                </div>
-
-                {/* Sacs list */}
-                <div className="flex h-full rounded-2xl border border-gray-300 !p-10 w-250">
-                    <div className="flex flex-wrap justify-center gap-6 w-full">
-                        {sacsFiltered.map(sac => (
-                            <CartItem
-                                key={sac._id}
-                                image={sac.image}
-                                description={sac.description}
-                                price={sac.prix}
-                                titre={sac.libelle}
-                                onClick={()=> addToCart(sac)}
-                            />
-
-                        ))}
-                    </div>
-                </div>
-
+                <Body
+                    /* le banner */
+                    Banner={<CategoryBanner count={sacs.length}  />}
+                    /* liste de produits : sacs */
+                    Bloc1={
+                        <CategoryList
+                            produits={sacs} onAdd={addToCart}
+                    />} />
             </div>
         </div>
     )

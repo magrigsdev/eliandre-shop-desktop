@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import homeImage from "../assets/accueil.jpg"
 import {Texts} from "../Constants/texts.js";
 
-
-
 const Home  = () => {
     //initiation des variables
 
@@ -12,6 +10,7 @@ const Home  = () => {
             <div className="flex justify-center items-center bg-white " >
 
                 <div className="grid grid-flows-row auto-rows-max">
+
                     {/**  bloc 1 title   ***/}
                     <div className="flex justify-start !mb-2 ">
                         {/**  bloc 1 logo and title   ***/}
