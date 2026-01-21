@@ -1,30 +1,13 @@
-import React, {Component, useEffect} from 'react';
-import {Field} from "../components/field.jsx";
-import {Boutton} from "../components/boutton.jsx";
-import accueil from "../assets/accueil.jpg"
-import useNavbar from "../hooks/useNavbar.js";
-import {Routes} from "../Constants/Routes.js";
-import useApp from "../hooks/useApp.js";
-import Navbars from "../components/navbars.jsx";
+import React, {Component} from 'react';
+import homeImage from "../assets/accueil.jpg"
+import {Texts} from "../Constants/texts.js";
 
 
 
 const Home  = () => {
     //initiation des variables
-    const {setCurrentPage, currentPage} = useApp()
 
-   const {Text} = useNavbar()
-
-    console.log('useNavbar : ',Text)
-    console.log('les pages : ',Routes.HOME)
-
-    useEffect(() => {
-        setCurrentPage(Routes.HOME)
-    },[currentPage])
-    console.log('current page : ',currentPage)
-    //console.log('route param  : ', state.user);
         return (<>
-
 
             <div className="flex justify-center items-center bg-white " >
 
@@ -34,7 +17,7 @@ const Home  = () => {
                         {/**  bloc 1 logo and title   ***/}
                         <div className="flex flex-start gap-x-6 ">
                             <div className="mt-2 w-180 gap-x-2 !py-6">
-                                <p className="text-base"> Saluts ! welcome to Eliandre shop</p>
+                                <p className="text-base"> {Texts.WELCOME} </p>
                             </div>
                         </div>
                     </div>
@@ -44,7 +27,7 @@ const Home  = () => {
                         <div className="flex flex-col  rounded-2xl border-gray-300 w-200  border-1 !p-10">
                             <div className="flex justify-center !mb-2">
                                 <img
-                                    src={accueil}
+                                    src={homeImage}
                                     alt="EliandreShop Logo"
                                     className="img w-100 h-100"/>
                             </div>
