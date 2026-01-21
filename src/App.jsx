@@ -1,14 +1,18 @@
 import './styles/style.css'
-import { NavbarProvider } from './context/navbarProvider'
+
 import { Browers } from './routes/Browers'
 import './App.css'
+import AppProvider from "./context/AppProvider.jsx";
+
 
 function App() {
 
   return (
-        <NavbarProvider>
+      // provider pour App
+      <AppProvider>
+          {/* pour la navigation entre pages */}
           <Browers/>
-        </NavbarProvider>     
+     </AppProvider>
   )
 }
 

@@ -2,7 +2,7 @@
 import "../styles/connexion.css"
 import {Field} from "../components/field.jsx";
 import {Boutton} from "../components/boutton.jsx";
-import {useNavbar} from "../hooks/useNavbar.js";
+//import {useNavbar} from "../hooks/useNavbar.js";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useForm} from "../hooks/useForm.js";
@@ -11,7 +11,7 @@ import {useFetch} from "../hooks/useFetch.js";
 
 const Login = () => {
     //********HOOK
-        const {setLocation, setOnglet} = useNavbar() // for navbar
+        //const {setLocation, setOnglet} = useNavbar() // for navbar
         const {pathname} = useLocation() // update location
         const route = useNavigate() // route manage
         const {
@@ -23,7 +23,7 @@ const Login = () => {
         const { send, errorAPI , data} = useFetch() // fetch api
 
         //
-        let user = {}
+
 
     //********** VARIABLES ************
     const [formData, setFormData] = useState({email:'', password:''})
@@ -49,10 +49,10 @@ const Login = () => {
     }
 
     //useEffect for location and current page
-    useEffect(()=>{
+   /* useEffect(()=>{
         setLocation(pathname);
         setOnglet('connexion') //
-    },[pathname,setOnglet, setLocation])
+    },[pathname,setOnglet, setLocation])*/
 
 
     // HANDLE

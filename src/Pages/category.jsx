@@ -1,68 +1,76 @@
-import React, { useEffect, useState } from 'react'
-import { useNavbar } from '../hooks/useNavbar'
+import React, { useEffect, useState} from 'react'
 import { useFetch } from '../hooks/useFetch'
 import CartItem from '../components/cartItem'
-
-const URLS = {
-    GET_SACS: 'http://192.168.1.14:3000/api/sacs/',
-}
+import useCart from "../hooks/useCart.js";
+import {Texts} from "../Constants/texts.js";
 
 const Category = () => {
+    //initiation des variables  et constantes
     const [sacs, setSacs] = useState([])
-    const [searchValue, setSearchValue] = useState('')
 
+    //appel au hooks
     const { send } = useFetch()
-    const { setOnglet } = useNavbar()
-
-    /** Set active navbar tab */
-    useEffect(() => {
-        setOnglet('category')
-    }, [setOnglet])
 
     /** Fetch sacs */
     useEffect(() => {
         const fetchSacs = async () => {
             try {
                 const data = await send({
-                    url: URLS.GET_SACS,
+                   url: Texts.URLS.GET_SACS,
+                    //url:URLS.TEST_DB,
                     method: 'GET',
                 })
                 setSacs(data || [])
             } catch (error) {
-                console.error('Error fetching sacs:', error)
+                console.error(Texts.ERREUR_DB, error)
             }
         }
 
         fetchSacs()
-    }, [send])
+    }, [])
 
     /** Filter sacs */
-    const sacsFiltered = sacs.filter(sac =>
-        sac.libelle?.toLowerCase().includes(searchValue.toLowerCase())
-    )
+        const sacsFiltered = sacs.filter(sac =>
+            sac.libelle?.toLowerCase().includes(searchValue.toLowerCase())
+        )
+    //******************** CART MANAGE
+    const {addToCart, cartItems, totalItems} = useCart()
+    console.log('le totale : ',totalItems)
+    console.log('le carte items : ',cartItems)
+
+
+    let Test = {}
 
     return (
         <div className="flex justify-center items-center bg-white">
             <div className="grid grid-flow-row auto-rows-max">
 
                 {/* Title */}
-                <div className="flex justify-start !mb-2">
+                <div className="flex justify-between !mb-2">
                     <p className="text-base text-teal-800">
                         NOMBRE DE SACS ( {sacsFiltered.length} )
+                    </p>
+                    <p className="text-base text-red-800">
+                        PANIER - CART (0)
+                    </p>
+                    <p className="text-base text-teal-800">
+                        Recherche
                     </p>
                 </div>
 
                 {/* Sacs list */}
                 <div className="flex h-full rounded-2xl border border-gray-300 !p-10 w-250">
-                    <div className="flex flex-wrap justify-start gap-6 w-full">
+                    <div className="flex flex-wrap justify-center gap-6 w-full">
                         {sacsFiltered.map(sac => (
                             <CartItem
-                                key={sac.id}
+                                key={sac._id}
                                 image={sac.image}
                                 description={sac.description}
                                 price={sac.prix}
                                 titre={sac.libelle}
+                                onClick={()=> addToCart(sac)}
                             />
+
                         ))}
                     </div>
                 </div>

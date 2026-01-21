@@ -1,5 +1,5 @@
 import { useEffect, useState} from "react";
-import { useNavbar } from "../hooks/useNavbar.js";
+//import { useNavbar } from "../hooks/useNavbar.js";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useForm} from "../hooks/useForm.js";
 import {useFetch} from "../hooks/useFetch.js";
@@ -9,7 +9,7 @@ import {Boutton} from "../components/boutton.jsx";
 
 const Register = () => {
     //init le hook
-    const {setOnglet} = useNavbar() // set current page
+    //const {setOnglet} = useNavbar() // set current page
     const {
         emailValidate,
         columnValidate,
@@ -18,8 +18,9 @@ const Register = () => {
     } = useForm() //for use form
 
     // MANAGE LOCATION PAGE
-    const {setLocation} = useNavbar() // for navbar
-    const {pathname} = useLocation() // update location
+   // const {setLocation} = useNavbar() // for navbar
+   // const {pathname} = useLocation() // update location
+
     const route = useNavigate() // route manage
     const { send, errorAPI , data} = useFetch() // fetch api
 
@@ -61,10 +62,10 @@ const Register = () => {
     }) //errors
 
     //useEffect
-    useEffect(()=>{
+  /*  useEffect(()=>{
         setLocation(pathname);
         setOnglet('inscription')
-    },[pathname,setOnglet, setLocation])
+    },[pathname,setOnglet, setLocation])*/
 
     //test de connection.
     /*  useEffect(() => {

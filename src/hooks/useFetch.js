@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useState } from "react"
+import {Texts} from "../Constants/texts.js";
 
 /**
  * @callback send
@@ -44,12 +45,12 @@ export const useFetch =() => {
               const apiError = error.response?.data
 
               if(apiError?.code === 'USER_ALREADY_EXISTS') {
-                  setErrorAPI("Cet email est déjà utilisé")
+                  setErrorAPI(Texts.USER_ALREADY_EXISTS)
               }
               else if(apiError?.code === 'SERVER_NOT_FOUND') {
-                  setErrorAPI("Server non disponible.")
+                  setErrorAPI(Texts.SERVER_NOT_FOUND)
               }
-              else setErrorAPI(apiError?.error || 'Erreur de serveur')
+              else setErrorAPI(apiError?.error || Texts.ERREUR_SERVER_NOT_FOUND)
               return {
                   success: false,
                   status: error.response?.status,

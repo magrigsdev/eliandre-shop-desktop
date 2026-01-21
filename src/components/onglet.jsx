@@ -1,17 +1,21 @@
 
-const  Onglet = ({name, actived= false, onNavigate}) => {
+import { NavLink} from 'react-router-dom'
 
-        return (
-            <a
-                onClick={actived ? undefined : onNavigate }
-                aria-disabled={actived}
-                className={`hover:text-teal-600 font-medium transition-colors !mx-4 
-                ${actived  ? "text-teal-600" : "text-gray-600 " }`}
-                href="">
-                {name}
-            </a>
-        );
+import React from 'react';
 
-}
+
+const Onglet = ({to, name}) => {
+    return (
+        <NavLink
+            to={to}
+            className={({ isActive }) =>
+                `px-3 py-2 font-medium transition !mx-4
+                ${isActive
+                    ? 'text-teal-600  '
+                    : 'text-gray-600 hover:text-teal-500'}`}
+        > {name} </NavLink>
+    );
+};
+
 
 export default Onglet;

@@ -1,15 +1,13 @@
-import React, { useEffect } from "react";
-import { useNavbar } from "../hooks/useNavbar.js";
 import CartItem from "../components/cartItem.jsx";
-import {useLocation} from "react-router-dom";
+
 
 const Cart = () =>{
     
-    const {setOnglet} =  useNavbar()
+   // const {setOnglet} =  useNavbar()
     
-    useEffect(()=>{setOnglet('panier');})
-    const location = useLocation();
-    console.log('location : ',location);
+    //useEffect(()=>{setOnglet('panier');})
+    /*const location = useLocation();
+    console.log('location : ',location);*/
     return (
         <div className="flex justify-center items-center bg-white " >
             <div className="grid grid-flows-row auto-rows-max">
