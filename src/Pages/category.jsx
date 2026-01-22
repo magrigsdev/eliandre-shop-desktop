@@ -1,6 +1,5 @@
 import React, { useEffect, useState} from 'react'
 import { useFetch } from '../hooks/useFetch'
-import CartItem from '../components/cartItem'
 import useCart from "../hooks/useCart.js";
 import {Texts} from "../Constants/texts.js";
 import Body from "../components/Body.jsx";
@@ -10,7 +9,7 @@ import CategoryList from "../components/category/categoryList.jsx";
 const Category = () => {
     //initiation des variables  et constants
     const [sacs, setSacs] = useState([])
-
+    const [searchValue, setSearchValue] = useState()
 
     //appel au hooks
     const { send } = useFetch()
@@ -24,7 +23,6 @@ const Category = () => {
                     //url:URLS.TEST_DB,
                     method: 'GET',
                 })
-                console.log("data : ",data)
                 setSacs(data || [])
             } catch (error) {
                 console.error(Texts.ERREUR_DB, error)
@@ -33,12 +31,13 @@ const Category = () => {
         fetchSacs()
     }, [])
 
-    /** Filter sacs */
-       /** const sacsFiltered = sacs.filter(sac =>
-            sac.libelle?.toLowerCase().includes(searchValue.toLowerCase())
-        )*/
+    /** Filter produit */
+       const ProduitFiltered = sacs.filter(sac =>
+            sac.libelle?.toLowerCase().includes(searchValue)
+        )
     //******************** CART MANAGE
     const {addToCart} = useCart()
+
 
     return (
         <div className="flex justify-center items-center bg-white">
@@ -47,10 +46,11 @@ const Category = () => {
                 <Body
                     /* le banner */
                     Banner={<CategoryBanner count={sacs.length}  />}
-                    /* liste de produits : sacs */
-                    Bloc1={
+                    /* list de produits : sacs */
+                     Bloc1={
                         <CategoryList
-                            produits={sacs} onAdd={addToCart}
+                            produits={sacs}
+                            //onAdd={}
                     />} />
             </div>
         </div>

@@ -10,7 +10,8 @@ const Home  = () => {
 
         return (<>
             <Body
-                Bloc1={<Title
+                Bloc1={
+                    <Title
                     title={Texts.WELCOME} />}
                 Bloc2={<Image src={homeImage}  />}
             />

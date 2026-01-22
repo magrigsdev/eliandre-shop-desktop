@@ -4,7 +4,19 @@ const UseCart = () => {
     const [cartItems, setCartItems] = useState([]);
 
     // Ajouter un produit dans le panier
+    /**
+     * @param array
+     * @type {(function(*): void)|*}
+     */
     const addToCart = useCallback((item)=>{
+        console.log('array of item inside addToCart useCart',item)
+
+        //on verifie si le produit exitst
+        if (!item || !item._id) {
+            console.warn('addToCart: les données du produit invalide', item);
+            return;
+        }
+        //on ajoute le produit
         setCartItems(prev => {
             const exist = prev.find(p => p._id === item._id);
             if (exist) {
@@ -15,7 +27,8 @@ const UseCart = () => {
             return [...prev, { ...item, quantity: 1 }];
         });
 
-    }, [])
+
+    }, [setCartItems])
 
     // Supprimer un produit dans le panier
     const deleteOneFromCart = useCallback((item)=>{
