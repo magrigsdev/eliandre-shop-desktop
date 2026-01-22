@@ -5,7 +5,7 @@ const CART_STORAGE_KEY = 'shopping_cart';
 
 
 /**
- * Hook personnalisé pour gérer le panier
+ * 🪝 Hook personnalisé pour gérer le panier
  * @returns {{cartproduits: any[]|*[], cartCount: number|*, cartTotal: number|*, isEmpty, addToCart: (function(*): void)|*, removeFromCart: (function(*): void)|*, decrementQuantity: (function(*): void)|*, clearCart: (function(): void)|*, isInCart: (function(*): (boolean|boolean))|*, getProductQuantity: (function(*): number)|*, testFunction: (function(): void)|*}}
  */
 const useCart = () => {
