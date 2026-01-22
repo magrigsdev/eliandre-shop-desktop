@@ -9,6 +9,7 @@ import CategoryList from '../components/category/CategoryList';
 import { Boutton } from '../components/Boutton';
 
 const Category = () => {
+
     const [sacs, setSacs] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [isLoading, setIsLoading] = useState(true);

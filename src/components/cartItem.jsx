@@ -16,7 +16,7 @@ const DEFAULT_IMAGE = 'https://img01.ztat.net/article/spp-media-p1/5823dc9dd03a4
  * @param {boolean} cart - Mode panier (true) ou catalogue (false)
  */
 function CartItem({
-                      id,
+                      _id,
                       titre = 'Sac à main',
                       price = 0,
                       quantity = 0,
@@ -28,21 +28,21 @@ function CartItem({
     // Styles conditionnels
     const containerClass = cart
         ? 'w-full'
-        : 'w-full max-w-sm';
+        : 'w-[400px]';
 
     return (
         <div
             className={`
                 flex flex-col bg-white border border-gray-200 
                 rounded-lg shadow-sm hover:shadow-md 
-                transition-shadow duration-200 overflow-hidden
+                transition-shadow duration-200 overflow-hidden !p-4
                 ${containerClass}
             `}
         >
             {/* Image Container */}
-            <div className="relative aspect-square bg-gray-100">
+            <div className=" aspect-square bg-gray-100">
                 <img
-                    className="w-full h-full object-cover"
+                    className="w-40 h-40 object-cover"
                     src={image}
                     alt={titre}
                     onError={(e) => {
@@ -83,7 +83,7 @@ function CartItem({
                         type="button"
                         value="🛒 Ajouter au panier"
                         onClick={onClick}
-                        className="w-full"
+                        size="100"
                     />
                 )}
             </div>
