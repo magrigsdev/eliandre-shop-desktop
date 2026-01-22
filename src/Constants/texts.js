@@ -12,13 +12,14 @@ export const Texts = {
     // Messages d'erreur Serveur / Réseau
     SERVER_NOT_FOUND:'Server non disponible.',
     ERREUR_SERVER_NOT_FOUND:'Server non disponible.',
+    ERREUR_DB: "Erreur lors d'obtention des données",
     /**
      * 🌐 Configuration des URLs API
-     * Note : Pense à utiliser une variable d'environnement (.env) en production.
      */
     URLS:{
         GET_SACS: 'http://192.168.1.14:3000/api/sacs/',
         TEST_DB: 'http://192.168.1.14:3000/users/db',
     },
-    ERREUR_DB: "Erreur lors d'obtention des données",
+    SEARCH_DESCRIPTIONS: 'Recherchez un produit ...',
+
 }

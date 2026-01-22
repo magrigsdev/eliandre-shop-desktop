@@ -8,20 +8,29 @@ import CategoryBanner from '../components/category/CategoryBanner';
 import CategoryList from '../components/category/CategoryList';
 import { Boutton } from '../components/Boutton';
 
+
+/**
+ * Page de catégorie : Gère l'affichage, le filtrage et la recherche des produits.
+ * Utilise des hooks de mémorisation pour optimiser les performances de rendu.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const Category = () => {
-
-    const [sacs, setSacs] = useState([]);
-    const [searchValue, setSearchValue] = useState('');
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
-
+    // 1. ÉTATS LOCAUX
+    const [produits, setProduits] = useState([]);// Données brutes venant de l'API
+    const [searchValue, setSearchValue] = useState('');// Valeur du champ de recherche
+    const [isLoading, setIsLoading] = useState(true);// État de chargement
+    const [error, setError] = useState(null);// Gestion des messages d'erreur
+    // 2. HOOKS PERSONNALISÉS
     const { send } = useFetch();
     const { addToCart, testFunction, cartCount } = useCart();
 
-    /**
-     * ✅ Fetch avec useCallback pour stabiliser la référence
+     /**
+     * 🔄 Récupération des données (API)
+     * useCallback évite que la fonction ne soit recréée à chaque re-rendu
+     * @type {(function(): Promise<void>)|*}
      */
-    const fetchSacs = useCallback(async () => {
+    const fetchProduits = useCallback(async () => {
         setIsLoading(true);
         setError(null);
 
@@ -30,41 +39,54 @@ const Category = () => {
                 url: Texts.URLS.GET_SACS,
                 method: 'GET',
             });
-
-            setSacs(data || []);
+            //on recupère soit les donnée du API ou tableau vide à default
+            setProduits(data || []);
             console.log(`[Category] ✅ ${data?.length || 0} produits chargés`);
+
         } catch (err) {
             console.error('[Category] ❌ Erreur:', err);
-            setError('Impossible de charger les produits');
+            setError(Texts.ERREUR_DB);// On utilise nos constantes de texte
         } finally {
             setIsLoading(false);
         }
-    }, []); // ✅ send doit être stable (provenant de useFetch)
+         // ✅ send doit être stable (provenant de useFetch)
+    }, []);
+
 
     /**
-     * ✅ useEffect avec tableau de dépendances vide
+     * ✅ 🚀 Effet de bord : Chargement initial au montage du composant
      */
     useEffect(() => {
-        fetchSacs();
-    }, [fetchSacs]); // ✅ fetchSacs est stable grâce à useCallback
+        fetchProduits();
+        // ✅ fetchProduits est stable grâce à useCallback
+    }, [fetchProduits]);
+
 
     /**
-     * ✅ Filtrage mémorisé
+     * 🔍 Filtrage des données (Calcul dérivé), Logique de recherche mémorisée.
+     * * Filtre la liste des sacs en fonction du libellé ou de la description.
+     *  * Optimisé pour ne pas se relancer inutilement lors des re-rendus du composant.
+     * @return {*[produit]}
      */
     const produitsFiltres = useMemo(() => {
+        //Si la recherche est vide, on affiche tout le catalogue immédiatement
         if (!searchValue?.trim()) {
-            return sacs;
+            return produits;
         }
-
+        // Sécurité : on vérifie que les champs existent avant de faire le .includes()
         const searchLower = searchValue.toLowerCase().trim();
-        return sacs.filter(sac =>
+        return produits.filter(sac =>
             sac.libelle?.toLowerCase().includes(searchLower) ||
             sac.description?.toLowerCase().includes(searchLower)
         );
-    }, [sacs, searchValue]);
+        // Recalcule uniquement si les produits ou la recherche changent
+    }, [produits, searchValue]);
+
 
     /**
-     * ✅ Handler stable
+     * 🛒 Gestionnaire d'ajout au panier
+     * useCallback est crucial ici pour éviter de casser l'optimisation de CategoryList.
+     * @type {(function(*): void)|*}
      */
     const handleAddToCart = useCallback((produit) => {
         console.log('[Category] 🛒 Ajout:', produit.libelle);
@@ -88,7 +110,7 @@ const Category = () => {
             <div className="flex justify-center items-center min-h-screen">
                 <div className="text-center">
                     <p className="text-xl text-red-600 mb-4">{error}</p>
-                    <Boutton onClick={fetchSacs} value="🔄 Réessayer" />
+                    <Boutton onClick={fetchProduits} value="🔄 Réessayer" />
                 </div>
             </div>
         );
@@ -101,7 +123,7 @@ const Category = () => {
                     Banner={
                         <CategoryBanner
                             count={produitsFiltres.length}
-                            totalCount={sacs.length}
+                            totalCount={produits.length}
                             cartCount={cartCount}
                             searchValue={searchValue}
                             onSearchChange={setSearchValue}

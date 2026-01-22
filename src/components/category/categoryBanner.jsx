@@ -1,5 +1,6 @@
 // components/category/CategoryBanner.jsx
 import React from 'react';
+import {Texts} from "../../Constants/texts.js";
 
 /**
  * Bannière affichant le nombre de produits et un champ de recherche
@@ -16,10 +17,10 @@ const CategoryBanner = ({
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                 {/* Titre et compteur */}
                 <div>
-                    <h1 className="text-3xl font-bold mb-2">
+                    <h1 className="text-3xl font-bold mb-2 !px-4 !py-2">
                         Notre Collection
                     </h1>
-                    <p className="text-blue-100">
+                    <p className="w-full text-gray-900 !px-4 !py-2">
                         {count === totalCount
                             ? `${count} produit${count > 1 ? 's' : ''} disponible${count > 1 ? 's' : ''}`
                             : `${count} sur ${totalCount} produits`
@@ -29,13 +30,13 @@ const CategoryBanner = ({
 
                 {/* Recherche */}
                 {onSearchChange && (
-                    <div className="w-full md:w-96">
+                    <div className="w-full md:w-96 !px-4 !py-2">
                         <input
                             type="text"
-                            placeholder="Rechercher un produit..."
+                            placeholder= {Texts.SEARCH_DESCRIPTIONS}
                             value={searchValue}
                             onChange={(e) => onSearchChange(e.target.value)}
-                            className="w-full px-4 py-2 rounded-lg text-gray-900
+                            className="w-200 !px-4 !py-2 rounded-lg text-gray-900
                                      border-2 border-white/20
                                      focus:outline-none focus:border-white
                                      placeholder-gray-400"
@@ -44,13 +45,13 @@ const CategoryBanner = ({
                 )}
 
                 {/* Panier */}
-                {cartCount > 0 && (
-                    <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
+
+                    <div className="bg-white/20 backdrop-blur-sm !px-4 !py-2 rounded-full text-gray-900">
                         <span className="text-lg font-semibold">
-                            🛒 {cartCount} article{cartCount > 1 ? 's' : ''}
+                            Article{cartCount > 1 ? 's' : ''} 🛒 ( {cartCount} )
                         </span>
                     </div>
-                )}
+
             </div>
         </div>
     );
