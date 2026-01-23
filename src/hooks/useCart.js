@@ -28,11 +28,7 @@ const useCart = () => {
             console.error('[useCart] ❌ Le produit doit avoir un _id', produit);
             return false;
         }
-        //on verifie si le prix est valide //******** SUPPRIME
-        {/* if (typeof produit.prix !== 'number' || produit.prix < 0) {
-            console.error('[useCart] ❌ Prix invalide', produit);
-            return false;
-        } */}
+
 
         return true;
     }, []);

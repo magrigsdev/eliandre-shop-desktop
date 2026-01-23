@@ -25,6 +25,7 @@ const Category = () => {
     const { send } = useFetch();
     const { addToCart, testFunction, cartCount } = useCart();
 
+
      /**
      * 🔄 Récupération des données (API)
      * useCallback évite que la fonction ne soit recréée à chaque re-rendu
@@ -116,6 +117,7 @@ const Category = () => {
         );
     }
 
+
     return (
         <div className="flex justify-center items-center bg-gray-50 min-h-screen">
             <div className="w-full max-w-7xl px-4 py-8">
@@ -157,7 +159,9 @@ const Category = () => {
                 />
             </div>
         </div>
+
     );
+
 };
 
 export default Category;
