@@ -13,14 +13,14 @@ const CategoryBanner = ({
                             onSearchChange
                         }) => {
     return (
-        <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg p-6 mb-6 shadow-lg">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className=" text-white  !p-6 mb-6 shadow-lg bg-gray-500">
+            <div className="flex flex-col md:flex-row justify-between items-center ">
                 {/* Titre et compteur */}
                 <div>
                     <h1 className="text-3xl font-bold mb-2 !px-4 !py-2">
                         Notre Collection
                     </h1>
-                    <p className="w-full text-gray-900 !px-4 !py-2">
+                    <p className="text-gray-900 !px-4 !py-2">
                         {count === totalCount
                             ? `${count} produit${count > 1 ? 's' : ''} disponible${count > 1 ? 's' : ''}`
                             : `${count} sur ${totalCount} produits`
@@ -30,13 +30,13 @@ const CategoryBanner = ({
 
                 {/* Recherche */}
                 {onSearchChange && (
-                    <div className="w-full md:w-96 !px-4 !py-2">
+                    <div className=" md:w-96 !px-4 !py-2">
                         <input
                             type="text"
                             placeholder= {Texts.SEARCH_DESCRIPTIONS}
                             value={searchValue}
                             onChange={(e) => onSearchChange(e.target.value)}
-                            className="w-200 !px-4 !py-2 rounded-lg text-gray-900
+                            className=" !px-4 !py-2 rounded-lg text-gray-900
                                      border-2 border-white/20
                                      focus:outline-none focus:border-white
                                      placeholder-gray-400"
@@ -46,7 +46,7 @@ const CategoryBanner = ({
 
                 {/* Panier */}
 
-                    <div className="bg-white/20 backdrop-blur-sm !px-4 !py-2 rounded-full text-gray-900">
+                    <div className="bg-white/20 backdrop-blur-sm !px-4 !py-2 rounded-md text-gray-900">
                         <span className="text-lg font-semibold">
                             Article{cartCount > 1 ? 's' : ''} 🛒 ( {cartCount} )
                         </span>

@@ -27,7 +27,7 @@ function CartItem({
                   }) {
     // Styles conditionnels
     const containerClass = cart
-        ? 'w-full'
+        ? 'w-200'
         : 'w-[400px]';
 
     return (
@@ -83,7 +83,7 @@ function CartItem({
                         type="button"
                         value="🛒 Ajouter au panier"
                         onClick={onClick}
-                        size="100"
+                        size="50"
                     />
                 )}
             </div>
