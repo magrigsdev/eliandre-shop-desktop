@@ -1,83 +1,163 @@
-import React, { useEffect, useState} from 'react'
-import { useFetch } from '../hooks/useFetch'
-import CartItem from '../components/cartItem'
-import useCart from "../hooks/useCart.js";
-import {Texts} from "../Constants/texts.js";
+// pages/Category.jsx
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import { useFetch } from '../hooks/useFetch';
+import useCart from '../hooks/useCart';
+import { Texts } from '../Constants/texts';
+import Body from '../components/Body';
+import CategoryBanner from '../components/category/CategoryBanner';
+import CategoryList from '../components/category/CategoryList';
+import { Boutton } from '../components/Boutton';
 
+
+/**
+ * Page de catégorie : Gère l'affichage, le filtrage et la recherche des produits.
+ * Utilise des hooks de mémorisation pour optimiser les performances de rendu.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const Category = () => {
-    //initiation des variables  et constantes
-    const [sacs, setSacs] = useState([])
+    // 1. ÉTATS LOCAUX
+    const [produits, setProduits] = useState([]);// Données brutes venant de l'API
+    const [searchValue, setSearchValue] = useState('');// Valeur du champ de recherche
+    const [isLoading, setIsLoading] = useState(true);// État de chargement
+    const [error, setError] = useState(null);// Gestion des messages d'erreur
+    // 2. HOOKS PERSONNALISÉS
+    const { send } = useFetch();
+    const { addToCart, testFunction, cartCount } = useCart();
 
-    //appel au hooks
-    const { send } = useFetch()
+     /**
+     * 🔄 Récupération des données (API)
+     * useCallback évite que la fonction ne soit recréée à chaque re-rendu
+     * @type {(function(): Promise<void>)|*}
+     */
+    const fetchProduits = useCallback(async () => {
+        setIsLoading(true);
+        setError(null);
 
-    /** Fetch sacs */
-    useEffect(() => {
-        const fetchSacs = async () => {
-            try {
-                const data = await send({
-                   url: Texts.URLS.GET_SACS,
-                    //url:URLS.TEST_DB,
-                    method: 'GET',
-                })
-                setSacs(data || [])
-            } catch (error) {
-                console.error(Texts.ERREUR_DB, error)
-            }
+        try {
+            const data = await send({
+                url: Texts.URLS.GET_SACS,
+                method: 'GET',
+            });
+            //on recupère soit les donnée du API ou tableau vide à default
+            setProduits(data || []);
+            console.log(`[Category] ✅ ${data?.length || 0} produits chargés`);
+
+        } catch (err) {
+            console.error('[Category] ❌ Erreur:', err);
+            setError(Texts.ERREUR_DB);// On utilise nos constantes de texte
+        } finally {
+            setIsLoading(false);
         }
-
-        fetchSacs()
-    }, [])
-
-    /** Filter sacs */
-        const sacsFiltered = sacs.filter(sac =>
-            sac.libelle?.toLowerCase().includes(searchValue.toLowerCase())
-        )
-    //******************** CART MANAGE
-    const {addToCart, cartItems, totalItems} = useCart()
-    console.log('le totale : ',totalItems)
-    console.log('le carte items : ',cartItems)
+         // ✅ send doit être stable (provenant de useFetch)
+    }, []);
 
 
-    let Test = {}
+    /**
+     * ✅ 🚀 Effet de bord : Chargement initial au montage du composant
+     */
+    useEffect(() => {
+        fetchProduits();
+        // ✅ fetchProduits est stable grâce à useCallback
+    }, [fetchProduits]);
+
+
+    /**
+     * 🔍 Filtrage des données (Calcul dérivé), Logique de recherche mémorisée.
+     * * Filtre la liste des sacs en fonction du libellé ou de la description.
+     *  * Optimisé pour ne pas se relancer inutilement lors des re-rendus du composant.
+     * @return {*[produit]}
+     */
+    const produitsFiltres = useMemo(() => {
+        //Si la recherche est vide, on affiche tout le catalogue immédiatement
+        if (!searchValue?.trim()) {
+            return produits;
+        }
+        // Sécurité : on vérifie que les champs existent avant de faire le .includes()
+        const searchLower = searchValue.toLowerCase().trim();
+        return produits.filter(sac =>
+            sac.libelle?.toLowerCase().includes(searchLower) ||
+            sac.description?.toLowerCase().includes(searchLower)
+        );
+        // Recalcule uniquement si les produits ou la recherche changent
+    }, [produits, searchValue]);
+
+
+    /**
+     * 🛒 Gestionnaire d'ajout au panier
+     * useCallback est crucial ici pour éviter de casser l'optimisation de CategoryList.
+     * @type {(function(*): void)|*}
+     */
+    const handleAddToCart = useCallback((produit) => {
+        console.log('[Category] 🛒 Ajout:', produit.libelle);
+        addToCart(produit);
+    }, [addToCart]);
+
+    // Loading
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <div className="text-xl text-gray-600">
+                    ⏳ Chargement...
+                </div>
+            </div>
+        );
+    }
+
+    // Error
+    if (error) {
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <div className="text-center">
+                    <p className="text-xl text-red-600 mb-4">{error}</p>
+                    <Boutton onClick={fetchProduits} value="🔄 Réessayer" />
+                </div>
+            </div>
+        );
+    }
 
     return (
-        <div className="flex justify-center items-center bg-white">
-            <div className="grid grid-flow-row auto-rows-max">
+        <div className="flex justify-center items-center bg-gray-50 min-h-screen">
+            <div className="w-full max-w-7xl px-4 py-8">
+                <Body
+                    Banner={
+                        <CategoryBanner
+                            count={produitsFiltres.length}
+                            totalCount={produits.length}
+                            cartCount={cartCount}
+                            searchValue={searchValue}
+                            onSearchChange={setSearchValue}
+                        />
+                    }
 
-                {/* Title */}
-                <div className="flex justify-between !mb-2">
-                    <p className="text-base text-teal-800">
-                        NOMBRE DE SACS ( {sacsFiltered.length} )
-                    </p>
-                    <p className="text-base text-red-800">
-                        PANIER - CART (0)
-                    </p>
-                    <p className="text-base text-teal-800">
-                        Recherche
-                    </p>
-                </div>
-
-                {/* Sacs list */}
-                <div className="flex h-full rounded-2xl border border-gray-300 !p-10 w-250">
-                    <div className="flex flex-wrap justify-center gap-6 w-full">
-                        {sacsFiltered.map(sac => (
-                            <CartItem
-                                key={sac._id}
-                                image={sac.image}
-                                description={sac.description}
-                                price={sac.prix}
-                                titre={sac.libelle}
-                                onClick={()=> addToCart(sac)}
+                    Bloc1={
+                        produitsFiltres.length > 0 ? (
+                            <CategoryList
+                                produits={produitsFiltres}
+                                onAdd={handleAddToCart}
                             />
+                        ) : (
+                            <div className="text-center py-12 text-gray-500">
+                                {searchValue
+                                    ? `Aucun produit pour "${searchValue}"`
+                                    : 'Aucun produit disponible'
+                                }
+                            </div>
+                        )
+                    }
 
-                        ))}
-                    </div>
-                </div>
-
+                    Bloc2={
+                        <div className="mt-4">
+                            <Boutton
+                                onClick={testFunction}
+                                value={`🛒 Debug Panier (${cartCount})`}
+                            />
+                        </div>
+                    }
+                />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Category
+export default Category;
