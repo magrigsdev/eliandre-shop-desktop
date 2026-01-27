@@ -1,13 +1,27 @@
 import CartItem from "../components/cartItem.jsx";
+import useApp from "../hooks/useApp.js";
 
 
 const Cart = () =>{
-    
-   // const {setOnglet} =  useNavbar()
-    
-    //useEffect(()=>{setOnglet('panier');})
-    /*const location = useLocation();
-    console.log('location : ',location);*/
+
+const {getCartItems} = useApp()
+
+    const handleClearCart = () => {
+        if (window.confirm('Êtes-vous sûr de vouloir vider le panier ?')) {
+            clearCart();
+        }
+    };
+console.log("get cart items : ",getCartItems);
+    // Panier vide
+    {/*if (isEmpty) {
+        return (
+            <div className="min-h-screen bg-gray-50 py-12">
+                <div className="max-w-4xl mx-auto px-4">
+                    <p>le panier est vide</p>
+                </div>
+            </div>
+        );
+    } */}
     return (
         <div className="flex justify-center items-center bg-white " >
             <div className="grid grid-flows-row auto-rows-max">
@@ -37,7 +51,7 @@ const Cart = () =>{
                 </div>
 
 
-            </div>
+                </div>
         </div>
     );
 }

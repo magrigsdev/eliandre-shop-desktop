@@ -229,6 +229,10 @@ const useCart = () => {
         // Mise à jour de la fonction seulement si le panier est modifié.
     }, [cartproduits]);
 
+    const putCartItems = useCallback((setCartItmes) =>{
+        setCartItmes(cartproduits)
+    })
+
     /**
      * Debug
      */
@@ -273,6 +277,7 @@ const useCart = () => {
         removeFromCart,
         decrementQuantity,
         clearCart,
+        putCartItems, //
 
         // Utilitaires
         isInCart,
