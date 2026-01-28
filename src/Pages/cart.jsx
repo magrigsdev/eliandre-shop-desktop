@@ -1,17 +1,11 @@
-import CartItem from "../components/cartItem.jsx";
-import useApp from "../hooks/useApp.js";
+
+
 
 
 const Cart = () =>{
 
-const {getCartItems} = useApp()
 
-    const handleClearCart = () => {
-        if (window.confirm('Êtes-vous sûr de vouloir vider le panier ?')) {
-            clearCart();
-        }
-    };
-console.log("get cart items : ",getCartItems);
+
     // Panier vide
     {/*if (isEmpty) {
         return (
@@ -44,9 +38,7 @@ console.log("get cart items : ",getCartItems);
                 {/**  bloc 2 subscribe columns  ***/}
                 <div className="flex flex-flow h-full  rounded-2xl border-gray-300 w-250  border-1 !p-10">
                     <div className="flex flex-wrap justify-start gap-6 w-full ">
-                        <CartItem  cart={true}/>
-                        <CartItem  cart={true}/>
-                        <CartItem cart={true}/>
+
                     </div>
                 </div>
 

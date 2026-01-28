@@ -1,7 +1,5 @@
-import {useCallback, useMemo, useState} from 'react';
+import { useMemo, useState} from 'react';
 import AppContext from "./AppContext.js";
-import useCart from "../hooks/useCart.js";
-
 
 // creation le context
 
@@ -11,27 +9,37 @@ import useCart from "../hooks/useCart.js";
  const AppProvider = ({children}) => {
      //declaration des variable
      const [currentPage, setCurrentPage] = useState('');
-     const [cartItems, setCartItems] = useState([]);
-     //hooks personnalisé
-     const {putCartItems} = useCart()
+
+
+     //OBJECT CARTS
+     const [objectCart, setObjectCart] = useState({
+         total: 0,
+         numberProduit :0,
+         sousTotal : 0,
+         cartProduitsObject : []
+     })
+
 
 
     //==========
-     const  getCartItems = useCallback(() =>{putCartItems(setCartItems)}, cartItems )
+
      //test
-    const testValue = "je test si AppContext marche" // test reuissi
+
     const value = useMemo(
         ()=>(
             {
-                cartItems,
-                testValue,
-
                 setCurrentPage,
-                setCartItems,
                 currentPage,
-                getCartItems
+
+
+                //test...
+                objectCart, setObjectCart
+
+
             }),
-        [testValue,cartItems, currentPage, setCurrentPage, setCartItems,getCartItems]);
+        [currentPage, setCurrentPage,
+            objectCart,setObjectCart
+            ]);
 
 
     return ( <AppContext.Provider

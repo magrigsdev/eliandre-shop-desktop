@@ -7,6 +7,7 @@ import Body from '../components/Body';
 import CategoryBanner from '../components/category/CategoryBanner';
 import CategoryList from '../components/category/CategoryList';
 import { Boutton } from '../components/Boutton';
+import useApp from "../hooks/useApp.js";
 
 
 /**
@@ -21,11 +22,19 @@ const Category = () => {
     const [searchValue, setSearchValue] = useState('');// Valeur du champ de recherche
     const [isLoading, setIsLoading] = useState(true);// État de chargement
     const [error, setError] = useState(null);// Gestion des messages d'erreur
+
     // 2. HOOKS PERSONNALISÉS
     const { send } = useFetch();
-    const { addToCart, testFunction, cartCount } = useCart();
+    const { addToCart, testFunction, cartCount, cartproduits, updateObjectContext } = useCart();
+    const {objectCart} = useApp();
 
 
+    // Dès que la liste cartProduits change, l'objet global est mis à jour
+    useEffect(() => {
+        updateObjectContext(cartproduits);
+    }, [cartproduits, updateObjectContext]);
+
+    console.log("objectCart : ", objectCart);
      /**
      * 🔄 Récupération des données (API)
      * useCallback évite que la fonction ne soit recréée à chaque re-rendu

@@ -1,16 +1,54 @@
 // hooks/useCart.js
-import { useState, useCallback } from 'react';
+import {useState, useCallback} from 'react';
+import useApp from "./useApp.js";
+
 
 const CART_STORAGE_KEY = 'shopping_cart';
 
 
 /**
  * 🪝 Hook personnalisé pour gérer le panier
- * @returns {{cartproduits: any[]|*[], cartCount: number|*, cartTotal: number|*, isEmpty, addToCart: (function(*): void)|*, removeFromCart: (function(*): void)|*, decrementQuantity: (function(*): void)|*, clearCart: (function(): void)|*, isInCart: (function(*): (boolean|boolean))|*, getProductQuantity: (function(*): number)|*, testFunction: (function(): void)|*}}
+ * @returns {{cartproduits: any[]|*[],
+ * cartCount: number|*, cartTotal: number|*,
+ * isEmpty, addToCart: (function(*): void)|*,
+ * removeFromCart: (function(*): void)|*,
+ * decrementQuantity: (function(*): void)|*,
+ * clearCart: (function(): void)|*, isInCart:
+ * (function(*): (boolean|boolean))|*, getProductQuantity:
+ * (function(*): number)|*, testFunction: (function(): void)|*}}
  */
 const useCart = () => {
     // ✅ Initialisation du cartproduits
      const [cartproduits, setCartproduits] = useState([])
+
+    //context useApp declarration
+    const {setObjectCart} = useApp()
+
+    /**
+     * ✅ Synchronise l'état global objectCart avec la liste des produits
+     */
+    const updateObjectContext = useCallback((cartItems) => {
+        // Sécurité : on s'assure d'avoir un tableau
+        const items = Array.isArray(cartItems) ? cartItems : [];
+
+        // Calculs financiers
+        const calculatedTotal = items.reduce((acc, item) => {
+            const price = item.prix || item.price || 0;
+            const qty = item.quantity || 0;
+            return acc + (price * qty);
+        }, 0);
+
+        // Mise à jour de l'état global
+        setObjectCart({
+            cartProduitsObject: items,
+            numberProduit: items.reduce((acc, item) => acc + (item.quantity || 0), 0),
+            sousTotal: calculatedTotal.toFixed(2),
+            total: calculatedTotal.toFixed(2)
+        });
+    }, [setObjectCart]);
+
+
+
 
     /**
      * ✅ Validé le produit
@@ -68,12 +106,15 @@ const useCart = () => {
                     return product;
                 });
 
+
                 console.log(`[useCart] ✅ Quantité +1 pour "${produit.libelle}"`);
                 return updated;
             }
 
             // Nouveau produit
             console.log(`[useCart] ✅ Ajout de "${produit.libelle}"`);
+            //
+
             return [...prevproduits, { ...produit, quantity: 1 }];
         });
     }, [isValidProduct]);
@@ -238,7 +279,7 @@ const useCart = () => {
      */
         //************************************** A SUPPRIMERR
     const testFunction = useCallback(() => {
-        console.log('═══════════════════════════════════');
+        console.log('═══════════════════════════════════ step 1');
         console.log('🛒 ÉTAT DU PANIER');
         console.log('═══════════════════════════════════');
         console.log('📦 Produits différents:', cartproduits?.length || 0);
@@ -264,6 +305,7 @@ const useCart = () => {
 //************************************** A SUPPRIMERR
 
 
+
     return {
         // État
         cartproduits: Array.isArray(cartproduits) ? cartproduits : [],
@@ -278,6 +320,9 @@ const useCart = () => {
         decrementQuantity,
         clearCart,
         putCartItems, //
+        setCartproduits, //en cours de test.
+        updateObjectContext,
+
 
         // Utilitaires
         isInCart,
