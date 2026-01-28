@@ -2,8 +2,7 @@
 import {useState, useCallback} from 'react';
 import useApp from "./useApp.js";
 
-
-const CART_STORAGE_KEY = 'shopping_cart';
+//const CART_STORAGE_KEY = 'shopping_cart';
 
 
 /**
@@ -121,26 +120,13 @@ const useCart = () => {
      * ✅ Retirer un produit
      * @type {(function(*): void)|*}
      */
-    const removeFromCart = useCallback((productId) => {
+    const removeFromCart = useCallback((produit, setter) => {
+        console.log(produit);
+        if (!produit?._id) return;
 
-        //on verifie si le _ID a été passé au paramètre ou le produit est definie
-        if (!productId) {
-            console.error('[useCart] ❌ ID manquant');
-            return;
-        }
+        setter(prev => prev.filter(item => item._id !== produit._id));
 
-        //suppression du produit
-        setCartproduits(prevproduits => {
-            //on verifie si le panier existe
-            if (!Array.isArray(prevproduits)) return [];
-
-            //cette fonction retourne le panier sans le produit qui a ce ID : productId
-            const filtered = prevproduits.filter(produit => produit._id !== productId);
-            console.log(`[useCart] ❌ Produit retiré: ${productId}`); //message
-
-            //retourne le panier
-            return filtered;
-        });
+        console.log(`[useCart] ✅ Supprimé : ${produit.libelle || produit.titre}`);
     }, []);
 
 
@@ -268,41 +254,6 @@ const useCart = () => {
         // Mise à jour de la fonction seulement si le panier est modifié.
     }, [cartproduits]);
 
-    const putCartItems = useCallback((setCartItmes) =>{
-        setCartItmes(cartproduits)
-    })
-
-    /**
-     * Debug
-     */
-        //************************************** A SUPPRIMERR
-    const testFunction = useCallback(() => {
-        console.log('═══════════════════════════════════ step 1');
-        console.log('🛒 ÉTAT DU PANIER');
-        console.log('═══════════════════════════════════');
-        console.log('📦 Produits différents:', cartproduits?.length || 0);
-        console.log('📊 Total articles:', getCartproduitsCount());
-        console.log('💰 Total:', getCartTotal().toFixed(2), '€');
-        console.log('───────────────────────────────────');
-
-        if (Array.isArray(cartproduits) && cartproduits.length > 0) {
-            console.log('📋 CONTENU:');
-            cartproduits.forEach((produit, index) => {
-                console.log(`  ${index + 1}. ${produit.libelle || 'Sans nom'}`);
-                console.log(`     • Qté: ${produit.quantity || 0}`);
-                console.log(`     • Prix: ${produit.prix || 0}€`);
-                console.log(`     • Sous-total: ${((produit.prix || 0) * (produit.quantity || 0)).toFixed(2)}€`);
-            });
-        } else {
-            console.log('📋 Panier vide');
-        }
-
-        console.log('═══════════════════════════════════');
-    }, [cartproduits, getCartproduitsCount, getCartTotal]);
-
-//************************************** A SUPPRIMERR
-
-
 
     return {
         // État
@@ -317,15 +268,12 @@ const useCart = () => {
         removeFromCart,
         decrementQuantity,
         clearCart,
-        putCartItems, //
-        setCartproduits, //en cours de test.
+        setCartproduits,
         updateObjectContext,
-
 
         // Utilitaires
         isInCart,
         getProductQuantity,
-        testFunction
     };
 };
 

@@ -1,14 +1,30 @@
 
 import useApp from "../hooks/useApp.js";
 import CategoryList from "../components/category/categoryList.jsx";
-import React from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import Body from "../components/Body.jsx";
+import useCart from "../hooks/useCart.js";
 
 
 const Cart = () =>{
 
     const cart = true
     const {objectCart} = useApp()
+    //declarations
+    const [myCart, setMyCart] = useState([])
+    //
+
+    // 2. Synchronisation  objectCart
+    useEffect(() => {
+        setMyCart(objectCart.cartProduitsObject);
+    }, [objectCart.cartProduitsObject]);
+
+    //
+    const {removeFromCart} = useCart()
+    const handleDeleteFromCart = useCallback((produit) => {
+        console.log("click")
+        removeFromCart(produit, setMyCart);
+    }, [removeFromCart]);
     // Panier vide
 
         return (
@@ -21,6 +37,7 @@ const Cart = () =>{
                             <CategoryList
                                 produits={objectCart.cartProduitsObject}
                                 cart={cart}
+                                onAdd={handleDeleteFromCart}
                             />
                         }
 

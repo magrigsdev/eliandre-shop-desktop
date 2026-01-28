@@ -7,7 +7,7 @@ import Body from '../components/Body';
 import CategoryBanner from '../components/category/CategoryBanner';
 import CategoryList from '../components/category/CategoryList';
 import { Boutton } from '../components/Boutton';
-import useApp from "../hooks/useApp.js";
+
 
 
 /**
@@ -25,8 +25,8 @@ const Category = () => {
 
     // 2. HOOKS PERSONNALISÉS
     const { send } = useFetch();
-    const { addToCart, testFunction, cartCount, cartproduits, updateObjectContext } = useCart();
-    const {objectCart} = useApp();
+    const { addToCart,  cartCount, cartproduits, updateObjectContext } = useCart();
+
 
 
     // Dès que la liste cartProduits change, l'objet global est mis à jour
@@ -34,7 +34,7 @@ const Category = () => {
         updateObjectContext(cartproduits);
     }, [cartproduits, updateObjectContext]);
 
-    console.log("objectCart : ", objectCart);
+   // console.log("objectCart : ", objectCart);
      /**
      * 🔄 Récupération des données (API)
      * useCallback évite que la fonction ne soit recréée à chaque re-rendu
@@ -100,8 +100,11 @@ const Category = () => {
      */
     const handleAddToCart = useCallback((produit) => {
         console.log('[Category] 🛒 Ajout:', produit.libelle);
+
         addToCart(produit);
     }, [addToCart]);
+
+
 
     // Loading
     if (isLoading) {
@@ -157,14 +160,7 @@ const Category = () => {
                         )
                     }
 
-                    Bloc2={
-                        <div className="mt-4">
-                            <Boutton
-                                onClick={testFunction}
-                                value={`🛒 Debug Panier (${cartCount})`}
-                            />
-                        </div>
-                    }
+
                 />
             </div>
         </div>
