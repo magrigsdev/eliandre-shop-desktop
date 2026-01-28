@@ -48,8 +48,6 @@ const useCart = () => {
     }, [setObjectCart]);
 
 
-
-
     /**
      * ✅ Validé le produit
      * @type {(function(*): (boolean))|*}
