@@ -120,14 +120,32 @@ const useCart = () => {
      * ✅ Retirer un produit
      * @type {(function(*): void)|*}
      */
-    const removeFromCart = useCallback((produit, setter) => {
-        console.log(produit);
-        if (!produit?._id) return;
+    const removeFromCart = useCallback((produit) => {
+        // 1. Sécurité : vérification du produit et de son ID
+        if (!produit?._id || !isValidProduct(produit)) {
+            console.warn('[useCart] ⚠️ Produit invalide ou ID manquant');
+            return;
+        }
 
-        setter(prev => prev.filter(item => item._id !== produit._id));
+        setObjectCart(prev => {
+            // 2. On filtre le tableau contenu à l'intérieur de l'objet
+            const newProducts = prev.cartProduitsObject.filter(item => item._id !== produit._id);
 
-        console.log(`[useCart] ✅ Supprimé : ${produit.libelle || produit.titre}`);
-    }, []);
+            // 3. On recalcule les totaux (important pour garder la cohérence)
+            const newNumber = newProducts.reduce((acc, item) => acc + (item.quantity || 1), 0);
+            const newTotal = newProducts.reduce((acc, item) => acc + ((item.prix || 0) * (item.quantity || 1)), 0);
+
+            return {
+                ...prev,                   // On garde les autres propriétés
+                cartProduitsObject: newProducts,
+                numberProduit: newNumber,
+                total: newTotal,
+                sousTotal: newTotal        // Ajuste selon ta logique de taxes/frais
+            };
+        });
+
+        console.log(`[useCart] ❌ Suppression de ${produit.libelle || produit.titre}`);
+    }, [setObjectCart]);
 
 
     /**

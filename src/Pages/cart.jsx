@@ -12,18 +12,19 @@ const Cart = () =>{
     const {objectCart} = useApp()
     //declarations
     const [myCart, setMyCart] = useState([])
-    //
 
     // 2. Synchronisation  objectCart
     useEffect(() => {
+        console.log("in cart [cart] setMyCart ...", myCart)
         setMyCart(objectCart.cartProduitsObject);
     }, [objectCart.cartProduitsObject]);
 
     //
     const {removeFromCart} = useCart()
     const handleDeleteFromCart = useCallback((produit) => {
-        console.log("click")
-        removeFromCart(produit, setMyCart);
+
+        console.log("click sur cart : objectCart.cartProduitsObject ", objectCart.cartProduitsObject)
+        removeFromCart(produit);
     }, [removeFromCart]);
     // Panier vide
 
