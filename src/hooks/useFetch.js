@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useState } from "react"
 import {Texts} from "../Constants/texts.js";
+import useApp from "./useApp.js";
 
 /**
  * useFetch
@@ -10,6 +11,7 @@ import {Texts} from "../Constants/texts.js";
 export const useFetch =() => {
     const [data, setData] = useState({})
     const [ErreurAPI, setErreurAPI] = useState(null)
+    const {setIsLogin} = useApp()
 
   /**
    * Sends an HTTP request and manages loading/errorAPI states
@@ -25,6 +27,9 @@ export const useFetch =() => {
           try {
                 console.log("[useFetch] premier passage : ",body)
                 //body = method === 'GET' && JSON.stringify(body)
+                if(method === 'GET' && body.length > 0){
+                    body = JSON.stringify(body)
+                }
                 //axios
                 const res = await axios(
                     {
@@ -33,7 +38,11 @@ export const useFetch =() => {
                         data: body,
                         headers: {'Content-Type': 'application/json'}
                     })
+
+              // condition de login
+              if(res.status === 200){setIsLogin(true)}
                 console.log("[useFetch] deuxième passage : ",res)
+              console.log("[useFetch] res status : ",res.status)
                 setData(res.data)
                 return { success: true, data: res.data, status: res.status };
 

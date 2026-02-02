@@ -18,9 +18,9 @@ export const Texts = {
      * 🌐 Configuration des URLs API
      */
     URLS:{
-        GET_SACS: 'http://172.20.10.2:3000/api/sacs/',
-        TEST_DB: 'http://172.20.10.2:3000/users/db',
-        USERS_LOGIN: 'http://172.20.10.2:3000/users/login',
+        GET_SACS: 'http://192.168.1.14:3000/api/sacs/',
+        TEST_DB: 'http://172.20.10.2:3000/api/users/db',
+        USERS_LOGIN: 'http://192.168.1.14:3000/api/users/login',
     },
     SEARCH_DESCRIPTIONS: 'Recherchez un produit ...',
 

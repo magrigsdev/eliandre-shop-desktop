@@ -7,6 +7,8 @@ import {useLocation, useNavigate} from "react-router-dom";
 import { useState} from "react";
 import {useForm} from "../hooks/useForm.js";
 import {Texts} from "../Constants/texts.js";
+import {useFetch} from "../hooks/useFetch.js";
+import useApp from "../hooks/useApp.js";
 
 
 const Login = () => {
@@ -20,7 +22,10 @@ const Login = () => {
                 handleLogin,
 
         } = useForm() // ************ use
-        //const { send, errorAPI , data} = useFetch() // fetch api
+        const {  data} = useFetch() // fetch api
+
+    const {isLogin} = useApp()
+
 
         //
 
@@ -43,38 +48,52 @@ const Login = () => {
     }
 
     // HANDLE
-    const handleOnsubmit = (e) => {
-        const error = {}
+    const handleOnsubmit = async (e) => {
         e.preventDefault();
+        const error = {};
 
-        //1. check email
-        emailValidate(formData.email) !=='' ? error.email = emailValidate(formData.email) : ''
+        // 1. Validation locale
+        const emailErr = emailValidate(formData.email);
+        const passErr = passwordValidation(formData.password);
 
-        //2. check password
-        passwordValidation(formData.password) !=='' ? error.password = passwordValidation(formData.password) : ''
-       //obtention de l'erreur sur le formulaire
-        setErrors(error)
+        if (emailErr) error.email = emailErr;
+        if (passErr) error.password = passErr;
 
-        //on verifie si le formulaire ne contient pas d'erreur
-        if(Object.keys(error).length === 0){
+        setErrors(error);
 
-            const result =  handleLogin(Texts.URLS.USERS_LOGIN, {Email:formData.email, Password:formData.password})
+        // 2. Si aucune erreur locale, on lance l'appel API
+        if (Object.keys(error).length === 0) {
 
-            console.log("le resultat du post ",result)
+            // 🔑 ATTENDRE la réponse de la Promise
+            const result = await handleLogin(Texts.URLS.USERS_LOGIN, {
+                Email: formData.email,
+                Password: formData.password
+            });
 
-            /*
-            if(result.length === 0 ){
-                console.log(Texts.SERVER_NOT_FOUND)
-                return
+            // 3. Vérification du résultat une fois la Promise résolue
+            if (result && result.success) {
+                console.log('✅ LOGIN SUCCESS :', result.data);
+
+                console.log("islogin :", isLogin);
+
+                // Optionnel : On peut mettre à jour un state local ou contextuel ici
+                // setUsername(result.data);
+
+                // Nettoyage du formulaire
+                setFormData(initialFormaData);
+                setErrors(initialErrors);
+
+                // 🚀 REDIRECTION : On passe les infos de l'utilisateur à la Home
+                // On utilise result.data car c'est l'objet frais renvoyé par le serveur
+                route('/', { state: { user: result.data } });
+
+            } else {
+                // Ici, result.success est false (400, 401, 500, etc.)
+                // L'erreur est normalement déjà stockée dans ton state ErreurAPI par useFetch
+                console.error('❌ ÉCHEC CONNEXION :', result?.message || "Erreur inconnue");
             }
-            console.log('✅ LOGIN SUCCESS :', result);
-            setFormData(initialFormaData)
-            setErrors(initialErrors)
-            route('/', {state : {user : username }})  */
         }
-
-
-    }
+    };
 
 
    // const location = useLocation();
