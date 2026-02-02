@@ -1,12 +1,12 @@
 // pages/Category.jsx
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
-import { useFetch } from '../hooks/useFetch';
 import useCart from '../hooks/useCart';
 import { Texts } from '../Constants/texts';
 import Body from '../components/Body';
 import CategoryBanner from '../components/category/CategoryBanner';
 import CategoryList from '../components/category/CategoryList';
 import { Boutton } from '../components/Boutton';
+import {useForm} from "../hooks/useForm.js";
 
 
 
@@ -24,8 +24,8 @@ const Category = () => {
     const [error, setError] = useState(null);// Gestion des messages d'erreur
 
     // 2. HOOKS PERSONNALISÉS
-    const { send } = useFetch();
     const { addToCart,  cartCount, cartproduits, updateObjectContext } = useCart();
+    const {getProduits} = useForm()
 
 
 
@@ -45,13 +45,12 @@ const Category = () => {
         setError(null);
 
         try {
-            const data = await send({
-                url: Texts.URLS.GET_SACS,
-                method: 'GET',
-            });
-            //on recupère soit les donnée du API ou tableau vide à default
-            setProduits(data || []);
-            console.log(`[Category] ✅ ${data?.length || 0} produits chargés`);
+            //la fonction pour se connecter à l'API
+            const produits = await getProduits( Texts.URLS.GET_SACS)
+
+            //on recupère soit les données du API  : produits.data
+            setProduits(produits.data || []);
+            console.log(`[Category] ✅ ${produits?.length || 0} produits chargés`);
 
         } catch (err) {
             console.error('[Category] ❌ Erreur:', err);

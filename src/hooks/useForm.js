@@ -131,6 +131,15 @@ export const useForm = () => {
         })
     }
 
+
+    const getProduits = async (url, body) => {
+        return await send({
+            url: url,
+            method: 'GET',
+            body: body,
+        })
+    }
+
     //GET PRODUCTS
 
     /**
@@ -143,11 +152,13 @@ export const useForm = () => {
 
     //return
     return {
+
         passwordValidation, handleOnChange,
         columnValidate, emailValidate,
         confirmPasswordValidation,
         handleLogin, handleLogout,
-        handleRegister
+        handleRegister,
+        getProduits
     }
 }
 //email

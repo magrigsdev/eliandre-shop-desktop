@@ -12,7 +12,6 @@ export const useFetch =() => {
     const [data, setData] = useState({})
     const [ErreurAPI, setErreurAPI] = useState(null)
 
-
   /**
    * Sends an HTTP request and manages loading/errorAPI states
    * @async
@@ -21,15 +20,13 @@ export const useFetch =() => {
    * @param {Object|null} [options.body=null] - Request body data (for POST, PUT, etc.)
    * @returns {Promise<Object|null>} The response data on success, or null on errorAPIAPI
    */
-    const send = async ({ url ,method, body= null}) => {
+    const send = async ({ url , method, body}) => {
             setErreurAPI(null); // On réinitialise l'erreur au début
             setData(null) // On réinitialise Data au début
           try {
                 console.log("[useFetch] premier passage : ",body)
                 //body = method === 'GET' && JSON.stringify(body)
-                if(method === 'GET' && body.length > 0){
-                    body = JSON.stringify(body)
-                }
+
                 //axios
                 const res = await axios(
                     {
