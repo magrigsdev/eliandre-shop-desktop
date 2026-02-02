@@ -3,16 +3,15 @@ import "../styles/connexion.css"
 import {Field} from "../components/field.jsx";
 import {Boutton} from "../components/boutton.jsx";
 //import {useNavbar} from "../hooks/useNavbar.js";
-import {useLocation, useNavigate} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import { useState} from "react";
 import {useForm} from "../hooks/useForm.js";
 import {Texts} from "../Constants/texts.js";
-import {useFetch} from "../hooks/useFetch.js";
 import useApp from "../hooks/useApp.js";
 
 
 const Login = () => {
-    //********HOOK
+    //********  HOOK ************************
         //const {setLocation, setOnglet} = useNavbar() // for navbar
         //const {pathname} = useLocation() // update location
         const route = useNavigate() // route manage
@@ -20,20 +19,14 @@ const Login = () => {
                 emailValidate,
                 passwordValidation,
                 handleLogin,
-
         } = useForm() // ************ use
-        const {  data} = useFetch() // fetch api
 
-    const {isLogin} = useApp()
-
-
-        //
-
+    //appelle a isLogin pour montré que il est connecté
+    const {isLogin, setIsLogin, user,setUser} = useApp()
 
     //********** VARIABLES ************
     const [formData, setFormData] = useState({email:'', password:''})
     const [errors, setErrors] = useState({email:'', password:''})
-    const [username, setUsername] = useState({})
 
 
     //initial formdata & errors
@@ -72,9 +65,13 @@ const Login = () => {
 
             // 3. Vérification du résultat une fois la Promise résolue
             if (result && result.success) {
+                console.log("islogin avant :", isLogin);
                 console.log('✅ LOGIN SUCCESS :', result.data);
+                setIsLogin(true)
+                setUser(result.data);
+                console.log("islogin après :", isLogin);
+                console.log("user :", user);
 
-                console.log("islogin :", isLogin);
 
                 // Optionnel : On peut mettre à jour un state local ou contextuel ici
                 // setUsername(result.data);
@@ -85,7 +82,7 @@ const Login = () => {
 
                 // 🚀 REDIRECTION : On passe les infos de l'utilisateur à la Home
                 // On utilise result.data car c'est l'objet frais renvoyé par le serveur
-                route('/', { state: { user: result.data } });
+                route('/');
 
             } else {
                 // Ici, result.success est false (400, 401, 500, etc.)

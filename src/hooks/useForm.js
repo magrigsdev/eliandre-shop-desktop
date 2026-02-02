@@ -117,6 +117,19 @@ export const useForm = () => {
             body: body,
         })
     }
+    /**
+     *
+     * @param url
+     * @param body
+     * @returns {Promise<Object|null>}
+     */
+    const handleRegister = async (url, body) =>{
+        return await send({
+            url: url,
+            method: 'POST',
+            body: body,
+        })
+    }
 
     //GET PRODUCTS
 
@@ -133,7 +146,8 @@ export const useForm = () => {
         passwordValidation, handleOnChange,
         columnValidate, emailValidate,
         confirmPasswordValidation,
-        handleLogin, handleLogout
+        handleLogin, handleLogout,
+        handleRegister
     }
 }
 //email

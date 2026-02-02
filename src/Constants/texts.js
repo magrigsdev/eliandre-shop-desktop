@@ -6,7 +6,7 @@
 export const Texts = {
     // Identité de la marque
     BRAND: 'eliandre shop',
-    WELCOME: 'Hello ! welcome to Eliandre shop',
+    WELCOME: 'Welcome to Eliandre shop',
     // Messages d'erreur Authentification
     USER_ALREADY_EXISTS:'Cet email est déjà utilisé',
     // Messages d'erreur Serveur / Réseau
@@ -21,6 +21,7 @@ export const Texts = {
         GET_SACS: 'http://192.168.1.14:3000/api/sacs/',
         TEST_DB: 'http://172.20.10.2:3000/api/users/db',
         USERS_LOGIN: 'http://192.168.1.14:3000/api/users/login',
+        USERS_REGISTER: 'http://192.168.1.14:3000/api/users/',
     },
     SEARCH_DESCRIPTIONS: 'Recherchez un produit ...',
 

@@ -1,10 +1,11 @@
-import { useEffect, useState} from "react";
+import {  useState} from "react";
 //import { useNavbar } from "../hooks/useNavbar.js";
-import {useLocation, useNavigate} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import {useForm} from "../hooks/useForm.js";
-import {useFetch} from "../hooks/useFetch.js";
 import {Field} from "../components/field.jsx";
 import {Boutton} from "../components/boutton.jsx";
+import useApp from "../hooks/useApp.js";
+import {Texts} from "../Constants/texts.js";
 
 
 const Register = () => {
@@ -22,7 +23,7 @@ const Register = () => {
    // const {pathname} = useLocation() // update location
 
     const route = useNavigate() // route manage
-    const { send, errorAPI , data} = useFetch() // fetch api
+
 
 
     //init variables*
@@ -52,94 +53,67 @@ const Register = () => {
         email:''
     }
 
-    //urls
-    const urls = {
-        'test_de_connexion' : 'http://192.168.1.14:3000/api/users/db',
-        'creation_user': 'http://192.168.1.14:3000/api/users',
-    }
-    const [users, setUsers] = useState({});
+
+
     const [errors, setErrors] = useState({
     }) //errors
 
-    //useEffect
-  /*  useEffect(()=>{
-        setLocation(pathname);
-        setOnglet('inscription')
-    },[pathname,setOnglet, setLocation])*/
+    //*************************************
+    //  HOOKS
+    //*************************************
+    const { setUser, setIsLogin} = useApp()
+    const {handleRegister} = useForm()
 
-    //test de connection.
-    /*  useEffect(() => {
+    const onSubmit = async (e) => { // 1. Ajout de async
+        const error = {};
+        e.preventDefault();
 
-        const TestDB =  send({
-            url: urls.test_de_connexion,
-            method: 'GET',
-        })
-        //console.log('test de DB',TestDB)
-    }, []) */
-
-    const onSubmit = (e) => {
-        const error = {}
-
-        //const validate = false
-        e.preventDefault()
-
-        // 1. CHECKING FIELDS VALIDATION
-
-        //nom
-        columnValidate(formData.nom, 'nom') !=='' ? error.nom = columnValidate(formData.nom, 'nom') : ''
-
-        //telephone
-        columnValidate(formData.telephone, 'telephone') !=='' ? error.telephone = columnValidate(formData.telephone, 'telephone') : ''
-
-        //prenom
-        columnValidate(formData.prenom, 'prenom') !=='' ? error.prenom = columnValidate(formData.prenom, 'prenom') : ''
-
-        //email
-        emailValidate(formData.email) !=='' ? error.email = emailValidate(formData.email) : ''
-
-        //2. check password
-        passwordValidation(formData.password) !=='' ? error.password = passwordValidation(formData.password) : ''
-        confirmPasswordValidation(formData.password,formData.confirmPassword) !=='' ? error.confirmPassword = confirmPasswordValidation(formData.password,formData.confirmPassword) : ''
-
-        setErrors(error)
-
-        //1.1- CHECKING
-
-        if(Object.keys(error).length === 0) {
-            console.log('formulaire validé')
-
-            // envoye du formualaire
-             send({
-                url: urls.creation_user,
-                method: 'POST',
-                body: {
-                    Nom: formData.nom,
-                    Prenom: formData.prenom,
-                    Telephone: formData.telephone,
-                    Password: formData.password,
-                    Email: formData.email,
-                },
-            })
-
-            // test si il ya une erreur dans l'api
-            if(!errorAPI || Object.keys(errorAPI).length === 0){
-
-                setUsers(data.data)
-                route('/',{user : users})
-
-                // changé de page ...
-            }
-            //affiche l'erreur
-            else{
-                console.log('error : ', errorAPI, ' urls :', urls )
-            }
-
-            setFormData("")
-            setErrors("")
-
+        // --- VALIDATION DES CHAMPS ---
+        if (columnValidate(formData.nom, 'nom')) error.nom = columnValidate(formData.nom, 'nom');
+        if (columnValidate(formData.telephone, 'telephone')) error.telephone = columnValidate(formData.telephone, 'telephone');
+        if (columnValidate(formData.prenom, 'prenom')) error.prenom = columnValidate(formData.prenom, 'prenom');
+        if (emailValidate(formData.email)) error.email = emailValidate(formData.email);
+        if (passwordValidation(formData.password)) error.password = passwordValidation(formData.password);
+        if (confirmPasswordValidation(formData.password, formData.confirmPassword)) {
+            error.confirmPassword = confirmPasswordValidation(formData.password, formData.confirmPassword);
         }
 
-    }
+        setErrors(error);
+        // --- ENVOI SI PAS D'ERREURS ---
+        if (Object.keys(error).length === 0) {
+            console.log('Formulaire validé, envoi en cours...');
+
+            // 2. On attend la réponse du serveur
+           const result = await handleRegister(
+               Texts.URLS.USERS_REGISTER, {
+                   Nom: formData.nom,
+                   Prenom: formData.prenom,
+                   Telephone: formData.telephone,
+                   Password: formData.password,
+                   Email: formData.email,
+               } )
+            console.log("result : ",result)
+            // 3. On vérifie le succès via le résultat direct
+            if (result && result.success) {
+
+
+                setIsLogin(true)
+                // On peut stocker l'utilisateur dans le state ou le passer à la home
+                setUser(result.data);
+                console.log('✅ Utilisateur créé avec succès');
+                // Reset des champs
+                setFormData(initialFormaData); // Utilise ton objet initial
+                setErrors(initialErrors);
+
+                // Redirection vers l'accueil ou login
+                route('/');
+
+            } else {
+                // L'erreur est gérée par ton useFetch (ErreurAPI)
+                console.log('❌ Erreur API :', result?.message || "une erreur s'est produite");
+            }
+        }
+    };
 
     const onCancel = (e) => {
         e.preventDefault();
@@ -147,21 +121,6 @@ const Register = () => {
         setErrors({ ... initialErrors })
     }
 
-
-    // test de Connection inscription page
-    useEffect(()=>{
-        //test connection
-        let testDB = {}
-        const testConnection = async () => {
-            testDB = await send({
-                url : urls.test_de_connexion,
-                method: 'GET', })
-            console.log('test_de_connexion page connexion data : ', testDB) }
-        testConnection()
-    },[])
-
-    const location = useLocation();
-    console.log('location : ',location);
     return (<>
                 <div className="flex justify-center items-center bg-white screen" >
 
@@ -256,8 +215,8 @@ const Register = () => {
 
 
                                 <div className="flex justify-start !mb-4 gap-x-16">
-                                    <Boutton type='restore' value='Effacer' size='50' restore='true' onclick={onCancel} />
-                                    <Boutton value='Enregistrer' size='50' onclick={onSubmit}/>
+                                    <Boutton type='restore' value='Effacer' size='50' restore='true' onClick={onCancel} />
+                                    <Boutton value='Enregistrer' size='50' onClick={onSubmit}/>
                                 </div>
                                 <div className="flex justify-right gap-x-5 !mb-4">
                                 <span className=" text-xs text-gray-500 m-4"> Vous avez déjà un compte ?   <a

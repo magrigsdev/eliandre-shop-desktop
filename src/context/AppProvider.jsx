@@ -10,6 +10,7 @@ import AppContext from "./AppContext.js";
      //declaration des variable
      const [currentPage, setCurrentPage] = useState('');
      const [isLogin, setIsLogin] = useState(false);
+     const [user, setUser] = useState({});
 
 
      //OBJECT CARTS
@@ -32,15 +33,13 @@ import AppContext from "./AppContext.js";
                 setCurrentPage,
                 currentPage,
                 isLogin, setIsLogin,
-
-                //test...
+                user, setUser,
                 objectCart, setObjectCart
-
-
             }),
         [currentPage, setCurrentPage,
             objectCart,setObjectCart,
-            isLogin, setIsLogin
+            isLogin, setIsLogin,
+            user, setUser
             ]);
 
 
