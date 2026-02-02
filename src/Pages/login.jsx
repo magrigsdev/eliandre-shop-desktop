@@ -4,15 +4,15 @@ import {Field} from "../components/field.jsx";
 import {Boutton} from "../components/boutton.jsx";
 //import {useNavbar} from "../hooks/useNavbar.js";
 import {useLocation, useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
+import { useState} from "react";
 import {useForm} from "../hooks/useForm.js";
-import {useFetch} from "../hooks/useFetch.js";
+import {Texts} from "../Constants/texts.js";
 
 
 const Login = () => {
     //********HOOK
         //const {setLocation, setOnglet} = useNavbar() // for navbar
-        const {pathname} = useLocation() // update location
+        //const {pathname} = useLocation() // update location
         const route = useNavigate() // route manage
         const {
                 emailValidate,
@@ -20,7 +20,7 @@ const Login = () => {
                 handleLogin,
 
         } = useForm() // ************ use
-        const { send, errorAPI , data} = useFetch() // fetch api
+        //const { send, errorAPI , data} = useFetch() // fetch api
 
         //
 
@@ -30,12 +30,6 @@ const Login = () => {
     const [errors, setErrors] = useState({email:'', password:''})
     const [username, setUsername] = useState({})
 
-    //urls
-    const urls = {
-        'test_de_connexion' : 'http://192.168.1.14:3000/api/users/db',
-        'login_user': 'http://192.168.1.14:3000/api/users/login',
-        'users': 'http://192.168.1.14:3000/api/users',
-    }
 
     //initial formdata & errors
     const initialFormaData= {
@@ -48,64 +42,43 @@ const Login = () => {
         password:'',
     }
 
-    //useEffect for location and current page
-   /* useEffect(()=>{
-        setLocation(pathname);
-        setOnglet('connexion') //
-    },[pathname,setOnglet, setLocation])*/
-
-
     // HANDLE
     const handleOnsubmit = (e) => {
         const error = {}
         e.preventDefault();
+
         //1. check email
         emailValidate(formData.email) !=='' ? error.email = emailValidate(formData.email) : ''
 
         //2. check password
         passwordValidation(formData.password) !=='' ? error.password = passwordValidation(formData.password) : ''
+       //obtention de l'erreur sur le formulaire
         setErrors(error)
+
+        //on verifie si le formulaire ne contient pas d'erreur
         if(Object.keys(error).length === 0){
-            console.log("validé")
 
-        const result =  handleLogin(urls.login_user, {Email:formData.email, Password:formData.password})
+            const result =  handleLogin(Texts.URLS.USERS_LOGIN, {Email:formData.email, Password:formData.password})
 
+            console.log("le resultat du post ",result)
+
+            /*
+            if(result.length === 0 ){
+                console.log(Texts.SERVER_NOT_FOUND)
+                return
+            }
             console.log('✅ LOGIN SUCCESS :', result);
-            // test si il ya une erreur dans l'api
-            if(!errorAPI || Object.keys(errorAPI).length === 0){
-                setUsername(result)
-                route('/', {state : {user : username }})
-
-                // changé de page ...
-            }
-            //affiche l'erreur
-            else{
-                console.log('error : ', errorAPI, ' urls :', urls )
-            }
-
-
             setFormData(initialFormaData)
             setErrors(initialErrors)
+            route('/', {state : {user : username }})  */
         }
-        else {
-            console.log("non validé")
-        }
+
 
     }
 
-    // test de Connection connetion page
-    useEffect(()=>{
-        //test connection
-        let testDB = {}
-        const testConnection = async () => {
-            testDB = await send({
-                url : urls.test_de_connexion,
-                method: 'GET', })
-                console.log('test_de_connexion page connexion data : ', testDB) }
-        testConnection()
-    },[])
-    const location = useLocation();
-    console.log('location : ',location);
+
+   // const location = useLocation();
+   // console.log('location : ',location);
 
     return <div className="flex justify-center items-center bg-white screen" >
 
@@ -156,14 +129,14 @@ const Login = () => {
                                 <Boutton type="submit"
                                          value="Login"
                                          size="60"
-                                         onclick={ handleOnsubmit}
+                                         onClick={handleOnsubmit}
                                 />
                             </div>
                             <div className="flex justify-items-start gap-x-5 !mb-4">
                                 <span className=" text-xs text-gray-500">Pas de compte ?   <a
                                       href=""
                                       className="text-teal-600  font-medium"
-                                    onClick={()=>route('/inscription')}
+                                    onClick={()=>route('/register')}
                                 > S'inscrire</a></span>
                             </div>
 

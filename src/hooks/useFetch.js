@@ -3,18 +3,14 @@ import { useState } from "react"
 import {Texts} from "../Constants/texts.js";
 
 /**
+ * useFetch
  * @callback send
  * @returns {errorAPI, data, loading}
  */
 export const useFetch =() => {
-    const [errorAPI, setErrorAPI] = useState({})
     const [data, setData] = useState({})
+    const [ErreurAPI, setErreurAPI] = useState(null)
 
-
-    //test body
-
-
-  //
   /**
    * Sends an HTTP request and manages loading/errorAPI states
    * @async
@@ -24,43 +20,75 @@ export const useFetch =() => {
    * @returns {Promise<Object|null>} The response data on success, or null on errorAPIAPI
    */
     const send = async ({ url ,method, body= null}) => {
-            setErrorAPI({})
-            setData(null)
+            setErreurAPI(null); // On réinitialise l'erreur au début
+            setData(null) // On réinitialise Data au début
           try {
-                const headers = {'Content-Type': 'application/json'};
-                body = method === 'GET' && JSON.stringify(body)
+                console.log("[useFetch] premier passage : ",body)
+                //body = method === 'GET' && JSON.stringify(body)
                 //axios
                 const res = await axios(
                     {
                         method,
                         url,
                         data: body,
-                        //headers: body ? headers  : {}
-                        headers: headers
+                        headers: {'Content-Type': 'application/json'}
                     })
-
+                console.log("[useFetch] deuxième passage : ",res)
                 setData(res.data)
-                return res.data
-          } catch (error) {
-              const apiError = error.response?.data
+                return { success: true, data: res.data, status: res.status };
 
-              if(apiError?.code === 'USER_ALREADY_EXISTS') {
-                  setErrorAPI(Texts.USER_ALREADY_EXISTS)
+          } catch (error) {
+              let errorMessage = Texts.ERREUR_SERVER_NOT_FOUND;
+              let errorCode = error.code; // Code interne Axios (ex: ERR_NETWORK)
+
+              // --- STRATÉGIE DE CAPTURE DES ERREURS ---
+
+              if (error.response) {
+                  /**
+                   * Cas 1 : Le serveur a répondu mais avec un code d'erreur (4xx, 5xx)
+                   * C'est ici qu'on trouve les erreurs 400 (Bad Request)
+                   */
+                  const data = error.response.data;
+                  errorMessage = data?.error || data?.message || `Erreur ${error.response.status} .`;
+
+                  // Gestion spécifique par tes codes d'erreur backend
+                  if (data?.code === 'USER_ALREADY_EXISTS') errorMessage = Texts.USER_ALREADY_EXISTS;
+                  if (data?.code === 'SERVER_NOT_FOUND') errorMessage = Texts.SERVER_NOT_FOUND;
+
+              } else if (error.request) {
+                  /**
+                   * Cas 2 : La requête a été envoyée mais pas de réponse (Problème réseau)
+                   */
+                  errorMessage = Texts.SERVER_NOT_FOUND || "Le serveur est injoignable.";
+                  errorCode = 'ERR_NETWORK';
+              } else {
+                  /**
+                   * Cas 3 : Erreur lors de la configuration de la requête
+                   */
+                  errorMessage = error.message;
               }
-              else if(apiError?.code === 'SERVER_NOT_FOUND') {
-                  setErrorAPI(Texts.SERVER_NOT_FOUND)
-              }
-              else setErrorAPI(apiError?.error || Texts.ERREUR_SERVER_NOT_FOUND)
+
+              // Mise à jour de l'état pour l'UI
+              setErreurAPI(errorMessage);
+
+              console.error("-[useFetch] Détail de l'erreur :", {
+                  message: errorMessage,
+                  status: error.response?.status || 'Status non disponible.',
+                  data: error.response?.data || 'Data non disponible.'
+              });
+
               return {
                   success: false,
                   status: error.response?.status,
-                  error: apiError.error,
-                  code: apiError.code,
-              }
-
+                  message: errorMessage,
+                  code: errorCode,
+                  data: error.response?.data // On retourne les détails (ex: erreurs de validation)
+              };
           }
+
+
     }
 
-  return { send, errorAPI, data}
+    return { send, ErreurAPI, data}
 }
 

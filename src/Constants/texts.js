@@ -13,12 +13,14 @@ export const Texts = {
     SERVER_NOT_FOUND:'Server non disponible.',
     ERREUR_SERVER_NOT_FOUND:'Server non disponible.',
     ERREUR_DB: "Erreur lors d'obtention des données",
+    ERR_NETWORK:"Erreur de reseaux ou adresse Ip incorrect",
     /**
      * 🌐 Configuration des URLs API
      */
     URLS:{
-        GET_SACS: 'http://192.168.1.129:3000/api/sacs/',
-        TEST_DB: 'http://192.168.1.129:3000/users/db',
+        GET_SACS: 'http://172.20.10.2:3000/api/sacs/',
+        TEST_DB: 'http://172.20.10.2:3000/users/db',
+        USERS_LOGIN: 'http://172.20.10.2:3000/users/login',
     },
     SEARCH_DESCRIPTIONS: 'Recherchez un produit ...',
 

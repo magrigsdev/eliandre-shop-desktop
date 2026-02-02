@@ -5,7 +5,7 @@ import {useFetch} from "./useFetch.js";
 export const useForm = () => {
 
     //import send
-    const {send, errorAPI} = useFetch()
+    const {send} = useFetch()
     //validation de confirmation de mot de passe
     const confirmPasswordValidation = useCallback((password, confirmPassword) => {
         let newError = ''
@@ -103,7 +103,13 @@ export const useForm = () => {
         return error
     },[])
 
-    //**LOGIN
+
+    /**
+     * LOGIN
+     * @param url
+     * @param body
+     * @returns {Promise<Object|null>}
+     */
     const handleLogin = async (url, body) =>{
         return await send({
             url: url,
@@ -113,13 +119,22 @@ export const useForm = () => {
     }
 
     //GET PRODUCTS
-    //LOGOUT
+
+    /**
+     * LOGOUT
+     * @returns {Promise<void>}
+     */
     const handleLogout = async () => {
         console.log('logout')
     }
 
     //return
-    return {passwordValidation, handleOnChange, columnValidate, emailValidate, confirmPasswordValidation, handleLogin, handleLogout}
+    return {
+        passwordValidation, handleOnChange,
+        columnValidate, emailValidate,
+        confirmPasswordValidation,
+        handleLogin, handleLogout
+    }
 }
 //email
 const emailVal = (email) => {
